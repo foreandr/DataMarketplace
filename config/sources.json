@@ -2,7 +2,7 @@
   "sources": [
     {
       "name": "imdb_movies",
-      "enabled": false,
+      "enabled": true,
       "item_type": "movie",
       "crawler": "crawlers.imdb.ImdbCrawler",
       "seed_urls": [
@@ -12,7 +12,7 @@
     },
     {
       "name": "craigslist_cars",
-      "enabled": false,
+      "enabled": true,
       "item_type": "vehicle",
       "crawler": "crawlers.craigslist.CraigslistCrawler",
       "seed_urls": [

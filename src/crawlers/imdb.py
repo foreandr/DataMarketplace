@@ -8,4 +8,4 @@ from crawlers.base import BaseCrawler, CrawlItem
 
 class ImdbCrawler(BaseCrawler):
     def run(self) -> Iterable[CrawlItem]:
-        raise NotImplementedError("Implement IMDb crawling logic.")
+        return self.stub_run()

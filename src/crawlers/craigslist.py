@@ -8,4 +8,4 @@ from crawlers.base import BaseCrawler, CrawlItem
 
 class CraigslistCrawler(BaseCrawler):
     def run(self) -> Iterable[CrawlItem]:
-        raise NotImplementedError("Implement Craigslist crawling logic.")
+        return self.stub_run()

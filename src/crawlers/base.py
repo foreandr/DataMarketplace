@@ -21,3 +21,9 @@ class BaseCrawler:
     def run(self) -> Iterable[CrawlItem]:
         """Return an iterable of CrawlItem. Override in subclasses."""
         raise NotImplementedError
+
+    def stub_run(self) -> Iterable[CrawlItem]:
+        """Base loop placeholder: print seed URLs, return no items."""
+        for url in self.seed_urls:
+            print(f"[{self.name}] seed_url: {url}")
+        return []
