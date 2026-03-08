@@ -1,0 +1,9 @@
+# Core
+requests
+beautifulsoup4
+lxml
+python-dotenv
+pydantic
+
+# Custom (your GitHub: foreandr)
+hyperSel

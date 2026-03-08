@@ -1,0 +1,24 @@
+{
+  "sources": [
+    {
+      "name": "imdb_movies",
+      "enabled": false,
+      "item_type": "movie",
+      "crawler": "crawlers.imdb.ImdbCrawler",
+      "seed_urls": [
+        "https://example.com/imdb-placeholder"
+      ],
+      "notes": "Replace with real IMDb entry points. Keep fields flexible in payload JSON."
+    },
+    {
+      "name": "craigslist_cars",
+      "enabled": false,
+      "item_type": "vehicle",
+      "crawler": "crawlers.craigslist.CraigslistCrawler",
+      "seed_urls": [
+        "https://example.com/craigslist-placeholder"
+      ],
+      "notes": "Replace with real Craigslist search URLs."
+    }
+  ]
+}

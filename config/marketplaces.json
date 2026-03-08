@@ -1,0 +1,27 @@
+{
+  "marketplaces": [
+    {
+      "name": "rapidapi",
+      "enabled": false,
+      "integration": "marketplaces.rapidapi.RapidApiPublisher",
+      "mode": "api",
+      "base_url": "https://example.com/rapidapi-placeholder",
+      "auth": {
+        "api_key_env": "RAPIDAPI_KEY"
+      },
+      "notes": "Replace with official RapidAPI endpoints."
+    },
+    {
+      "name": "generic_selenium_portal",
+      "enabled": false,
+      "integration": "marketplaces.selenium_portal.SeleniumPortalPublisher",
+      "mode": "selenium",
+      "base_url": "https://example.com/portal-placeholder",
+      "auth": {
+        "username_env": "PORTAL_USER",
+        "password_env": "PORTAL_PASS"
+      },
+      "notes": "Use Selenium when no public API is available."
+    }
+  ]
+}
