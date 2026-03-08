@@ -12,17 +12,8 @@ ROOT_DIR = Path(__file__).resolve().parent
 SRC_DIR = ROOT_DIR / "src"
 sys.path.insert(0, str(SRC_DIR))
 
-from utils.config import load_json_config
-
-
-# =========================
-# CONFIG (edit these)
-# =========================
-SOURCE_NAME = "example_source"  # e.g., "imdb_movies"
-
-# Optional: override module file name if it doesn't match SOURCE_NAME
-MODULE_NAME = None  # e.g., "imdb"
-# =========================
+from utils.config import load_json_config, get_data_path
+from db.sqlite import connect, init_db, drop_source_table, delete_registry_row
 
 
 def _setup_logging(level: str) -> None:
@@ -73,15 +64,29 @@ def main(source_name: str) -> None:
     _setup_logging(app_cfg["app"]["log_level"])
 
     sources_path = ROOT_DIR / "config" / "sources.json"
-    module_name = MODULE_NAME or _derive_module_name(source_name)
+    module_name = _derive_module_name(source_name)
 
     removed = _remove_source_entry(sources_path, source_name)
     deleted = _delete_crawler_stub(module_name)
 
+    db_path = get_data_path(app_cfg["database"]["path"])
+    conn = connect(db_path)
+    init_db(conn)
+    drop_source_table(conn, source_name)
+    delete_registry_row(conn, source_name)
+    conn.close()
+
     logging.info("Removed source entry: %s", removed)
     logging.info("Deleted crawler file: %s", deleted)
+    logging.info("Dropped DB table + registry row for: %s", source_name)
     logging.info("Updated: %s", sources_path)
 
 
 if __name__ == "__main__":
+    # =========================
+    # CONFIG (edit these)
+    # =========================
+    SOURCE_NAME = "craigslist_realestate"  # e.g., "imdb_movies"
+    # =========================
+
     main(SOURCE_NAME)

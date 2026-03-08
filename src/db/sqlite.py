@@ -172,3 +172,14 @@ def get_last_crawled_at(conn: sqlite3.Connection, source_name: str) -> Optional[
         (source_name,),
     ).fetchone()
     return row[0] if row else None
+
+
+def drop_source_table(conn: sqlite3.Connection, source_name: str) -> None:
+    safe_name = _sanitize_table_name(source_name)
+    conn.execute(f'DROP TABLE IF EXISTS "{safe_name}";')
+    conn.commit()
+
+
+def delete_registry_row(conn: sqlite3.Connection, source_name: str) -> None:
+    conn.execute("DELETE FROM source_registry WHERE source_name = ?;", (source_name,))
+    conn.commit()

@@ -100,11 +100,7 @@ def main() -> None:
             continue
 
         crawler_cls = load_crawler(source["crawler"])
-        crawler = crawler_cls(
-            name=source["name"],
-            item_type=source["item_type"],
-            seed_urls=source.get("seed_urls", []),
-        )
+        crawler = crawler_cls(name=source["name"])
 
         prior = get_last_crawled_at(conn, source["name"])
         logging.info("%sRunning crawler:%s %s", _C.CYAN, _C.RESET, source["name"])

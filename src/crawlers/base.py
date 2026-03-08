@@ -8,22 +8,18 @@ from typing import Dict, Iterable, Any
 @dataclass
 class CrawlItem:
     source: str
-    item_type: str
     payload: Dict[str, Any]
 
 
 class BaseCrawler:
-    def __init__(self, name: str, item_type: str, seed_urls: Iterable[str] | None = None):
+    def __init__(self, name: str):
         self.name = name
-        self.item_type = item_type
-        self.seed_urls = list(seed_urls or [])
 
     def run(self) -> Iterable[CrawlItem]:
         """Return an iterable of CrawlItem. Override in subclasses."""
         raise NotImplementedError
 
     def stub_run(self) -> Iterable[CrawlItem]:
-        """Base loop placeholder: print seed URLs, return no items."""
-        for url in self.seed_urls:
-            print(f"[{self.name}] seed_url: {url}")
+        """Base loop placeholder: print source name, return no items."""
+        print(f"[{self.name}] stub_run")
         return []
