@@ -1,0 +1,28 @@
+"""Geography helpers."""
+from __future__ import annotations
+
+from typing import List
+
+from db.cities_can import cities_can
+from db.cities_us import cities_us
+
+
+def _extract_city_names(rows: List[dict]) -> List[str]:
+    names: List[str] = []
+    for row in rows:
+        name = row.get("city", "").strip()
+        if name:
+            names.append(name)
+    return names
+
+
+def get_cities_can() -> List[str]:
+    return _extract_city_names(cities_can)
+
+
+def get_cities_us() -> List[str]:
+    return _extract_city_names(cities_us)
+
+
+def get_all_cities() -> List[str]:
+    return get_cities_us() + get_cities_can()

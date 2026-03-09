@@ -69,7 +69,7 @@ def _remove_source_entry(sources_path: Path, source_name: str) -> bool:
     return True
 
 
-def _write_crawler_stub(module_name: str, class_name: str) -> None:
+def _write_crawler_stub(source_name: str, module_name: str, class_name: str) -> None:
     path = _crawler_file_path(module_name)
     if path.exists():
         raise FileExistsError(f"Crawler file already exists: {path}")
@@ -78,11 +78,21 @@ def _write_crawler_stub(module_name: str, class_name: str) -> None:
             '"""Crawler stub."""\n'
             "from __future__ import annotations\n\n"
             "from typing import Iterable\n\n"
-            "from crawlers.base import BaseCrawler, CrawlItem\n\n\n"
+            "try:\n"
+            "    from crawlers.base import BaseCrawler, CrawlItem\n"
+            "except ModuleNotFoundError:  # allow running directly from this folder\n"
+            "    import sys\n"
+            "    from pathlib import Path\n\n"
+            "    ROOT_DIR = Path(__file__).resolve().parents[2]\n"
+            "    sys.path.insert(0, str(ROOT_DIR / \"src\"))\n"
+            "    from crawlers.base import BaseCrawler, CrawlItem\n\n\n"
             f"class {class_name}(BaseCrawler):\n"
             "    def run(self) -> Iterable[CrawlItem]:\n"
             "        # Base template: each source owns its crawler file.\n"
             "        return self.stub_run()\n"
+            "\n\n"
+            "if __name__ == \"__main__\":\n"
+            f"    {class_name}(name=\"{source_name}\").run()\n"
         ),
         encoding="utf-8",
     )
@@ -105,7 +115,7 @@ def main(source_name: str, enabled: bool) -> None:
     module_name = _derive_module_name(source_name)
     class_name = _derive_class_name(source_name)
 
-    _write_crawler_stub(module_name, class_name)
+    _write_crawler_stub(source_name, module_name, class_name)
     entry = {
         "name": source_name,
         "enabled": enabled,
