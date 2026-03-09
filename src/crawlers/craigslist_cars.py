@@ -8,6 +8,7 @@ from hyperSel import instance, parser, log
 try:
     from crawlers.base import BaseCrawler, CrawlItem
     from utils.geo import get_all_cities
+    from jsonify_logic.craigslist_cars import CraigslistCarsJsonify
 except ModuleNotFoundError:  # allow running directly from this folder
     import sys
     from pathlib import Path
@@ -16,6 +17,7 @@ except ModuleNotFoundError:  # allow running directly from this folder
     sys.path.insert(0, str(ROOT_DIR / "src"))
     from crawlers.base import BaseCrawler, CrawlItem
     from utils.geo import get_all_cities
+    from jsonify_logic.craigslist_cars import CraigslistCarsJsonify
 
 
 class CraigslistCarsCrawler(BaseCrawler):
@@ -73,6 +75,10 @@ class CraigslistCarsCrawler(BaseCrawler):
             if idx == 0:
                 input("holding here")
             input("hit end of cities")
+
+            jsonifier = CraigslistCarsJsonify(self.name)
+            json_data = jsonifier.to_json(total_data)
+            print(f"[{self.name}] jsonified items: {len(json_data)}")
             
         return self.stub_run()
 

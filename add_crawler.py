@@ -36,8 +36,21 @@ def _crawler_file_path(module_name: str) -> Path:
     return SRC_DIR / "crawlers" / f"{module_name}.py"
 
 
+def _jsonify_file_path(module_name: str) -> Path:
+    return SRC_DIR / "jsonify_logic" / f"{module_name}.py"
+
+
+def _demo_data_file_path(module_name: str) -> Path:
+    return SRC_DIR / "demo_data" / f"{module_name}.py"
+
+
 def _crawler_dotted_path(module_name: str, class_name: str) -> str:
     return f"crawlers.{module_name}.{class_name}"
+
+
+def _jsonify_class_name(source_name: str) -> str:
+    parts = source_name.replace("-", "_").split("_")
+    return "".join(p.capitalize() for p in parts) + "Jsonify"
 
 
 def _load_sources(path: Path) -> dict:
@@ -56,17 +69,6 @@ def _add_source_entry(sources_path: Path, entry: dict) -> None:
     sources.append(entry)
     data["sources"] = sources
     _write_sources(sources_path, data)
-
-
-def _remove_source_entry(sources_path: Path, source_name: str) -> bool:
-    data = _load_sources(sources_path)
-    sources = data.get("sources", [])
-    new_sources = [s for s in sources if s.get("name") != source_name]
-    if len(new_sources) == len(sources):
-        return False
-    data["sources"] = new_sources
-    _write_sources(sources_path, data)
-    return True
 
 
 def _write_crawler_stub(source_name: str, module_name: str, class_name: str) -> None:
@@ -98,12 +100,38 @@ def _write_crawler_stub(source_name: str, module_name: str, class_name: str) -> 
     )
 
 
-def _delete_crawler_stub(module_name: str) -> bool:
-    path = _crawler_file_path(module_name)
-    if not path.exists():
-        return False
-    path.unlink()
-    return True
+def _write_jsonify_stub(source_name: str, module_name: str, class_name: str) -> None:
+    path = _jsonify_file_path(module_name)
+    if path.exists():
+        raise FileExistsError(f"Jsonify file already exists: {path}")
+    path.write_text(
+        (
+            f'"""Jsonify stub for {source_name}.\"\"\"\n'
+            "from __future__ import annotations\n\n"
+            "from typing import Any, List\n\n"
+            "from jsonify_logic.base import Jsonify\n\n\n"
+            f"class {class_name}(Jsonify):\n"
+            "    def to_json(self, data: Any) -> List[dict]:\n"
+            "        # TODO: convert list-of-lists into list of dicts.\n"
+            "        return data if isinstance(data, list) else []\n"
+        ),
+        encoding="utf-8",
+    )
+
+
+def _write_demo_data_stub(source_name: str, module_name: str) -> None:
+    path = _demo_data_file_path(module_name)
+    if path.exists():
+        raise FileExistsError(f"Demo data file already exists: {path}")
+    path.write_text(
+        (
+            f'"""Demo data for {source_name}.\"\"\"\n\n'
+            "DEMO_DATA = [\n"
+            "    # [\"example\", 123],\n"
+            "]\n"
+        ),
+        encoding="utf-8",
+    )
 
 
 def main(source_name: str, enabled: bool) -> None:
@@ -114,8 +142,11 @@ def main(source_name: str, enabled: bool) -> None:
     sources_path = ROOT_DIR / "config" / "sources.json"
     module_name = _derive_module_name(source_name)
     class_name = _derive_class_name(source_name)
+    jsonify_class_name = _jsonify_class_name(source_name)
 
     _write_crawler_stub(source_name, module_name, class_name)
+    _write_jsonify_stub(source_name, module_name, jsonify_class_name)
+    _write_demo_data_stub(source_name, module_name)
     entry = {
         "name": source_name,
         "enabled": enabled,

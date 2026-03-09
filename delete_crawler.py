@@ -30,6 +30,12 @@ def _derive_module_name(source_name: str) -> str:
 def _crawler_file_path(module_name: str) -> Path:
     return SRC_DIR / "crawlers" / f"{module_name}.py"
 
+def _jsonify_file_path(module_name: str) -> Path:
+    return SRC_DIR / "jsonify_logic" / f"{module_name}.py"
+
+def _demo_data_file_path(module_name: str) -> Path:
+    return SRC_DIR / "demo_data" / f"{module_name}.py"
+
 
 def _load_sources(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -58,6 +64,22 @@ def _delete_crawler_stub(module_name: str) -> bool:
     return True
 
 
+def _delete_jsonify_stub(module_name: str) -> bool:
+    path = _jsonify_file_path(module_name)
+    if not path.exists():
+        return False
+    path.unlink()
+    return True
+
+
+def _delete_demo_data_stub(module_name: str) -> bool:
+    path = _demo_data_file_path(module_name)
+    if not path.exists():
+        return False
+    path.unlink()
+    return True
+
+
 def main(source_name: str) -> None:
     load_dotenv()
     app_cfg = load_json_config("app.json")
@@ -68,6 +90,8 @@ def main(source_name: str) -> None:
 
     removed = _remove_source_entry(sources_path, source_name)
     deleted = _delete_crawler_stub(module_name)
+    deleted_jsonify = _delete_jsonify_stub(module_name)
+    deleted_demo = _delete_demo_data_stub(module_name)
 
     db_path = get_data_path(app_cfg["database"]["path"])
     conn = connect(db_path)
@@ -78,6 +102,8 @@ def main(source_name: str) -> None:
 
     logging.info("Removed source entry: %s", removed)
     logging.info("Deleted crawler file: %s", deleted)
+    logging.info("Deleted jsonify file: %s", deleted_jsonify)
+    logging.info("Deleted demo data file: %s", deleted_demo)
     logging.info("Dropped DB table + registry row for: %s", source_name)
     logging.info("Updated: %s", sources_path)
 
