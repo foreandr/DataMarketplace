@@ -32,3 +32,4 @@ output/
 # SQLite
 *.db
 *.sqlite
+src/crawlers/logs

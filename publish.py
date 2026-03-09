@@ -5,7 +5,17 @@ from pathlib import Path
 
 
 SPEC_PATH = Path("config/api_spec.example.json")
-MARKETPLACES = ["apilayer", "rapidapi", "zyla_api_hub"]
+MARKETPLACES = [
+    "rapidapi",
+    "apify",
+    "zyla_api_hub",
+    "apilayer",
+    "aws_data_exchange",
+    "snowflake_marketplace",
+    "datarade",
+    "bright_data_marketplace",
+    "oxylabs_marketplace",
+]
 
 
 def main() -> None:
