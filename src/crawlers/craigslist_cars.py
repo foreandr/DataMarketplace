@@ -5,7 +5,7 @@ from typing import Iterable, List, Any
 import time
 import json
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime
 from hyperSel import instance, parser, log
 
 try:
@@ -140,7 +140,7 @@ class CraigslistCarsCrawler(BaseCrawler):
         return root_dir / "data" / f"{self.name}.sqlite"
 
     def _utc_now_iso(self) -> str:
-        return datetime.now(timezone.utc).isoformat()
+        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 if __name__ == "__main__":

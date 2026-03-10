@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 import sqlite3
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 
@@ -52,9 +52,9 @@ def _fetched_at_metrics(conn: sqlite3.Connection, table: str) -> str | None:
     if not ts_col:
         return None
 
-    now = datetime.now(timezone.utc)
-    one_hour = (now - timedelta(hours=1)).isoformat()
-    one_day = (now - timedelta(hours=24)).isoformat()
+    now = datetime.now()
+    one_hour = (now - timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S")
+    one_day = (now - timedelta(hours=24)).strftime("%Y-%m-%d %H:%M:%S")
 
     try:
         last_1h = conn.execute(
@@ -72,11 +72,11 @@ def _fetched_at_metrics(conn: sqlite3.Connection, table: str) -> str | None:
 
 def _report_db(path: Path) -> None:
     size = path.stat().st_size
-    mtime = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc).isoformat()
+    mtime = datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S")
     print(_rule(path.name))
     print(f"{C.CYAN}Path:{C.RESET} {path}")
     print(f"{C.CYAN}Size:{C.RESET} {_fmt_bytes(size)}")
-    print(f"{C.CYAN}Modified (UTC):{C.RESET} {mtime}")
+    print(f"{C.CYAN}Modified:{C.RESET} {mtime}")
 
     conn = sqlite3.connect(str(path))
     tables = conn.execute(

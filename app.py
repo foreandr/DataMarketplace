@@ -1,32 +1,25 @@
 from __future__ import annotations
 
 import json
-import logging
-from datetime import datetime
+import os
+import sqlite3
+import sys
 from importlib import import_module
 from pathlib import Path
 from typing import Any
 
-import sqlite3
+from flask import Flask, jsonify, request
+from dotenv import load_dotenv
 
 
 ROOT_DIR = Path(__file__).resolve().parent
-LOG_DIR = ROOT_DIR / "logs" / "queries"
+SRC_DIR = ROOT_DIR / "src"
+sys.path.insert(0, str(SRC_DIR))
+load_dotenv()
+DATA_DIR = ROOT_DIR / "data"
 DEFAULT_LIMIT = 100
 
-
-def _setup_logging() -> None:
-    LOG_DIR.mkdir(parents=True, exist_ok=True)
-    log_path = LOG_DIR / f"queries_{datetime.now().strftime('%Y-%m-%d')}.log"
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s | %(levelname)s | %(message)s",
-        handlers=[logging.FileHandler(log_path, encoding="utf-8"), logging.StreamHandler()],
-    )
-
-
-def _load_query(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+app = Flask(__name__)
 
 
 def _load_schema(schema_module: str):
@@ -54,7 +47,6 @@ def _coerce_value(field_type: str, value: Any) -> Any:
         if isinstance(value, bool) or not isinstance(value, (int, float)):
             raise TypeError("Expected REAL")
         return float(value)
-    # TEXT / BLOB fallthrough
     if not isinstance(value, str):
         raise TypeError("Expected TEXT")
     return value
@@ -101,49 +93,62 @@ def _build_order_by(schema, order_by: list[dict]) -> str:
     return " ORDER BY " + ", ".join(parts)
 
 
-def main() -> None:
-    _setup_logging()
-    query_path = ROOT_DIR / "config" / "query.json"
-    if not query_path.exists():
-        raise FileNotFoundError(f"Query config not found: {query_path}")
+@app.get("/health")
+def health():
+    return jsonify({"status": "ok"})
 
-    cfg = _load_query(query_path)
-    db_path = Path(cfg["db_path"])
-    schema_name = cfg["schema"]
-    select_fields = cfg.get("select", ["*"])
-    where = cfg.get("where", [])
-    order_by = cfg.get("order_by", [])
 
-    schema = _load_schema(schema_name)
-    field_types = _field_type_map(schema)
+@app.get("/schemas")
+def list_schemas():
+    schema_files = sorted((ROOT_DIR / "src" / "schemas").glob("*.py"))
+    names = [p.stem for p in schema_files if p.stem != "__init__"]
+    return jsonify({"schemas": names})
 
-    if select_fields != ["*"]:
-        for f in select_fields:
-            _validate_field(schema, f)
-        select_sql = ", ".join(select_fields)
-    else:
-        select_sql = ", ".join(schema.field_names())
 
-    where_sql, params = _build_where(schema, where)
-    order_sql = _build_order_by(schema, order_by)
+@app.post("/query")
+def query():
+    try:
+        payload = request.get_json(force=True)
+        db_path = Path(payload["db_path"])
+        schema_name = payload["schema"]
+        select_fields = payload.get("select", ["*"])
+        where = payload.get("where", [])
+        order_by = payload.get("order_by", [])
 
-    sql = f"SELECT {select_sql} FROM {schema.table}{where_sql}{order_sql} LIMIT {DEFAULT_LIMIT};"
-    logging.info("DB: %s", db_path)
-    logging.info("SQL: %s", sql)
-    logging.info("Params: %s", params)
+        schema = _load_schema(schema_name)
+        if select_fields != ["*"]:
+            for f in select_fields:
+                _validate_field(schema, f)
+            select_sql = ", ".join(select_fields)
+        else:
+            select_sql = ", ".join(schema.field_names())
 
-    conn = sqlite3.connect(str(db_path))
-    cur = conn.execute(sql, params)
-    rows = cur.fetchall()
-    conn.close()
+        where_sql, params = _build_where(schema, where)
+        order_sql = _build_order_by(schema, order_by)
 
-    logging.info("Rows returned: %s", len(rows))
-    for row in rows[:10]:
-        logging.info("Row: %s", row)
+        sql = f"SELECT {select_sql} FROM {schema.table}{where_sql}{order_sql} LIMIT {DEFAULT_LIMIT};"
+
+        conn = sqlite3.connect(str(db_path))
+        cur = conn.execute(sql, params)
+        rows = cur.fetchall()
+        col_names = [d[0] for d in cur.description] if cur.description else []
+        conn.close()
+
+        return jsonify(
+            {
+                "sql": sql,
+                "params": params,
+                "rows": [dict(zip(col_names, r)) for r in rows],
+                "row_count": len(rows),
+                "limit": DEFAULT_LIMIT,
+            }
+        )
+    except (KeyError, ValueError, TypeError) as exc:
+        return jsonify({"error": str(exc)}), 400
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except (ValueError, TypeError) as exc:
-        print(f"Query error: {exc}")
+    host = os.environ["API_HOST"]
+    port = int(os.environ["API_PORT"])
+    debug = os.environ["API_DEBUG"].lower() in {"1", "true", "yes", "on"}
+    app.run(host=host, port=port, debug=debug)
