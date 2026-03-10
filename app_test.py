@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 import os
 import urllib.request
+from datetime import datetime
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -47,6 +49,18 @@ def main() -> None:
     }
     code, body = _post("/query", payload)
     print("POST /query:", code, body)
+
+    if os.environ.get("LOG_TEST_DATA", "").lower() in {"1", "true", "yes", "on"}:
+        log_dir = Path("logs") / "test"
+        log_dir.mkdir(parents=True, exist_ok=True)
+        stamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        out_path = log_dir / f"test_data_{stamp}.json"
+        try:
+            parsed = json.loads(body)
+            out_path.write_text(json.dumps(parsed, indent=2), encoding="utf-8")
+        except Exception:
+            out_path.write_text(body, encoding="utf-8")
+        print("Wrote test data to:", out_path)
 
 
 if __name__ == "__main__":

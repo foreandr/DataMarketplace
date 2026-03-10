@@ -31,3 +31,4 @@ output/
 # SQLite
 *.db
 src/crawlers/logs
+logs/test/*.json
