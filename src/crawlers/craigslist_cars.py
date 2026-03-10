@@ -24,7 +24,7 @@ class CraigslistCarsCrawler(BaseCrawler):
     def run(self) -> Iterable[CrawlItem]:
         browser = instance.Browser(
             driver_choice='selenium',
-            headless=False,
+            headless=True,
             zoom_level=100
         )
         browser.init_browser()
@@ -33,15 +33,12 @@ class CraigslistCarsCrawler(BaseCrawler):
         for idx, city in enumerate(get_all_cities()):
             print(f"[{self.name}] city: {city}")
             total_data = self._process_city(browser, city)
-
-            log.log_function(total_data)
-
             jsonifier = CraigslistCarsJsonify(self.name)
-            json_data = jsonifier.to_json(total_data)
-            print(f"[{self.name}] jsonified items: {len(json_data)}")
-            print(3)
+            clean_data = jsonifier.run_analysis(total_data, print_samples=True)
+            input("hit data get")
+            
             if idx == 0:
-                input("holding here")
+                input("holding here - check the random samples above")
         
         input("hit end of cities")
         return self.stub_run()
