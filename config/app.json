@@ -3,12 +3,5 @@
     "name": "DataMarketplace",
     "log_level": "INFO",
     "timezone": "America/Toronto"
-  },
-  "database": {
-    "type": "sqlite",
-    "path": "data/datamarketplace.sqlite"
-  },
-  "published_registry": {
-    "path": "data/published.csv"
   }
 }

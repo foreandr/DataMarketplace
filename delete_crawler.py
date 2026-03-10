@@ -12,8 +12,7 @@ ROOT_DIR = Path(__file__).resolve().parent
 SRC_DIR = ROOT_DIR / "src"
 sys.path.insert(0, str(SRC_DIR))
 
-from utils.config import load_json_config, get_data_path
-from db.sqlite import connect, init_db, delete_registry_row
+from utils.config import load_json_config
 
 
 def _setup_logging(level: str) -> None:
@@ -117,11 +116,6 @@ def main(source_name: str) -> None:
     deleted_demo = _delete_demo_data_stub(module_name)
     deleted_schema = _delete_schema_stub(module_name)
 
-    db_path = get_data_path(app_cfg["database"]["path"])
-    conn = connect(db_path)
-    init_db(conn)
-    delete_registry_row(conn, source_name)
-    conn.close()
     deleted_db = _delete_crawler_db(source_name)
 
     logging.info("Removed source entry: %s", removed)
@@ -130,7 +124,6 @@ def main(source_name: str) -> None:
     logging.info("Deleted demo data file: %s", deleted_demo)
     logging.info("Deleted schema file: %s", deleted_schema)
     logging.info("Deleted crawler DB: %s", deleted_db)
-    logging.info("Deleted registry row for: %s", source_name)
     logging.info("Updated: %s", sources_path)
 
 
