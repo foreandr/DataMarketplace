@@ -3,12 +3,16 @@ from __future__ import annotations
 
 from typing import Iterable, List, Any
 import time
+import json
+import sqlite3
+from datetime import datetime, timezone
 from hyperSel import instance, parser, log
 
 try:
     from crawlers.base import BaseCrawler, CrawlItem
     from utils.geo import get_all_cities
     from jsonify_logic.craigslist_cars import CraigslistCarsJsonify
+    from schemas.craigslist_cars import SCHEMA
 except ModuleNotFoundError:
     import sys
     from pathlib import Path
@@ -18,6 +22,7 @@ except ModuleNotFoundError:
     from crawlers.base import BaseCrawler, CrawlItem
     from utils.geo import get_all_cities
     from jsonify_logic.craigslist_cars import CraigslistCarsJsonify
+    from schemas.craigslist_cars import SCHEMA
 
 
 class CraigslistCarsCrawler(BaseCrawler):
@@ -35,10 +40,9 @@ class CraigslistCarsCrawler(BaseCrawler):
             total_data = self._process_city(browser, city)
             jsonifier = CraigslistCarsJsonify(self.name)
             clean_data = jsonifier.run_analysis(total_data, print_samples=True)
-            input("hit data get")
-            
-            if idx == 0:
-                input("holding here - check the random samples above")
+            self._store_clean_data(clean_data)
+
+            break
         
         input("hit end of cities")
         return self.stub_run()
@@ -91,6 +95,47 @@ class CraigslistCarsCrawler(BaseCrawler):
             break
             
         return total_data
+
+    def _store_clean_data(self, clean_data: Any) -> None:
+        # Store cleaned data in a crawler-specific SQLite DB.
+        db_path = self._crawler_db_path()
+        print(f"[{self.name}] DB path: {db_path}")
+        conn = sqlite3.connect(str(db_path))
+        conn.execute(SCHEMA.create_table_sql())
+        print(f"[{self.name}] Ensured table: {SCHEMA.table}")
+        for stmt in SCHEMA.create_indexes_sql():
+            conn.execute(stmt)
+        if SCHEMA.create_indexes_sql():
+            print(f"[{self.name}] Ensured indexes: {len(SCHEMA.create_indexes_sql())}")
+
+        rows = []
+        if isinstance(clean_data, list):
+            for item in clean_data:
+                if not isinstance(item, dict):
+                    continue
+                row = [item.get(k) for k in SCHEMA.field_names()]
+                rows.append(row)
+        if rows:
+            placeholders = ", ".join(["?"] * len(SCHEMA.field_names()))
+            columns = ", ".join(SCHEMA.field_names())
+            conn.executemany(
+                f"INSERT OR REPLACE INTO items ({columns}) VALUES ({placeholders});",
+                rows,
+            )
+            print(f"[{self.name}] Inserted rows: {len(rows)}")
+        else:
+            print(f"[{self.name}] Inserted rows: 0")
+        conn.commit()
+        conn.close()
+
+    def _crawler_db_path(self) -> "Path":
+        from pathlib import Path
+
+        root_dir = Path(__file__).resolve().parents[2]
+        return root_dir / "data" / f"{self.name}.sqlite"
+
+    def _utc_now_iso(self) -> str:
+        return datetime.now(timezone.utc).isoformat()
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import sqlite3
 import sys
 from pathlib import Path
 
@@ -12,8 +13,7 @@ ROOT_DIR = Path(__file__).resolve().parent
 SRC_DIR = ROOT_DIR / "src"
 sys.path.insert(0, str(SRC_DIR))
 
-from utils.config import load_json_config, get_data_path
-from db.sqlite import connect, init_db, ensure_source_table
+from utils.config import load_json_config
 
 
 def _setup_logging(level: str) -> None:
@@ -42,6 +42,9 @@ def _jsonify_file_path(module_name: str) -> Path:
 
 def _demo_data_file_path(module_name: str) -> Path:
     return SRC_DIR / "demo_data" / f"{module_name}.py"
+
+def _schema_file_path(module_name: str) -> Path:
+    return SRC_DIR / "schemas" / f"{module_name}.py"
 
 
 def _crawler_dotted_path(module_name: str, class_name: str) -> str:
@@ -134,6 +137,46 @@ def _write_demo_data_stub(source_name: str, module_name: str) -> None:
     )
 
 
+def _write_schema_stub(source_name: str, module_name: str) -> None:
+    path = _schema_file_path(module_name)
+    if path.exists():
+        raise FileExistsError(f"Schema file already exists: {path}")
+    path.write_text(
+        (
+            f'"""Schema stub for {source_name}.\"\"\"\n'
+            "from __future__ import annotations\n\n"
+            "from schemas.base import Field, Schema\n\n\n"
+            "SCHEMA = Schema(\n"
+            "    table=\"items\",\n"
+            "    fields=[\n"
+            "        Field(\"id\", \"TEXT\", primary=True),\n"
+            "    ],\n"
+            ")\n"
+        ),
+        encoding="utf-8",
+    )
+
+
+def _crawler_db_path(source_name: str) -> Path:
+    return ROOT_DIR / "data" / f"{source_name}.sqlite"
+
+
+def _init_crawler_db(path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(path))
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            payload_json TEXT NOT NULL,
+            fetched_at TEXT NOT NULL
+        );
+        """
+    )
+    conn.commit()
+    conn.close()
+
+
 def main(source_name: str, enabled: bool) -> None:
     load_dotenv()
     app_cfg = load_json_config("app.json")
@@ -147,6 +190,7 @@ def main(source_name: str, enabled: bool) -> None:
     _write_crawler_stub(source_name, module_name, class_name)
     _write_jsonify_stub(source_name, module_name, jsonify_class_name)
     _write_demo_data_stub(source_name, module_name)
+    _write_schema_stub(source_name, module_name)
     entry = {
         "name": source_name,
         "enabled": enabled,
@@ -155,11 +199,7 @@ def main(source_name: str, enabled: bool) -> None:
     }
     _add_source_entry(sources_path, entry)
 
-    db_path = get_data_path(app_cfg["database"]["path"])
-    conn = connect(db_path)
-    init_db(conn)
-    ensure_source_table(conn, source_name)
-    conn.close()
+    _init_crawler_db(_crawler_db_path(source_name))
 
     logging.info("Added crawler: %s", source_name)
     logging.info("Module: %s | Class: %s", module_name, class_name)

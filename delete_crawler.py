@@ -13,7 +13,7 @@ SRC_DIR = ROOT_DIR / "src"
 sys.path.insert(0, str(SRC_DIR))
 
 from utils.config import load_json_config, get_data_path
-from db.sqlite import connect, init_db, drop_source_table, delete_registry_row
+from db.sqlite import connect, init_db, delete_registry_row
 
 
 def _setup_logging(level: str) -> None:
@@ -35,6 +35,9 @@ def _jsonify_file_path(module_name: str) -> Path:
 
 def _demo_data_file_path(module_name: str) -> Path:
     return SRC_DIR / "demo_data" / f"{module_name}.py"
+
+def _schema_file_path(module_name: str) -> Path:
+    return SRC_DIR / "schemas" / f"{module_name}.py"
 
 
 def _load_sources(path: Path) -> dict:
@@ -80,6 +83,26 @@ def _delete_demo_data_stub(module_name: str) -> bool:
     return True
 
 
+def _delete_schema_stub(module_name: str) -> bool:
+    path = _schema_file_path(module_name)
+    if not path.exists():
+        return False
+    path.unlink()
+    return True
+
+
+def _crawler_db_path(source_name: str) -> Path:
+    return ROOT_DIR / "data" / f"{source_name}.sqlite"
+
+
+def _delete_crawler_db(source_name: str) -> bool:
+    path = _crawler_db_path(source_name)
+    if not path.exists():
+        return False
+    path.unlink()
+    return True
+
+
 def main(source_name: str) -> None:
     load_dotenv()
     app_cfg = load_json_config("app.json")
@@ -92,19 +115,22 @@ def main(source_name: str) -> None:
     deleted = _delete_crawler_stub(module_name)
     deleted_jsonify = _delete_jsonify_stub(module_name)
     deleted_demo = _delete_demo_data_stub(module_name)
+    deleted_schema = _delete_schema_stub(module_name)
 
     db_path = get_data_path(app_cfg["database"]["path"])
     conn = connect(db_path)
     init_db(conn)
-    drop_source_table(conn, source_name)
     delete_registry_row(conn, source_name)
     conn.close()
+    deleted_db = _delete_crawler_db(source_name)
 
     logging.info("Removed source entry: %s", removed)
     logging.info("Deleted crawler file: %s", deleted)
     logging.info("Deleted jsonify file: %s", deleted_jsonify)
     logging.info("Deleted demo data file: %s", deleted_demo)
-    logging.info("Dropped DB table + registry row for: %s", source_name)
+    logging.info("Deleted schema file: %s", deleted_schema)
+    logging.info("Deleted crawler DB: %s", deleted_db)
+    logging.info("Deleted registry row for: %s", source_name)
     logging.info("Updated: %s", sources_path)
 
 
