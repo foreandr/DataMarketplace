@@ -7,22 +7,26 @@ def flatten_file(file_path: str):
         print(f"File {file_path} not found.")
         return
 
-    # Read the content
     content = path.read_text(encoding='utf-8')
 
-    # This regex looks for newlines and replaces them with a space
-    # but you can also just use .replace('\n', ' ') if you want it all on one line
-    cleaned_content = content.replace('\n', ' ')
+    # 1. Fix the internal strings: 'string'\n'string' -> 'string', 'string'
+    # We look for a quote, a newline (plus potential whitespace), and another quote
+    content = re.sub(r"'\s*\n\s*'", "', '", content)
 
-    # Optional: If you want to keep the ['id', 'name'...] structure 
-    # but just fix the internal breaks, we can fix the spacing:
-    cleaned_content = re.sub(r'\s+', ' ', cleaned_content)
+    # 2. Fix the list boundaries: ]\n[ -> ], [
+    content = re.sub(r"\]\s*\n\s*\[", "], [", content)
 
-    # Write to a new file to be safe
-    output_path = path.parent / f"cleaned_{path.name}"
-    output_path.write_text(cleaned_content, encoding='utf-8')
+    # 3. Clean up any remaining internal newlines (like in 'East Brunswick\nNJ')
+    # We replace newlines that are inside quotes with a space
+    content = content.replace('\n', ' ')
+
+    # 4. Collapse extra whitespace
+    content = re.sub(r'\s+', ' ', content)
+
+    output_path = path.parent / f"fixed_{path.name}"
+    output_path.write_text(content, encoding='utf-8')
     
-    print(f"Done! Cleaned file saved to: {output_path}")
+    print(f"Done! Valid Python data saved to: {output_path}")
 
 if __name__ == "__main__":
     # Put your path here
