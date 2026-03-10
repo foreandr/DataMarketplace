@@ -7,12 +7,14 @@ import random
 
 try:
     from jsonify_logic.base import Jsonify
+    from schemas.craigslist_cars import SCHEMA
 except ModuleNotFoundError:
     import sys
     from pathlib import Path
     ROOT_DIR = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(ROOT_DIR / "src"))
     from jsonify_logic.base import Jsonify
+    from schemas.craigslist_cars import SCHEMA
 
 from demo_data.craigslist_cars import DEMO_DATA
 data_to_process = DEMO_DATA
@@ -139,8 +141,9 @@ class CraigslistCarsJsonify(Jsonify):
                 "url": url,
                 "image_url": next((x for x in item if isinstance(x, str) and any(ext in x.lower() for ext in [".png", ".jpg", ".jpeg", "images"])), None)
             }
-            
-            self.success_data.append(record)
+
+            ordered = {k: record.get(k) for k in SCHEMA.field_names()}
+            self.success_data.append(ordered)
             self.processed_count += 1
 
         return self.success_data
