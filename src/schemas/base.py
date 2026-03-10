@@ -12,6 +12,7 @@ class Field:
     primary: bool = False
     indexed: bool = False
     unique: bool = False
+    default_sql: str | None = None
 
 
 class Schema:
@@ -27,6 +28,8 @@ class Schema:
                 col += " PRIMARY KEY"
             if f.unique:
                 col += " UNIQUE"
+            if f.default_sql:
+                col += f" DEFAULT {f.default_sql}"
             cols.append(col)
         cols_sql = ",\n            ".join(cols)
         return f"""

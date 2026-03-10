@@ -44,7 +44,12 @@ def _table_row_count(conn: sqlite3.Connection, table: str) -> int:
 
 def _fetched_at_metrics(conn: sqlite3.Connection, table: str) -> str | None:
     cols = _table_columns(conn, table)
-    if "fetched_at" not in cols:
+    ts_col = None
+    if "crawled_at" in cols:
+        ts_col = "crawled_at"
+    elif "fetched_at" in cols:
+        ts_col = "fetched_at"
+    if not ts_col:
         return None
 
     now = datetime.now(timezone.utc)
@@ -53,14 +58,14 @@ def _fetched_at_metrics(conn: sqlite3.Connection, table: str) -> str | None:
 
     try:
         last_1h = conn.execute(
-            f"SELECT COUNT(*) FROM {table} WHERE fetched_at >= ?;",
+            f"SELECT COUNT(*) FROM {table} WHERE {ts_col} >= ?;",
             (one_hour,),
         ).fetchone()[0]
         last_24h = conn.execute(
-            f"SELECT COUNT(*) FROM {table} WHERE fetched_at >= ?;",
+            f"SELECT COUNT(*) FROM {table} WHERE {ts_col} >= ?;",
             (one_day,),
         ).fetchone()[0]
-        return f"rows_last_1h={last_1h} | rows_last_24h={last_24h}"
+        return f"rows_last_1h={last_1h} | rows_last_24h={last_24h} | ts_col={ts_col}"
     except Exception:
         return None
 

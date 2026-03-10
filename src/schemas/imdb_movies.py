@@ -9,5 +9,6 @@ SCHEMA = Schema(
     fields=[
         Field("id", "TEXT", primary=True),
         Field("title", "TEXT", indexed=True),
+        Field("crawled_at", "TEXT", indexed=True, default_sql="CURRENT_TIMESTAMP"),
     ],
 )

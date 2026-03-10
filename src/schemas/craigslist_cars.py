@@ -16,5 +16,6 @@ SCHEMA = Schema(
         Field("price", "INTEGER", indexed=True),
         Field("url", "TEXT", unique=True, indexed=True),
         Field("image_url", "TEXT"),
+        Field("crawled_at", "TEXT", indexed=True, default_sql="CURRENT_TIMESTAMP"),
     ],
 )
