@@ -40,12 +40,12 @@ class CraigslistCarsCrawler(BaseCrawler):
                 print(f"[{self.name}] city: {city}")
                 total_data = self._process_city(browser, city)
                 jsonifier = CraigslistCarsJsonify(self.name)
-                clean_data = jsonifier.run_analysis(total_data, print_samples=True)
+                clean_data = jsonifier.run_analysis(total_data, print_samples=False)
                 self._store_clean_data(clean_data)
             except Exception as e:
                 print("CITY FAILED FOR SOME REASON:", city)
                 continue
-            
+
         browser.close_browser()
         return self.stub_run()
 
