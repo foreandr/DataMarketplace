@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import csv
 import json
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, Set, Tuple
 
@@ -51,4 +51,4 @@ def record_published(
 
 
 def _utc_now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")

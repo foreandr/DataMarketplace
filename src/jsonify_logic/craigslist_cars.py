@@ -53,7 +53,10 @@ class CraigslistCarsJsonify(Jsonify):
         multiplier = 1000 if 'k' in val.lower() else 1
         digits = re.sub(r'[^\d.]', '', val)
         try:
-            return int(float(digits) * multiplier)
+            miles = int(float(digits) * multiplier)
+            if miles > 500_000:
+                return None
+            return miles
         except:
             return None
 
@@ -112,7 +115,7 @@ class CraigslistCarsJsonify(Jsonify):
             title = str(item[1]) if len(item) > 1 else ""
             year = self._extract_year(title)
             
-            region = str(item[3]) if len(item) > 3 else "Unknown"
+            # region removed
 
             # Filter Logic
             if price is None:
@@ -134,7 +137,6 @@ class CraigslistCarsJsonify(Jsonify):
                 "id": str(item[0]) if len(item) > 0 else None,
                 "title": title,
                 "year": year,
-                "region": region if len(region) <= 35 else "Unknown",
                 "posted_at": self._parse_date(item[4] if len(item) > 4 else ""),
                 "mileage": self._parse_mileage(item),
                 "price": price,

@@ -10,7 +10,6 @@ SCHEMA = Schema(
         Field("id", "TEXT", primary=True),
         Field("title", "TEXT"),
         Field("year", "INTEGER", indexed=True),
-        Field("region", "TEXT", indexed=True),
         Field("posted_at", "TEXT", indexed=True),
         Field("mileage", "INTEGER"),
         Field("price", "INTEGER", indexed=True),
