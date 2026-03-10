@@ -150,6 +150,7 @@ def _write_schema_stub(source_name: str, module_name: str) -> None:
             "    table=\"items\",\n"
             "    fields=[\n"
             "        Field(\"id\", \"TEXT\", primary=True),\n"
+            "        Field(\"crawled_at\", \"TEXT\", indexed=True, default_sql=\"CURRENT_TIMESTAMP\"),\n"
             "    ],\n"
             ")\n"
         ),

@@ -105,11 +105,19 @@ class CraigslistCarsCrawler(BaseCrawler):
         if SCHEMA.create_indexes_sql():
             print(f"[{self.name}] Ensured indexes: {len(SCHEMA.create_indexes_sql())}")
 
+        # Ensure crawled_at exists on legacy DBs
+        cols = [r[1] for r in conn.execute("PRAGMA table_info(items);").fetchall()]
+        if "crawled_at" not in cols:
+            conn.execute("ALTER TABLE items ADD COLUMN crawled_at TEXT;")
+            conn.execute("UPDATE items SET crawled_at = CURRENT_TIMESTAMP WHERE crawled_at IS NULL;")
+
         rows = []
         if isinstance(clean_data, list):
             for item in clean_data:
                 if not isinstance(item, dict):
                     continue
+                if "crawled_at" not in item:
+                    item["crawled_at"] = self._utc_now_iso()
                 row = [item.get(k) for k in SCHEMA.field_names()]
                 rows.append(row)
         if rows:
