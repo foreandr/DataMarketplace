@@ -36,15 +36,17 @@ class CraigslistCarsCrawler(BaseCrawler):
         browser.go_to_site("https://foreandr.github.io/")
         
         for idx, city in enumerate(get_all_cities()):
-            print(f"[{self.name}] city: {city}")
-            total_data = self._process_city(browser, city)
-            jsonifier = CraigslistCarsJsonify(self.name)
-            clean_data = jsonifier.run_analysis(total_data, print_samples=True)
-            self._store_clean_data(clean_data)
-
-            break
-        
-        input("hit end of cities")
+            try:
+                print(f"[{self.name}] city: {city}")
+                total_data = self._process_city(browser, city)
+                jsonifier = CraigslistCarsJsonify(self.name)
+                clean_data = jsonifier.run_analysis(total_data, print_samples=True)
+                self._store_clean_data(clean_data)
+            except Exception as e:
+                print("CITY FAILED FOR SOME REASON:", city)
+                continue
+            
+        browser.close_browser()
         return self.stub_run()
 
     def _process_city(self, browser: Any, city: str) -> List[List[Any]]:
@@ -74,7 +76,7 @@ class CraigslistCarsCrawler(BaseCrawler):
             target_y = current_y + scroll_increment
             
             browser.WEBDRIVER.execute_script(f"window.scrollTo(0, {target_y});")
-            print(f"Scroll {scroll_count}: Moved from {current_y}px to {target_y}px")
+            # print(f"Scroll {scroll_count}: Moved from {current_y}px to {target_y}px")
             
             time.sleep(time_between_scrolls)
 
@@ -84,15 +86,10 @@ class CraigslistCarsCrawler(BaseCrawler):
             total_data.extend(all_data)
             total_data = [list(x) for x in set(tuple(x) for x in total_data)]
             
-            print(f"Current unique items in total_data: {len(total_data)}")
+            # print(f"Current unique items in total_data: {len(total_data)}")
             
             if scroll_count % 10 == 0:
                 print(f"Periodic Check: Found {len(all_data)} items on last pass.")
-
-            # Early break for debugging
-            print("I AM BREAKING EARLY")
-            print("@" * 200)
-            break
             
         return total_data
 
