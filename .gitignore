@@ -27,6 +27,8 @@ Thumbs.db
 # Logs / data
 *.log
 output/
+logs/
+gunicorn.ctl
 
 # SQLite
 *.db
