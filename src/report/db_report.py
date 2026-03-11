@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 import sqlite3
 from datetime import datetime, timedelta
@@ -8,6 +9,7 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT_DIR / "data"
+LOG_DIR = ROOT_DIR / "logs" / "report"
 
 
 class C:
@@ -42,7 +44,7 @@ def _table_row_count(conn: sqlite3.Connection, table: str) -> int:
     return conn.execute(f"SELECT COUNT(*) FROM {table};").fetchone()[0]
 
 
-def _fetched_at_metrics(conn: sqlite3.Connection, table: str) -> str | None:
+def _fetched_at_metrics(conn: sqlite3.Connection, table: str) -> dict | None:
     cols = _table_columns(conn, table)
     ts_col = None
     if "crawled_at" in cols:
@@ -65,12 +67,16 @@ def _fetched_at_metrics(conn: sqlite3.Connection, table: str) -> str | None:
             f"SELECT COUNT(*) FROM {table} WHERE {ts_col} >= ?;",
             (one_day,),
         ).fetchone()[0]
-        return f"rows_last_1h={last_1h} | rows_last_24h={last_24h} | ts_col={ts_col}"
+        return {
+            "rows_last_1h": last_1h,
+            "rows_last_24h": last_24h,
+            "ts_col": ts_col,
+        }
     except Exception:
         return None
 
 
-def _report_db(path: Path) -> None:
+def _report_db(path: Path) -> dict:
     size = path.stat().st_size
     mtime = datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S")
     print(_rule(path.name))
@@ -87,8 +93,15 @@ def _report_db(path: Path) -> None:
     if not table_names:
         print(f"{C.YELLOW}No tables found.{C.RESET}")
         conn.close()
-        return
+        return {
+            "db_name": path.name,
+            "path": str(path),
+            "size_bytes": size,
+            "modified_at": mtime,
+            "tables": [],
+        }
 
+    tables_payload = []
     for table in table_names:
         cols = _table_columns(conn, table)
         count = _table_row_count(conn, table)
@@ -97,9 +110,29 @@ def _report_db(path: Path) -> None:
         print(f"  {C.YELLOW}Columns:{C.RESET} {cols}")
         print(f"  {C.GREEN}Rows:{C.RESET} {count}")
         if metrics:
-            print(f"  {C.CYAN}Rates:{C.RESET} {metrics}")
+            print(
+                f"  {C.CYAN}Rates:{C.RESET} "
+                f"rows_last_1h={metrics['rows_last_1h']} | "
+                f"rows_last_24h={metrics['rows_last_24h']} | "
+                f"ts_col={metrics['ts_col']}"
+            )
+        tables_payload.append(
+            {
+                "name": table,
+                "columns": cols,
+                "rows": count,
+                "rates": metrics,
+            }
+        )
     conn.close()
     print(f"{C.DIM}{'-' * 70}{C.RESET}")
+    return {
+        "db_name": path.name,
+        "path": str(path),
+        "size_bytes": size,
+        "modified_at": mtime,
+        "tables": tables_payload,
+    }
 
 
 def main() -> None:
@@ -116,8 +149,18 @@ def main() -> None:
         print(f"{C.YELLOW}No .sqlite files found in:{C.RESET} {DATA_DIR}")
         return
 
+    payload = []
     for db in dbs:
-        _report_db(db)
+        payload.append(_report_db(db))
+
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    out_path = LOG_DIR / f"db_report_{stamp}.json"
+    out_path.write_text(
+        json.dumps({"generated_at": stamp, "data": payload}, indent=2),
+        encoding="utf-8",
+    )
+    print(f"{C.GREEN}Saved report:{C.RESET} {out_path}")
 
 
 if __name__ == "__main__":

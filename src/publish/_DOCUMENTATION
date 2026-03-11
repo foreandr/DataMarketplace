@@ -1,0 +1,3 @@
+Purpose: Entry points to run a publish action per marketplace.
+Key files:
+- <marketplace>.py: Loads marketplace module and runs it with the API spec.

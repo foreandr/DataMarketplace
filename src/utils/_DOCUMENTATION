@@ -1,0 +1,4 @@
+Purpose: Shared utilities and helpers.
+Key files:
+- config.py: Config loading helpers.
+- func.py, geo.py, published.py: Misc helper logic.
