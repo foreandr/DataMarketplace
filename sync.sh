@@ -18,7 +18,6 @@ TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 LOG_DIR="$TARGET_DIR/logs/$YEAR/$MONTH"
 LOG_FILE="$LOG_DIR/$DAY.txt"
 
-# Create directory if it doesn't exist
 mkdir -p "$LOG_DIR"
 
 # Logging function
@@ -26,9 +25,10 @@ log() {
     echo "[$TIMESTAMP] $1" >> "$LOG_FILE"
 }
 
+# 3. Execution with Visual Separator
+echo "--------------------------------------------------------------------------------" >> "$LOG_FILE"
 log "STARTING HOURLY SYNC"
 
-# 3. Sync Logic
 if [ ! -d "$TARGET_DIR" ]; then
     log "[*] Target directory missing. Cloning..."
     git clone "$REPO_URL" "$TARGET_DIR" >> "$LOG_FILE" 2>&1
@@ -43,7 +43,6 @@ else
     fi
 fi
 
-# 4. Linux-Specific Restart
 if [[ "$OSTYPE" != "msys" && "$OSTYPE" != "win32" ]]; then
     log "[*] Restarting service..."
     systemctl restart datamarketplace >> "$LOG_FILE" 2>&1
@@ -51,4 +50,5 @@ if [[ "$OSTYPE" != "msys" && "$OSTYPE" != "win32" ]]; then
 fi
 
 log "SYNC FINISHED"
+echo "" >> "$LOG_FILE"
 echo "Sync complete. Log updated: $LOG_FILE"
