@@ -15,7 +15,7 @@ def main() -> None:
     if not SPEC_PATH.exists():
         raise FileNotFoundError(f"API spec not found: {SPEC_PATH}")
 
-    from marketplaces.rapidapi import main as publish_main
+    from src.marketplaces._1rapidapi import main as publish_main
 
     publish_main(str(SPEC_PATH))
 

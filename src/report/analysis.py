@@ -12,7 +12,7 @@ import db_report, monitor_server
 from telegram_messaging import send_message
 
 
-FORCE_SEND = True
+FORCE_SEND = False
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 LOG_DIR = ROOT_DIR / "logs" / "report"
