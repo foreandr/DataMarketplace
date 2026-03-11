@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import os
-import urllib.request
+import requests
 from datetime import datetime
 from pathlib import Path
 
@@ -16,42 +16,38 @@ BASE = f"http://{HOST}:{PORT}"
 
 
 def _get(path: str) -> tuple[int, str]:
-    req = urllib.request.Request(BASE + path, method="GET")
-    with urllib.request.urlopen(req) as resp:
-        return resp.status, resp.read().decode("utf-8")
+    resp = requests.get(BASE + path, timeout=30)
+    return resp.status_code, resp.text
 
 
 def _post(path: str, payload: dict) -> tuple[int, str]:
-    data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(
-        BASE + path,
-        data=data,
-        method="POST",
-        headers={"Content-Type": "application/json"},
-    )
-    with urllib.request.urlopen(req) as resp:
-        return resp.status, resp.read().decode("utf-8")
+    resp = requests.post(BASE + path, json=payload, timeout=30)
+    return resp.status_code, resp.text
 
 
 def main() -> None:
-    code, body = _get("/health")
-    print("GET /health:", code, body)
+    code, _ = _get("/health")
+    print("GET /health:", code)
 
-    code, body = _get("/schemas")
-    print("GET /schemas:", code, body)
+    code, _ = _get("/schemas")
+    print("GET /schemas:", code)
+
+    code, _ = _get("/v1/collections")
+    print("GET /v1/collections:", code)
 
     payload = {
-        "db_path": "data/craigslist_cars.sqlite",
-        "schema": "craigslist_cars",
         "select": ["*"],
-        "where": [{"field": "price", "op": ">=", "value": 5000}],
+        "filter": {"price": {"$gte": 5000}},
         "order_by": [{"field": "price", "direction": "asc"}],
+        "limit": 100,
+        "offset": 0,
     }
-    code, body = _post("/query", payload)
-    print("POST /query:", code, body)
+    code, body = _post("/v1/collections/cars/search", payload)
+    print("POST /v1/collections/cars/search:", code)
 
     if os.environ.get("LOG_TEST_DATA", "").lower() in {"1", "true", "yes", "on"}:
-        log_dir = Path("logs") / "test"
+        root = Path(__file__).resolve().parents[1]
+        log_dir = root / "logs" / "test"
         log_dir.mkdir(parents=True, exist_ok=True)
         stamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         out_path = log_dir / f"test_data_{stamp}.json"

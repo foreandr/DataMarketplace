@@ -5,6 +5,7 @@ lxml
 python-dotenv
 pydantic
 flask
+requests
 
 # Custom (your GitHub: foreandr)
 hyperSel
