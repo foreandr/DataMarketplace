@@ -20,5 +20,10 @@ def main() -> None:
     publish_main(str(SPEC_PATH))
 
 
+'''
+1: https://apify.com/partners/actor-developers 
+
+'''
+
 if __name__ == "__main__":
     main()
