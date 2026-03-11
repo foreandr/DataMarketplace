@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 from datetime import datetime
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from dotenv import load_dotenv
 
 
@@ -195,6 +195,14 @@ def _log_incoming_request():
 @app.get("/health")
 def health():
     return jsonify({"status": "ok"})
+
+
+@app.get("/")
+def index():
+    index_path = ROOT_DIR / "index.html"
+    if not index_path.exists():
+        return jsonify({"error": "index.html not found", "code": 404}), 404
+    return Response(index_path.read_text(encoding="utf-8"), mimetype="text/html")
 
 
 @app.get("/schemas")

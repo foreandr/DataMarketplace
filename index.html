@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data Marketplace API</title>
+    <style>
+      :root {
+        --bg: #0b0d10;
+        --panel: #11151a;
+        --text: #e7edf2;
+        --muted: #9fb0bf;
+        --accent: #7fd7c4;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Iosevka", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+        line-height: 1.6;
+      }
+      .wrap {
+        max-width: 980px;
+        margin: 48px auto;
+        padding: 24px;
+      }
+      .panel {
+        background: var(--panel);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 28px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      }
+      h1 {
+        margin: 0 0 16px;
+        font-size: 28px;
+        color: var(--accent);
+      }
+      .subtitle {
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="panel">
+        <h1>Data Marketplace API</h1>
+        <div class="subtitle">Documentation (rendered from README.md)</div>
+        <pre>﻿# Data Marketplace API
+
+A lightweight data marketplace service that collects public data from multiple sources, stores it in structured SQLite databases, and exposes consistent query endpoints for downstream apps.
+
+This system is designed to:
+- Ingest data via modular crawlers
+- Normalize output into predictable schemas
+- Provide simple, documented query APIs
+- Keep the infrastructure small and self-hostable
+
+## What It Does
+
+At a high level, the platform:
+- Runs source-specific crawlers to collect data
+- Transforms raw crawler output into structured rows
+- Persists data in SQLite databases (one per collection)
+- Exposes a uniform search API across collections
+- Tracks health, logs, and operational telemetry
+
+It is intended for building API products, internal dashboards, and data-driven tools that need reliable, queryable datasets without heavy infrastructure.
+
+## How It Is Organized
+
+Key locations in the repository:
+- `src/crawlers/`: Source-specific crawlers
+- `src/jsonify_logic/`: Transform logic to normalize crawler output
+- `src/schemas/`: Table schemas for each collection
+- `data/`: SQLite databases (one per collection)
+- `config/`: Runtime and source configuration files
+- `src/report/`: Operational reports and telemetry scripts
+- `src/publish/`: Marketplace publishing scripts
+- `src/tools/`: Add/remove crawler automation
+
+## API Overview
+
+Base URL:
+- `/` renders this documentation
+
+Core endpoints:
+- `GET /health` returns service status
+- `GET /schemas` lists available schemas
+- `GET /v1/collections` lists available collections
+- `POST /v1/collections/&lt;name&gt;/search` runs a query
+
+Example search payload:
+```json
+{
+  &quot;select&quot;: [&quot;*&quot;],
+  &quot;filter&quot;: {&quot;price&quot;: {&quot;$gte&quot;: 5000}},
+  &quot;order_by&quot;: [{&quot;field&quot;: &quot;price&quot;, &quot;direction&quot;: &quot;asc&quot;}],
+  &quot;limit&quot;: 100,
+  &quot;offset&quot;: 0
+}
+```
+
+## Request Logging
+
+All API requests are logged to `logs/api_requests.log` in JSONL format, including:
+- IP and forwarding headers
+- User agent and request metadata
+- Full request headers
+- Body snapshot (JSON when possible)
+
+This log is intended for auditing, debugging, and usage analysis.
+
+## Crawler Lifecycle
+
+Adding a crawler:
+- Generates crawler, schema, jsonify logic, and demo data stubs
+- Inserts a new source entry into `config/sources.json`
+- Creates a backing SQLite database in `data/`
+
+Removing a crawler:
+- Removes the source entry
+- Deletes related code stubs and the database
+
+The automation scripts live in `src/tools/`.
+
+## Publishing
+
+Marketplace publishing scripts live in `src/publish/` and each one targets a specific marketplace. They are intended to be run individually depending on where the dataset should be listed.
+
+## Notes
+
+This documentation is intentionally high-level so it stays accurate as sources evolve. The system is built to be extended by adding new sources without changing the API surface.
+</pre>
+      </div>
+    </div>
+  </body>
+</html>
