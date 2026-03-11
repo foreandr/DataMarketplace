@@ -1,0 +1,6 @@
+Purpose: Operational reporting, telemetry, and alerting.
+Key files:
+- db_report.py: Summarizes DB tables and writes JSON logs.
+- monitor_server.py: Pulls server telemetry and writes JSON logs.
+- telegram_messaging.py: Sends messages via Telegram API.
+- analysis.py: Builds alerts and sends formatted reports.

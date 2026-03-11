@@ -1,0 +1,6 @@
+Purpose: Automated checks and smoke tests.
+Key files:
+- app_test.py: API smoke tests (requires running server).
+- test_*.py: Schema/resources/report checks.
+- run_all.py: pytest runner.
+Notes: Uses pytest; some tests modify config temporarily.

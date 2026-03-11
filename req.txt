@@ -8,6 +8,7 @@ flask
 requests
 gunicorn
 pytest
+python-telegram-bot
 
 # Custom (your GitHub: foreandr)
 hyperSel

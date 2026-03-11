@@ -1,0 +1,4 @@
+Purpose: Schema definitions for each collection/table.
+Key files:
+- base.py: Field and Schema types.
+- <source>.py: Table schema per collection.

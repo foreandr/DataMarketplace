@@ -1,8 +1,13 @@
-import os
-import requests
 import json
+import os
 from datetime import datetime
+from pathlib import Path
+
+import requests
 from dotenv import load_dotenv
+
+ROOT_DIR = Path(__file__).resolve().parents[2]
+LOG_DIR = ROOT_DIR / "logs" / "report"
 
 load_dotenv()
 
@@ -18,6 +23,25 @@ def extract_val(data):
         return float(data['data']['result'][0]['values'][-1][1])
     except (KeyError, IndexError, TypeError):
         return 0.0
+
+def _flatten_stats(stats: dict) -> dict:
+    flat = {}
+    for key, value in stats.items():
+        if isinstance(value, dict):
+            for sub_key, sub_val in value.items():
+                flat[f"{key}_{sub_key}"] = sub_val
+        else:
+            flat[key] = value
+    return flat
+
+
+def _write_stats(stats: dict) -> Path:
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    out_path = LOG_DIR / f"monitor_server_{stamp}.json"
+    out_path.write_text(json.dumps(stats, indent=2), encoding="utf-8")
+    return out_path
+
 
 def get_full_telemetry():
     token = os.getenv("DIGITAL_OCEAN_APP_PASSWORD")
@@ -79,5 +103,14 @@ def get_full_telemetry():
 
     return stats
 
+
+def main() -> dict:
+    telemetry = get_full_telemetry()
+    flattened = _flatten_stats(telemetry)
+    out_path = _write_stats(flattened)
+    print(json.dumps(flattened, indent=2))
+    print(f"Saved report: {out_path}")
+    return flattened
+
 if __name__ == "__main__":
-    print(json.dumps(get_full_telemetry(), indent=2))
+    main()

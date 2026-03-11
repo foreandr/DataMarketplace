@@ -1,0 +1,4 @@
+Purpose: Developer automation scripts.
+Key files:
+- add_crawler.py: Generates crawler/schema/jsonify/demo stubs and DB.
+- delete_crawler.py: Removes the same artifacts and config entry.
