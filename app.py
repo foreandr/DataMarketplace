@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 import sqlite3
 import sys
+from datetime import datetime
 from importlib import import_module
 from pathlib import Path
 from typing import Any
-from datetime import datetime
 
 from flask import Flask, jsonify, request, Response
 from dotenv import load_dotenv
@@ -19,11 +20,37 @@ sys.path.insert(0, str(SRC_DIR))
 load_dotenv()
 DATA_DIR = ROOT_DIR / "data"
 LOG_DIR = ROOT_DIR / "logs"
+FOREVER_LOG_DIR = LOG_DIR / "forever"
 REQUEST_LOG_PATH = LOG_DIR / "api_requests.log"
+SERVER_LOG_PATH = FOREVER_LOG_DIR / "server.log"
+ERROR_LOG_PATH = FOREVER_LOG_DIR / "errors.log"
 DEFAULT_LIMIT = 100
 MAX_LIMIT = 500
 
 app = Flask(__name__)
+
+
+def _setup_server_logging() -> None:
+    FOREVER_LOG_DIR.mkdir(parents=True, exist_ok=True)
+    logger = logging.getLogger("datamarketplace")
+    logger.setLevel(logging.INFO)
+    if not logger.handlers:
+        formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
+
+        server_handler = logging.FileHandler(SERVER_LOG_PATH, encoding="utf-8")
+        server_handler.setLevel(logging.INFO)
+        server_handler.setFormatter(formatter)
+
+        error_handler = logging.FileHandler(ERROR_LOG_PATH, encoding="utf-8")
+        error_handler.setLevel(logging.ERROR)
+        error_handler.setFormatter(formatter)
+
+        logger.addHandler(server_handler)
+        logger.addHandler(error_handler)
+
+
+def _logger() -> logging.Logger:
+    return logging.getLogger("datamarketplace")
 
 
 def _load_schema(schema_module: str):
@@ -192,6 +219,24 @@ def _log_incoming_request():
     _log_request()
 
 
+@app.after_request
+def _log_response(response):
+    _logger().info("%s %s -> %s", request.method, request.path, response.status_code)
+    return response
+
+
+@app.errorhandler(404)
+def _handle_not_found(error):
+    _logger().warning("404 Not Found: %s %s", request.method, request.path)
+    return jsonify({"error": "Not found", "code": 404}), 404
+
+
+@app.errorhandler(Exception)
+def _handle_exception(error):
+    _logger().exception("Unhandled error: %s %s", request.method, request.path)
+    return jsonify({"error": "Internal server error", "code": 500}), 500
+
+
 @app.get("/health")
 def health():
     return jsonify({"status": "ok"})
@@ -277,6 +322,7 @@ def search_collection(name: str):
 
 
 if __name__ == "__main__":
+    _setup_server_logging()
     host = os.environ["API_HOST"]
     port = int(os.environ["API_PORT"])
     debug = os.environ["API_DEBUG"].lower() in {"1", "true", "yes", "on"}
