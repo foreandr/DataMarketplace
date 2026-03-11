@@ -7,6 +7,7 @@ import sys
 from importlib import import_module
 from pathlib import Path
 from typing import Any
+from datetime import datetime
 
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
@@ -17,6 +18,8 @@ SRC_DIR = ROOT_DIR / "src"
 sys.path.insert(0, str(SRC_DIR))
 load_dotenv()
 DATA_DIR = ROOT_DIR / "data"
+LOG_DIR = ROOT_DIR / "logs"
+REQUEST_LOG_PATH = LOG_DIR / "api_requests.log"
 DEFAULT_LIMIT = 100
 MAX_LIMIT = 500
 
@@ -139,6 +142,54 @@ def _build_where_from_filter(schema, flt: dict) -> tuple[str, list]:
             clauses.append(f"{field} = ?")
             params.append(coerced)
     return " WHERE " + " AND ".join(clauses), params
+
+
+def _request_body_snapshot() -> dict | None:
+    try:
+        json_body = request.get_json(silent=True)
+    except Exception:
+        json_body = None
+    if json_body is not None:
+        return {"type": "json", "value": json_body}
+
+    data = request.get_data(cache=True, as_text=True)
+    if not data:
+        return None
+    max_len = 4000
+    if len(data) > max_len:
+        data = data[:max_len] + "...<truncated>"
+    return {"type": "text", "value": data}
+
+
+def _log_request() -> None:
+    try:
+        LOG_DIR.mkdir(parents=True, exist_ok=True)
+        entry = {
+            "timestamp": datetime.now().isoformat(timespec="seconds"),
+            "method": request.method,
+            "path": request.path,
+            "url": request.url,
+            "query": request.args.to_dict(flat=False),
+            "remote_addr": request.remote_addr,
+            "x_forwarded_for": request.headers.get("X-Forwarded-For"),
+            "user_agent": str(request.user_agent),
+            "content_type": request.content_type,
+            "content_length": request.content_length,
+            "referrer": request.referrer,
+            "origin": request.headers.get("Origin"),
+            "headers": dict(request.headers),
+            "body": _request_body_snapshot(),
+        }
+        with REQUEST_LOG_PATH.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    except Exception:
+        # Never fail a request because logging failed.
+        pass
+
+
+@app.before_request
+def _log_incoming_request():
+    _log_request()
 
 
 @app.get("/health")
