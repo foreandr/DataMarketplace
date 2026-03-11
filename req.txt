@@ -6,6 +6,7 @@ python-dotenv
 pydantic
 flask
 requests
+gunicorn
 
 # Custom (your GitHub: foreandr)
 hyperSel
