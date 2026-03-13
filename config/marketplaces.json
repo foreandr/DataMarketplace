@@ -2,14 +2,18 @@
   "marketplaces": [
     {
       "name": "rapidapi",
-      "enabled": false,
-      "integration": "marketplaces.rapidapi.RapidApiPublisher",
+      "enabled": true,
+      "integration": "publish.rapidapi.RapidAPIPublisher",
       "mode": "api",
-      "base_url": "https://example.com/rapidapi-placeholder",
-      "auth": {
-        "api_key_env": "RAPIDAPI_KEY"
+      "base_url": "https://rapidapi-v1.p.rapidapi.com",
+      "endpoints": {
+        "create_api": "/apis"
       },
-      "notes": "Replace with official RapidAPI endpoints."
+      "auth": {
+        "api_key_env": "RAPIDAPI_KEY",
+        "host": "rapidapi-v1.p.rapidapi.com"
+      },
+      "notes": "Confirm RapidAPI publish endpoint if needed."
     }
   ]
 }

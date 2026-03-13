@@ -2,5 +2,20 @@
   "app": {
     "name": "DataMarketplace",
     "log_level": "INFO"
-  }
+  },
+  "server": {
+    "base_url": "http://143.110.158.119:5000"
+  },
+  "apis": [
+    {
+      "name": "Craigslist Cars API",
+      "slug": "craigslist_cars",
+      "collection": "cars",
+      "schema": "craigslist_cars",
+      "version": "1.0.0",
+      "description": "Searchable Craigslist cars listings.",
+      "tags": ["craigslist", "cars"],
+      "visibility": "PUBLIC"
+    }
+  ]
 }

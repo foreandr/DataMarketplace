@@ -46,6 +46,15 @@ def _load_sources(path: Path) -> dict:
 def _write_sources(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 
+def _load_json(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _write_json(path: Path, data: dict) -> None:
+    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+
 
 def _remove_source_entry(sources_path: Path, source_name: str) -> bool:
     data = _load_sources(sources_path)
@@ -57,6 +66,26 @@ def _remove_source_entry(sources_path: Path, source_name: str) -> bool:
     _write_sources(sources_path, data)
     return True
 
+def _remove_collection(resources_path: Path, collection: str) -> bool:
+    data = _load_json(resources_path)
+    collections = data.get("collections", {})
+    if collection not in collections:
+        return False
+    collections.pop(collection, None)
+    data["collections"] = collections
+    _write_json(resources_path, data)
+    return True
+
+
+def _remove_api_entry(app_path: Path, slug: str) -> bool:
+    data = _load_json(app_path)
+    apis = data.get("apis", [])
+    new_apis = [a for a in apis if a.get("slug") != slug]
+    if len(new_apis) == len(apis):
+        return False
+    data["apis"] = new_apis
+    _write_json(app_path, data)
+    return True
 
 def _delete_crawler_stub(module_name: str) -> bool:
     path = _crawler_file_path(module_name)
@@ -108,9 +137,13 @@ def main(source_name: str) -> None:
     _setup_logging(app_cfg["app"]["log_level"])
 
     sources_path = ROOT_DIR / "config" / "sources.json"
+    resources_path = ROOT_DIR / "config" / "resources.json"
+    app_path = ROOT_DIR / "config" / "app.json"
     module_name = _derive_module_name(source_name)
 
     removed = _remove_source_entry(sources_path, source_name)
+    removed_collection = _remove_collection(resources_path, module_name)
+    removed_api = _remove_api_entry(app_path, module_name)
     deleted = _delete_crawler_stub(module_name)
     deleted_jsonify = _delete_jsonify_stub(module_name)
     deleted_demo = _delete_demo_data_stub(module_name)
@@ -124,6 +157,8 @@ def main(source_name: str) -> None:
     logging.info("Deleted demo data file: %s", deleted_demo)
     logging.info("Deleted schema file: %s", deleted_schema)
     logging.info("Deleted crawler DB: %s", deleted_db)
+    logging.info("Removed collection: %s", removed_collection)
+    logging.info("Removed API entry: %s", removed_api)
     logging.info("Updated: %s", sources_path)
 
 
