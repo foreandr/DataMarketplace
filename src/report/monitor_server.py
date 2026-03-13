@@ -1,13 +1,18 @@
 import json
 import os
+import platform
+import subprocess
 from datetime import datetime
 from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
 
+from report_paths import write_report_json
+
 ROOT_DIR = Path(__file__).resolve().parents[2]
 LOG_DIR = ROOT_DIR / "logs" / "report"
+REPORT_NAME = "monitor_server"
 
 load_dotenv()
 
@@ -35,12 +40,100 @@ def _flatten_stats(stats: dict) -> dict:
     return flat
 
 
+def _should_include_processes() -> bool:
+    flag = os.getenv("MONITOR_SERVER_INCLUDE_PROCESSES", "auto").strip().lower()
+    if flag in {"1", "true", "yes", "on"}:
+        return True
+    if flag in {"0", "false", "no", "off"}:
+        return False
+    return platform.system().lower() == "linux"
+
+
+def _run_command(cmd: list[str], timeout: int = 15) -> str | None:
+    try:
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            check=False,
+        )
+        if result.returncode != 0:
+            return None
+        return result.stdout
+    except Exception:
+        return None
+
+
+def _parse_ps_output(output: str) -> list[dict]:
+    lines = [line.strip() for line in output.splitlines() if line.strip()]
+    if not lines:
+        return []
+    if lines[0].lower().startswith("pid"):
+        lines = lines[1:]
+
+    processes: list[dict] = []
+    for line in lines:
+        parts = line.split(None, 4)
+        if len(parts) < 5:
+            continue
+        pid, comm, cpu, mem, rss = parts
+        try:
+            rss_mb = round(float(rss) / 1024, 2)
+        except Exception:
+            rss_mb = 0.0
+        processes.append(
+            {
+                "pid": int(pid) if pid.isdigit() else pid,
+                "command": comm,
+                "cpu_percent": float(cpu) if cpu.replace(".", "", 1).isdigit() else cpu,
+                "mem_percent": float(mem) if mem.replace(".", "", 1).isdigit() else mem,
+                "rss_mb": rss_mb,
+            }
+        )
+    return processes
+
+
+def _get_process_snapshot() -> dict | None:
+    if not _should_include_processes():
+        return None
+
+    top_n = int(os.getenv("MONITOR_SERVER_PROCESS_TOP_N", "25"))
+    host = os.getenv("MONITOR_SERVER_SSH_HOST", "").strip()
+    user = os.getenv("MONITOR_SERVER_SSH_USER", "").strip() or "root"
+    key_path = os.getenv("MONITOR_SERVER_SSH_KEY_PATH", "").strip()
+    port = os.getenv("MONITOR_SERVER_SSH_PORT", "").strip() or "22"
+
+    ps_cmd = "ps -eo pid,comm,%cpu,%mem,rss --sort=-rss"
+    if host:
+        ssh_cmd = ["ssh", "-o", "BatchMode=yes", "-p", port]
+        if key_path:
+            ssh_cmd += ["-i", key_path]
+        ssh_cmd += [f"{user}@{host}", ps_cmd]
+        output = _run_command(ssh_cmd, timeout=20)
+        source = "ssh"
+        source_host = host
+    else:
+        if platform.system().lower() != "linux":
+            return {"error": "Process listing only supported on Linux or via SSH."}
+        output = _run_command(["ps", "-eo", "pid,comm,%cpu,%mem,rss", "--sort=-rss"])
+        source = "local"
+        source_host = "local"
+
+    if not output:
+        return {"error": "Process listing failed.", "source": source, "host": source_host}
+
+    processes = _parse_ps_output(output)
+    return {
+        "source": source,
+        "host": source_host,
+        "total_processes": len(processes),
+        "top_by_rss": processes[: max(top_n, 1)],
+    }
+
+
 def _write_stats(stats: dict) -> Path:
-    LOG_DIR.mkdir(parents=True, exist_ok=True)
-    stamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    out_path = LOG_DIR / f"monitor_server_{stamp}.json"
-    out_path.write_text(json.dumps(stats, indent=2), encoding="utf-8")
-    return out_path
+    return write_report_json(LOG_DIR, REPORT_NAME, "monitor_server", stats)
 
 
 def get_full_telemetry():
@@ -100,6 +193,11 @@ def get_full_telemetry():
         "inbound": round(inbound * 8 / (1024**2), 2),
         "outbound": round(outbound * 8 / (1024**2), 2)
     }
+
+    # 5. Process list (top memory consumers)
+    processes = _get_process_snapshot()
+    if processes:
+        stats["processes"] = processes
 
     return stats
 

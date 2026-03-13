@@ -9,6 +9,7 @@ from typing import Any
 from dotenv import load_dotenv
 
 import db_report, monitor_server
+from report_paths import iter_report_files
 from telegram_messaging import send_message
 
 
@@ -33,10 +34,10 @@ def _get_env_int(name: str, default: int) -> int:
 
 
 def _load_latest_db_report() -> dict | None:
-    reports = sorted(LOG_DIR.glob("db_report_*.json"))
+    reports = list(iter_report_files(LOG_DIR, "db_report", "db_report_*.json"))
     if not reports:
         return None
-    path = reports[-1]
+    path = max(reports, key=lambda p: p.stat().st_mtime)
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -52,7 +53,12 @@ def _parse_timestamp(value: str) -> datetime | None:
 def _load_monitor_samples(hours: int = 24) -> list[dict]:
     cutoff = datetime.now() - timedelta(hours=hours)
     samples: list[dict] = []
-    for path in LOG_DIR.glob("monitor_server_*.json"):
+    for path in iter_report_files(LOG_DIR, "monitor_server", "monitor_server_*.json"):
+        try:
+            if datetime.fromtimestamp(path.stat().st_mtime) < cutoff:
+                continue
+        except Exception:
+            pass
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
         except Exception:
@@ -61,7 +67,10 @@ def _load_monitor_samples(hours: int = 24) -> list[dict]:
         if isinstance(data, dict) and data.get("timestamp"):
             ts = _parse_timestamp(str(data["timestamp"]))
         if not ts:
-            continue
+            try:
+                ts = datetime.fromtimestamp(path.stat().st_mtime)
+            except Exception:
+                continue
         if ts < cutoff:
             continue
         data["_ts"] = ts
@@ -152,6 +161,8 @@ def _build_message(db_payload: dict | None, samples: list[dict]) -> tuple[str, b
     current_load = latest.get("load_1m", "N/A")
     current_bw_in = latest.get("bandwidth_mbps_inbound", "N/A")
     current_bw_out = latest.get("bandwidth_mbps_outbound", "N/A")
+    process_source = latest.get("processes_source")
+    process_list = latest.get("processes_top_by_rss") or []
 
     lines = [
         "Data Marketplace Report",
@@ -173,6 +184,19 @@ def _build_message(db_payload: dict | None, samples: list[dict]) -> tuple[str, b
         "Disk Window Summary:",
         *disk_lines,
     ]
+
+    if process_list:
+        lines.append("")
+        lines.append("Top Memory Processes:")
+        if process_source:
+            lines.append(f"Source: {process_source}")
+        for proc in process_list[:5]:
+            pid = proc.get("pid", "?")
+            cmd = proc.get("command", "?")
+            rss = proc.get("rss_mb", "?")
+            cpu = proc.get("cpu_percent", "?")
+            mem = proc.get("mem_percent", "?")
+            lines.append(f"{pid} {cmd} | rss {rss} MB | cpu {cpu}% | mem {mem}%")
 
     if db_payload:
         lines.append("")
