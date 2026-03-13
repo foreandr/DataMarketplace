@@ -6,10 +6,12 @@ import sqlite3
 from datetime import datetime, timedelta
 from pathlib import Path
 
+from report_paths import write_report_json
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT_DIR / "data"
 LOG_DIR = ROOT_DIR / "logs" / "report"
+REPORT_NAME = "db_report"
 
 
 class C:
@@ -153,12 +155,12 @@ def main() -> None:
     for db in dbs:
         payload.append(_report_db(db))
 
-    LOG_DIR.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    out_path = LOG_DIR / f"db_report_{stamp}.json"
-    out_path.write_text(
-        json.dumps({"generated_at": stamp, "data": payload}, indent=2),
-        encoding="utf-8",
+    out_path = write_report_json(
+        LOG_DIR,
+        REPORT_NAME,
+        "db_report",
+        {"generated_at": stamp, "data": payload},
     )
     print(f"{C.GREEN}Saved report:{C.RESET} {out_path}")
 
