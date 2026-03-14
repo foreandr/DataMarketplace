@@ -19,6 +19,7 @@ except ModuleNotFoundError:  # allow running directly
     from utils.config import load_json_config
 
 load_dotenv()
+OUT_DIR = None
 
 class RapidAPIPublisher:
     def __init__(self, marketplace_name: str = "rapidapi"):
@@ -88,7 +89,7 @@ if __name__ == "__main__":
     # =========================
     API_SLUG = "craigslist_cars"
     DRY_RUN = True
-    OUT_DIR = None
+    
     # =========================
 
     publisher = RapidAPIPublisher()
