@@ -1,13 +1,7 @@
-"""RapidAPI upload placeholder."""
-from __future__ import annotations
+from hyperSel import instance,log
 
-from pathlib import Path
-
-
-def main(spec_path: str) -> None:
-    path = Path(spec_path)
-    print(f"[RapidAPI] Upload placeholder for: {path}")
-
+def main():
+    pass
 
 if __name__ == "__main__":
-    main("config/api_spec.example.json")
+    main()
