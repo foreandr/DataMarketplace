@@ -9,7 +9,7 @@ from pathlib import Path
 from report_paths import write_report_json
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
-DATA_DIR = ROOT_DIR / "data"
+SRC_DIR = ROOT_DIR / "src"
 LOG_DIR = ROOT_DIR / "logs" / "report"
 REPORT_NAME = "db_report"
 
@@ -142,13 +142,9 @@ def main() -> None:
     print(_rule("DB Report"))
     print("")
 
-    if not DATA_DIR.exists():
-        print(f"{C.RED}Data directory not found:{C.RESET} {DATA_DIR}")
-        return
-
-    dbs = sorted(DATA_DIR.glob("*.sqlite"))
+    dbs = sorted(SRC_DIR.glob("_*/database.sqlite"))
     if not dbs:
-        print(f"{C.YELLOW}No .sqlite files found in:{C.RESET} {DATA_DIR}")
+        print(f"{C.YELLOW}No database.sqlite files found in:{C.RESET} {SRC_DIR}")
         return
 
     payload = []

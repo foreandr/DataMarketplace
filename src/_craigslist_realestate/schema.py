@@ -1,4 +1,4 @@
-"""Schema stub for craigslist_realestate."""
+"""Schema stub for _craigslist_realestate."""
 from __future__ import annotations
 
 from schemas.base import Field, Schema
