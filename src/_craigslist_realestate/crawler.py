@@ -1,22 +1,15 @@
-"""Crawler stub for _craigslist_realestate."""
+"""Crawler for _craigslist_realestate."""
 from __future__ import annotations
 
-from typing import Iterable
 
-try:
-    from lib import BaseCrawler, CrawlItem
-except ModuleNotFoundError:
-    import sys
-    from pathlib import Path
-    ROOT_DIR = Path(__file__).resolve().parents[2]
-    sys.path.insert(0, str(ROOT_DIR / "src"))
-    from lib import BaseCrawler, CrawlItem
+class CraigslistRealestateCrawler:
+    def __init__(self, name: str = "_craigslist_realestate"):
+        self.name = name
 
-
-class CraigslistRealestateCrawler(BaseCrawler):
-    def run(self) -> Iterable[CrawlItem]:
-        return self.stub_run()
+    def run(self) -> None:
+        # TODO: implement
+        print(f"[{self.name}] stub_run")
 
 
 if __name__ == "__main__":
-    CraigslistRealestateCrawler(name="_craigslist_realestate").run()
+    CraigslistRealestateCrawler().run()

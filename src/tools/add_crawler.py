@@ -71,22 +71,16 @@ def _write_crawler_stub(module_name: str, class_name: str) -> None:
     if path.exists():
         raise FileExistsError(f"Already exists: {path}")
     path.write_text(
-        f'"""Crawler stub for {module_name}."""\n'
-        "from __future__ import annotations\n\n"
-        "from typing import Iterable\n\n"
-        "try:\n"
-        "    from lib import BaseCrawler, CrawlItem\n"
-        "except ModuleNotFoundError:\n"
-        "    import sys\n"
-        "    from pathlib import Path\n"
-        "    ROOT_DIR = Path(__file__).resolve().parents[2]\n"
-        '    sys.path.insert(0, str(ROOT_DIR / "src"))\n'
-        "    from lib import BaseCrawler, CrawlItem\n\n\n"
-        f"class {class_name}(BaseCrawler):\n"
-        "    def run(self) -> Iterable[CrawlItem]:\n"
-        "        return self.stub_run()\n\n\n"
+        f'"""Crawler for {module_name}."""\n'
+        "from __future__ import annotations\n\n\n"
+        f"class {class_name}:\n"
+        f'    def __init__(self, name: str = "{module_name}"):\n'
+        "        self.name = name\n\n"
+        "    def run(self) -> None:\n"
+        "        # TODO: implement\n"
+        f'        print(f"[{{self.name}}] stub_run")\n\n\n'
         'if __name__ == "__main__":\n'
-        f'    {class_name}(name="{module_name}").run()\n',
+        f'    {class_name}().run()\n',
         encoding="utf-8",
     )
 
@@ -96,9 +90,38 @@ def _write_schema_stub(module_name: str) -> None:
     if path.exists():
         raise FileExistsError(f"Already exists: {path}")
     path.write_text(
-        f'"""Schema stub for {module_name}."""\n'
+        f'"""Schema for {module_name}."""\n'
         "from __future__ import annotations\n\n"
-        "from lib import Field, Schema\n\n\n"
+        "from dataclasses import dataclass\n"
+        "from typing import List\n\n\n"
+        "@dataclass(frozen=True)\n"
+        "class Field:\n"
+        "    name: str\n"
+        "    type: str\n"
+        "    primary: bool = False\n"
+        "    indexed: bool = False\n"
+        "    unique: bool = False\n"
+        "    default_sql: str | None = None\n\n\n"
+        "class Schema:\n"
+        "    def __init__(self, table: str, fields: List[Field]):\n"
+        "        self.table = table\n"
+        "        self.fields = fields\n\n"
+        "    def create_table_sql(self) -> str:\n"
+        "        cols = []\n"
+        "        for f in self.fields:\n"
+        '            col = f"{f.name} {f.type}"\n'
+        "            if f.primary: col += \" PRIMARY KEY\"\n"
+        "            if f.unique: col += \" UNIQUE\"\n"
+        '            if f.default_sql: col += f" DEFAULT {f.default_sql}"\n'
+        "            cols.append(col)\n"
+        '        return f"CREATE TABLE IF NOT EXISTS {self.table} ({\', \'.join(cols)});"\n\n'
+        "    def create_indexes_sql(self) -> List[str]:\n"
+        "        return [\n"
+        '            f"CREATE INDEX IF NOT EXISTS idx_{self.table}_{f.name} ON {self.table}({f.name});"\n'
+        "            for f in self.fields if f.indexed and not f.primary\n"
+        "        ]\n\n"
+        "    def field_names(self) -> List[str]:\n"
+        "        return [f.name for f in self.fields]\n\n\n"
         "SCHEMA = Schema(\n"
         '    table="items",\n'
         "    fields=[\n"
@@ -115,18 +138,12 @@ def _write_jsonify_stub(module_name: str, class_name: str) -> None:
     if path.exists():
         raise FileExistsError(f"Already exists: {path}")
     path.write_text(
-        f'"""Jsonify stub for {module_name}."""\n'
+        f'"""Jsonify for {module_name}."""\n'
         "from __future__ import annotations\n\n"
-        "from typing import Any, List\n\n"
-        "try:\n"
-        "    from lib import Jsonify\n"
-        "except ModuleNotFoundError:\n"
-        "    import sys\n"
-        "    from pathlib import Path\n"
-        "    ROOT_DIR = Path(__file__).resolve().parents[2]\n"
-        '    sys.path.insert(0, str(ROOT_DIR / "src"))\n'
-        "    from lib import Jsonify\n\n\n"
-        f"class {class_name}(Jsonify):\n"
+        "from typing import Any, List\n\n\n"
+        f"class {class_name}:\n"
+        f'    def __init__(self, source_name: str = "{module_name}"):\n'
+        "        self.source_name = source_name\n\n"
         "    def to_json(self, data: Any) -> List[dict]:\n"
         "        # TODO: convert scraped rows into dicts\n"
         "        return data if isinstance(data, list) else []\n",

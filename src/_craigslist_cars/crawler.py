@@ -1,31 +1,32 @@
 """Craigslist cars crawler."""
 from __future__ import annotations
 
-from typing import Iterable, List, Any
+from typing import List, Any
 import time
 import sqlite3
 from datetime import datetime
+from pathlib import Path
+
 from hyperSel import instance, parser
 
 try:
-    from lib import BaseCrawler, CrawlItem
     from utils.geo import get_all_cities
     from _craigslist_cars.jsonify import CraigslistCarsJsonify
     from _craigslist_cars.schema import SCHEMA
 except ModuleNotFoundError:
     import sys
-    from pathlib import Path
-
     ROOT_DIR = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(ROOT_DIR / "src"))
-    from lib import BaseCrawler, CrawlItem
     from utils.geo import get_all_cities
     from _craigslist_cars.jsonify import CraigslistCarsJsonify
     from _craigslist_cars.schema import SCHEMA
 
 
-class CraigslistCarsCrawler(BaseCrawler):
-    def run(self) -> Iterable[CrawlItem]:
+class CraigslistCarsCrawler:
+    def __init__(self, name: str = "_craigslist_cars"):
+        self.name = name
+
+    def run(self) -> None:
         browser = instance.Browser(
             driver_choice='selenium',
             headless=True,
@@ -46,7 +47,6 @@ class CraigslistCarsCrawler(BaseCrawler):
                 continue
 
         browser.close_browser()
-        return self.stub_run()
 
     def _process_city(self, browser: Any, city: str) -> List[List[Any]]:
         city_without_spaces = city.replace(" ", "").lower()
@@ -86,7 +86,7 @@ class CraigslistCarsCrawler(BaseCrawler):
         return total_data
 
     def _store_clean_data(self, clean_data: Any) -> None:
-        db_path = self._crawler_db_path()
+        db_path = self._db_path()
         print(f"[{self.name}] DB path: {db_path}")
         conn = sqlite3.connect(str(db_path))
         conn.execute(SCHEMA.create_table_sql())
@@ -120,11 +120,9 @@ class CraigslistCarsCrawler(BaseCrawler):
         conn.commit()
         conn.close()
 
-    def _crawler_db_path(self) -> "Path":
-        from pathlib import Path
-        root_dir = Path(__file__).resolve().parents[2]
-        return root_dir / "src" / self.name / "database.sqlite"
+    def _db_path(self) -> Path:
+        return Path(__file__).resolve().parents[2] / "src" / self.name / "database.sqlite"
 
 
 if __name__ == "__main__":
-    CraigslistCarsCrawler(name="_craigslist_cars").run()
+    CraigslistCarsCrawler().run()
