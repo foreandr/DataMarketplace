@@ -6,7 +6,7 @@ import sqlite3
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from report.report_paths import write_report_json
+from report_paths import write_report_json
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 SRC_DIR = ROOT_DIR / "src"
