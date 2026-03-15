@@ -10,5 +10,5 @@ gunicorn
 pytest
 python-telegram-bot
 
-# Custom (your GitHub: foreandr)
+# Custom (your GitHub: foreandr)1
 hyperSel
