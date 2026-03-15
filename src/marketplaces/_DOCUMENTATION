@@ -1,3 +1,0 @@
-Purpose: Marketplace-specific publishing integrations.
-Key files:
-- <marketplace>.py: Handles publishing flow for each marketplace.

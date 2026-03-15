@@ -13,65 +13,33 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 SRC_DIR = ROOT_DIR / "src"
 sys.path.insert(0, str(SRC_DIR))
 
-from utils.config import load_json_config
 
-
-def _setup_logging(level: str) -> None:
+def _setup_logging() -> None:
     logging.basicConfig(
-        level=getattr(logging, level.upper(), logging.INFO),
+        level=logging.INFO,
         format="%(asctime)s | %(levelname)s | %(message)s",
     )
 
 
 def _derive_module_name(source_name: str) -> str:
-    return source_name.replace("-", "_").lower()
+    """Ensure module name starts with _ and uses underscores."""
+    name = source_name.replace("-", "_").lower()
+    return name if name.startswith("_") else f"_{name}"
 
 
-def _derive_class_name(source_name: str) -> str:
-    parts = source_name.replace("-", "_").split("_")
+def _derive_class_name(module_name: str) -> str:
+    parts = [p for p in module_name.lstrip("_").split("_") if p]
     return "".join(p.capitalize() for p in parts) + "Crawler"
 
 
-def _crawler_file_path(module_name: str) -> Path:
-    return SRC_DIR / "crawlers" / f"{module_name}.py"
-
-
-def _jsonify_file_path(module_name: str) -> Path:
-    return SRC_DIR / "jsonify_logic" / f"{module_name}.py"
-
-
-def _demo_data_file_path(module_name: str) -> Path:
-    return SRC_DIR / "demo_data" / f"{module_name}.py"
-
-def _schema_file_path(module_name: str) -> Path:
-    return SRC_DIR / "schemas" / f"{module_name}.py"
-
-
-def _crawler_dotted_path(module_name: str, class_name: str) -> str:
-    return f"crawlers.{module_name}.{class_name}"
-
-
-def _jsonify_class_name(source_name: str) -> str:
-    parts = source_name.replace("-", "_").split("_")
+def _derive_jsonify_class_name(module_name: str) -> str:
+    parts = [p for p in module_name.lstrip("_").split("_") if p]
     return "".join(p.capitalize() for p in parts) + "Jsonify"
 
 
-def _load_sources(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+def _crawler_dir(module_name: str) -> Path:
+    return SRC_DIR / module_name
 
-
-def _write_sources(path: Path, data: dict) -> None:
-    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
-
-
-def _add_source_entry(sources_path: Path, entry: dict) -> None:
-    data = _load_sources(sources_path)
-    sources = data.get("sources", [])
-    if any(s.get("name") == entry["name"] for s in sources):
-        raise ValueError(f"Source already exists: {entry['name']}")
-    sources.append(entry)
-    data["sources"] = sources
-    _write_sources(sources_path, data)
 
 def _load_json(path: Path) -> dict:
     if not path.exists():
@@ -92,186 +60,148 @@ def _ensure_collection(resources_path: Path, collection: str, schema: str, db_pa
         _write_json(resources_path, data)
 
 
-def _ensure_api_entry(app_path: Path, entry: dict) -> None:
-    data = _load_json(app_path)
-    apis = data.get("apis", [])
-    if not any(a.get("slug") == entry.get("slug") for a in apis):
-        apis.append(entry)
-        data["apis"] = apis
-        _write_json(app_path, data)
+def _write_init(module_name: str) -> None:
+    path = _crawler_dir(module_name) / "__init__.py"
+    if not path.exists():
+        path.write_text("", encoding="utf-8")
 
-def _write_crawler_stub(source_name: str, module_name: str, class_name: str) -> None:
-    path = _crawler_file_path(module_name)
+
+def _write_crawler_stub(module_name: str, class_name: str) -> None:
+    path = _crawler_dir(module_name) / "crawler.py"
     if path.exists():
-        raise FileExistsError(f"Crawler file already exists: {path}")
+        raise FileExistsError(f"Already exists: {path}")
     path.write_text(
-        (
-            '"""Crawler stub."""\n'
-            "from __future__ import annotations\n\n"
-            "from typing import Iterable\n\n"
-            "try:\n"
-            "    from crawlers.base import BaseCrawler, CrawlItem\n"
-            "except ModuleNotFoundError:  # allow running directly from this folder\n"
-            "    import sys\n"
-            "    from pathlib import Path\n\n"
-            "    ROOT_DIR = Path(__file__).resolve().parents[2]\n"
-            "    sys.path.insert(0, str(ROOT_DIR / \"src\"))\n"
-            "    from crawlers.base import BaseCrawler, CrawlItem\n\n\n"
-            f"class {class_name}(BaseCrawler):\n"
-            "    def run(self) -> Iterable[CrawlItem]:\n"
-            "        # Base template: each source owns its crawler file.\n"
-            "        return self.stub_run()\n"
-            "\n\n"
-            "if __name__ == \"__main__\":\n"
-            f"    {class_name}(name=\"{source_name}\").run()\n"
-        ),
+        f'"""Crawler stub for {module_name}."""\n'
+        "from __future__ import annotations\n\n"
+        "from typing import Iterable\n\n"
+        "try:\n"
+        "    from lib import BaseCrawler, CrawlItem\n"
+        "except ModuleNotFoundError:\n"
+        "    import sys\n"
+        "    from pathlib import Path\n"
+        "    ROOT_DIR = Path(__file__).resolve().parents[2]\n"
+        '    sys.path.insert(0, str(ROOT_DIR / "src"))\n'
+        "    from lib import BaseCrawler, CrawlItem\n\n\n"
+        f"class {class_name}(BaseCrawler):\n"
+        "    def run(self) -> Iterable[CrawlItem]:\n"
+        "        return self.stub_run()\n\n\n"
+        'if __name__ == "__main__":\n'
+        f'    {class_name}(name="{module_name}").run()\n',
         encoding="utf-8",
     )
 
 
-def _write_jsonify_stub(source_name: str, module_name: str, class_name: str) -> None:
-    path = _jsonify_file_path(module_name)
+def _write_schema_stub(module_name: str) -> None:
+    path = _crawler_dir(module_name) / "schema.py"
     if path.exists():
-        raise FileExistsError(f"Jsonify file already exists: {path}")
+        raise FileExistsError(f"Already exists: {path}")
     path.write_text(
-        (
-            f'"""Jsonify stub for {source_name}.\"\"\"\n'
-            "from __future__ import annotations\n\n"
-            "from typing import Any, List\n\n"
-            "from jsonify_logic.base import Jsonify\n\n\n"
-            f"class {class_name}(Jsonify):\n"
-            "    def to_json(self, data: Any) -> List[dict]:\n"
-            "        # TODO: convert list-of-lists into list of dicts.\n"
-            "        return data if isinstance(data, list) else []\n"
-        ),
+        f'"""Schema stub for {module_name}."""\n'
+        "from __future__ import annotations\n\n"
+        "from lib import Field, Schema\n\n\n"
+        "SCHEMA = Schema(\n"
+        '    table="items",\n'
+        "    fields=[\n"
+        '        Field("id", "TEXT", primary=True),\n'
+        '        Field("crawled_at", "TEXT", indexed=True, default_sql="CURRENT_TIMESTAMP"),\n'
+        "    ],\n"
+        ")\n",
         encoding="utf-8",
     )
 
 
-def _write_demo_data_stub(source_name: str, module_name: str) -> None:
-    path = _demo_data_file_path(module_name)
+def _write_jsonify_stub(module_name: str, class_name: str) -> None:
+    path = _crawler_dir(module_name) / "jsonify.py"
     if path.exists():
-        raise FileExistsError(f"Demo data file already exists: {path}")
+        raise FileExistsError(f"Already exists: {path}")
     path.write_text(
-        (
-            f'"""Demo data for {source_name}.\"\"\"\n\n'
-            "DEMO_DATA = [\n"
-            "    # [\"example\", 123],\n"
-            "]\n"
-        ),
+        f'"""Jsonify stub for {module_name}."""\n'
+        "from __future__ import annotations\n\n"
+        "from typing import Any, List\n\n"
+        "try:\n"
+        "    from lib import Jsonify\n"
+        "except ModuleNotFoundError:\n"
+        "    import sys\n"
+        "    from pathlib import Path\n"
+        "    ROOT_DIR = Path(__file__).resolve().parents[2]\n"
+        '    sys.path.insert(0, str(ROOT_DIR / "src"))\n'
+        "    from lib import Jsonify\n\n\n"
+        f"class {class_name}(Jsonify):\n"
+        "    def to_json(self, data: Any) -> List[dict]:\n"
+        "        # TODO: convert scraped rows into dicts\n"
+        "        return data if isinstance(data, list) else []\n",
         encoding="utf-8",
     )
 
 
-def _write_schema_stub(source_name: str, module_name: str) -> None:
-    path = _schema_file_path(module_name)
+def _write_demo_data_stub(module_name: str) -> None:
+    path = _crawler_dir(module_name) / "demo_data.py"
     if path.exists():
-        raise FileExistsError(f"Schema file already exists: {path}")
+        raise FileExistsError(f"Already exists: {path}")
     path.write_text(
-        (
-            f'"""Schema stub for {source_name}.\"\"\"\n'
-            "from __future__ import annotations\n\n"
-            "from schemas.base import Field, Schema\n\n\n"
-            "SCHEMA = Schema(\n"
-            "    table=\"items\",\n"
-            "    fields=[\n"
-            "        Field(\"id\", \"TEXT\", primary=True),\n"
-            "        Field(\"crawled_at\", \"TEXT\", indexed=True, default_sql=\"CURRENT_TIMESTAMP\"),\n"
-            "    ],\n"
-            ")\n"
-        ),
+        f'"""Demo data for {module_name}."""\n\n'
+        "DEMO_DATA = []\n",
         encoding="utf-8",
     )
 
 
-def _crawler_db_path(source_name: str) -> Path:
-    return ROOT_DIR / "data" / f"{source_name}.sqlite"
+def _write_publish_stub(module_name: str) -> None:
+    path = _crawler_dir(module_name) / "publish.py"
+    if path.exists():
+        raise FileExistsError(f"Already exists: {path}")
+    path.write_text(
+        f'"""Publish logic for {module_name}."""\n'
+        "from __future__ import annotations\n\n"
+        "# TODO: implement publishing to RapidAPI, Zyla, etc.\n",
+        encoding="utf-8",
+    )
 
 
-def _init_crawler_db(path: Path) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+def _init_crawler_db(module_name: str) -> None:
+    path = SRC_DIR / module_name / "database.sqlite"
     conn = sqlite3.connect(str(path))
     conn.execute(
-        """
-        CREATE TABLE IF NOT EXISTS items (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            payload_json TEXT NOT NULL,
-            fetched_at TEXT NOT NULL
-        );
-        """
+        "CREATE TABLE IF NOT EXISTS items ("
+        "id TEXT PRIMARY KEY, "
+        "crawled_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);"
     )
     conn.commit()
     conn.close()
 
 
-def main(source_name: str, enabled: bool) -> None:
+def main(source_name: str) -> None:
     load_dotenv()
-    app_cfg = load_json_config("app.json")
-    _setup_logging(app_cfg["app"]["log_level"])
+    _setup_logging()
 
-    sources_path = ROOT_DIR / "config" / "sources.json"
     resources_path = ROOT_DIR / "config" / "resources.json"
-    app_path = ROOT_DIR / "config" / "app.json"
     module_name = _derive_module_name(source_name)
-    class_name = _derive_class_name(source_name)
-    jsonify_class_name = _jsonify_class_name(source_name)
+    class_name = _derive_class_name(module_name)
+    jsonify_class_name = _derive_jsonify_class_name(module_name)
 
-    _write_crawler_stub(source_name, module_name, class_name)
-    _write_jsonify_stub(source_name, module_name, jsonify_class_name)
-    _write_demo_data_stub(source_name, module_name)
-    _write_schema_stub(source_name, module_name)
-    entry = {
-        "name": source_name,
-        "enabled": enabled,
-        "crawler": _crawler_dotted_path(module_name, class_name),
-        "notes": "Auto-generated by add_crawler.py",
-    }
-    _add_source_entry(sources_path, entry)
+    _crawler_dir(module_name).mkdir(parents=True, exist_ok=True)
+    _write_init(module_name)
+    _write_crawler_stub(module_name, class_name)
+    _write_schema_stub(module_name)
+    _write_jsonify_stub(module_name, jsonify_class_name)
+    _write_demo_data_stub(module_name)
+    _write_publish_stub(module_name)
+    _init_crawler_db(module_name)
 
-    collection = module_name
-    schema = module_name
-    db_rel_path = f"data/{source_name}.sqlite"
-    _ensure_collection(resources_path, collection, schema, db_rel_path)
+    _ensure_collection(
+        resources_path,
+        module_name,
+        module_name,
+        f"src/{module_name}/database.sqlite",
+    )
 
-    api_entry = {
-        "name": f"{source_name.replace('_', ' ').title()} API",
-        "slug": module_name,
-        "collection": collection,
-        "schema": schema,
-        "version": "1.0.0",
-        "description": f"API for {source_name.replace('_', ' ')}.",
-        "tags": [module_name],
-        "visibility": "PUBLIC",
-    }
-    _ensure_api_entry(app_path, api_entry)
-
-    _init_crawler_db(_crawler_db_path(source_name))
-
-    logging.info("Added crawler: %s", source_name)
-    logging.info("Module: %s | Class: %s", module_name, class_name)
-    logging.info("Updated: %s", sources_path)
+    logging.info("Added crawler: %s -> src/%s/", module_name, module_name)
 
 
 if __name__ == "__main__":
     # =========================
     # CONFIG (edit these)
     # =========================
-    SOURCE_NAME = "imdb_movies"
-    ENABLED = True
+    SOURCE_NAME = "my_new_crawler"   # will become _my_new_crawler
     # =========================
 
-    main(SOURCE_NAME, ENABLED)
-
-    # =========================
-    SOURCE_NAME = "craigslist_cars"
-    ENABLED = True
-    # =========================
-
-    main(SOURCE_NAME, ENABLED)
-
-    # =========================
-    SOURCE_NAME = "craigslist_realestate"
-    ENABLED = True
-    # =========================
-
-    main(SOURCE_NAME, ENABLED)
+    main(SOURCE_NAME)

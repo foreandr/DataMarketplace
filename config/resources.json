@@ -1,8 +1,8 @@
 {
   "collections": {
-    "cars": {
-      "db_path": "data/craigslist_cars.sqlite",
-      "schema": "craigslist_cars"
+    "_craigslist_cars": {
+      "db_path": "src/_craigslist_cars/database.sqlite",
+      "schema": "_craigslist_cars"
     }
   }
 }

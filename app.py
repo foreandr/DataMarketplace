@@ -18,14 +18,11 @@ ROOT_DIR = Path(__file__).resolve().parent
 SRC_DIR = ROOT_DIR / "src"
 sys.path.insert(0, str(SRC_DIR))
 load_dotenv()
-DATA_DIR = ROOT_DIR / "data"
 LOG_DIR = ROOT_DIR / "logs"
 FOREVER_LOG_DIR = LOG_DIR / "forever"
 REQUEST_LOG_PATH = LOG_DIR / "api_requests.log"
 SERVER_LOG_PATH = FOREVER_LOG_DIR / "server.log"
 ERROR_LOG_PATH = FOREVER_LOG_DIR / "errors.log"
-DEFAULT_LIMIT = 100
-MAX_LIMIT = 500
 
 app = Flask(__name__)
 
@@ -53,8 +50,13 @@ def _logger() -> logging.Logger:
     return logging.getLogger("datamarketplace")
 
 
+def _query_limit() -> int:
+    """Server-side limit only — never taken from user input."""
+    return int(os.environ.get("MID_LIMIT", 250))
+
+
 def _load_schema(schema_module: str):
-    mod = import_module(f"schemas.{schema_module}")
+    mod = import_module(f"{schema_module}.schema")
     return mod.SCHEMA
 
 
@@ -252,8 +254,8 @@ def index():
 
 @app.get("/schemas")
 def list_schemas():
-    schema_files = sorted((ROOT_DIR / "src" / "schemas").glob("*.py"))
-    names = [p.stem for p in schema_files if p.stem != "__init__"]
+    schema_files = sorted((ROOT_DIR / "src").glob("_*/schema.py"))
+    names = [p.parent.name for p in schema_files]
     return jsonify({"data": names, "metadata": {"count": len(names)}})
 
 
@@ -278,10 +280,8 @@ def search_collection(name: str):
         select_fields = payload.get("select", ["*"])
         flt = payload.get("filter", {})
         order_by = payload.get("order_by", [])
-        limit = int(payload.get("limit", DEFAULT_LIMIT))
+        limit = _query_limit()
         offset = int(payload.get("offset", 0))
-        if limit < 1 or limit > MAX_LIMIT:
-            raise ValueError(f"limit must be between 1 and {MAX_LIMIT}")
         if offset < 0:
             raise ValueError("offset must be >= 0")
 

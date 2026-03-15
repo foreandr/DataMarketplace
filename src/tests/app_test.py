@@ -45,10 +45,9 @@ def test_search_cars() -> None:
         "select": ["*"],
         "filter": {"price": {"$gte": 5000}},
         "order_by": [{"field": "price", "direction": "asc"}],
-        "limit": 100,
         "offset": 0,
     }
-    code, body = _post("/v1/collections/cars/search", payload)
+    code, body = _post("/v1/collections/_craigslist_cars/search", payload)
     assert code == 200
 
     if os.environ.get("LOG_TEST_DATA", "").lower() in {"1", "true", "yes", "on"}:
