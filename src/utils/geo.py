@@ -1,11 +1,12 @@
 """Geography helpers."""
 from __future__ import annotations
 
-from typing import List
+from typing import Dict, List
 
 from db.cities_can import cities_can
 from db.cities_us import cities_us
 import random
+
 
 def _extract_city_names(rows: List[dict]) -> List[str]:
     names: List[str] = []
@@ -28,3 +29,25 @@ def get_all_cities() -> List[str]:
     all_cities = get_cities_us() + get_cities_can()
     # random.sample(list, len(list)) returns a new shuffled list
     return random.sample(all_cities, k=len(all_cities))
+
+
+def get_all_cities_with_location() -> List[Dict[str, str]]:
+    """Return shuffled list of dicts with city, state, and country."""
+    result: List[Dict[str, str]] = []
+    for row in cities_us:
+        city = row.get("city", "").strip()
+        if city:
+            result.append({
+                "city": city,
+                "state": row.get("state_name", ""),
+                "country": "United States",
+            })
+    for row in cities_can:
+        city = row.get("city", "").strip()
+        if city:
+            result.append({
+                "city": city,
+                "state": row.get("province_name", ""),
+                "country": "Canada",
+            })
+    return random.sample(result, k=len(result))

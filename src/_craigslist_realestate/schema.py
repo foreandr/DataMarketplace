@@ -48,6 +48,9 @@ SCHEMA = Schema(
     fields=[
         Field("id", "TEXT", primary=True),
         Field("title", "TEXT", indexed=True),
+        Field("city", "TEXT", indexed=True),
+        Field("state", "TEXT", indexed=True),
+        Field("country", "TEXT", indexed=True),
         Field("crawled_at", "TEXT", indexed=True, default_sql="CURRENT_TIMESTAMP"),
     ],
 )
