@@ -10,14 +10,14 @@ from pathlib import Path
 from hyperSel import instance, parser
 
 try:
-    from utils.geo import get_all_cities
+    from utils.geo import get_all_cities_with_location
     from _craigslist_cars.jsonify import CraigslistCarsJsonify
     from _craigslist_cars.schema import SCHEMA
 except ModuleNotFoundError:
     import sys
     ROOT_DIR = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(ROOT_DIR / "src"))
-    from utils.geo import get_all_cities
+    from utils.geo import get_all_cities_with_location
     from _craigslist_cars.jsonify import CraigslistCarsJsonify
     from _craigslist_cars.schema import SCHEMA
 
@@ -35,12 +35,13 @@ class CraigslistCarsCrawler:
         browser.init_browser()
         browser.go_to_site("https://foreandr.github.io/")
 
-        for city in get_all_cities():
+        for location in get_all_cities_with_location():
+            city = location["city"]
             try:
-                print(f"[{self.name}] city: {city}")
+                print(f"[{self.name}] city: {city} | {location['state']}, {location['country']}")
                 total_data = self._process_city(browser, city)
                 jsonifier = CraigslistCarsJsonify(self.name)
-                clean_data = jsonifier.run_analysis(total_data, print_samples=False)
+                clean_data = jsonifier.run_analysis(total_data, location=location, print_samples=False)
                 self._store_clean_data(clean_data)
             except Exception as e:
                 print("CITY FAILED FOR SOME REASON:", city)
@@ -97,6 +98,12 @@ class CraigslistCarsCrawler:
         if "crawled_at" not in cols:
             conn.execute("ALTER TABLE items ADD COLUMN crawled_at TEXT;")
             conn.execute("UPDATE items SET crawled_at = CURRENT_TIMESTAMP WHERE crawled_at IS NULL;")
+        if "city" not in cols:
+            conn.execute("ALTER TABLE items ADD COLUMN city TEXT;")
+        if "state" not in cols:
+            conn.execute("ALTER TABLE items ADD COLUMN state TEXT;")
+        if "country" not in cols:
+            conn.execute("ALTER TABLE items ADD COLUMN country TEXT;")
 
         rows = []
         if isinstance(clean_data, list):

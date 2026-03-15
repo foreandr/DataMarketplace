@@ -79,7 +79,7 @@ class CraigslistCarsJsonify:
                 return year
         return None
 
-    def to_json(self, data: Any) -> List[dict]:
+    def to_json(self, data: Any, location: dict | None = None) -> List[dict]:
         self.processed_count = 0
         self.skipped_count = 0
         self.skipped_data = []
@@ -87,6 +87,10 @@ class CraigslistCarsJsonify:
 
         if not data or not isinstance(data, list):
             return []
+
+        loc_city    = (location or {}).get("city")
+        loc_state   = (location or {}).get("state")
+        loc_country = (location or {}).get("country")
 
         for item in data:
             reason = None
@@ -122,15 +126,18 @@ class CraigslistCarsJsonify:
                 "mileage": self._parse_mileage(item),
                 "price": price,
                 "url": url,
-                "image_url": next((x for x in item if isinstance(x, str) and any(ext in x.lower() for ext in [".png", ".jpg", ".jpeg", "images"])), None)
+                "image_url": next((x for x in item if isinstance(x, str) and any(ext in x.lower() for ext in [".png", ".jpg", ".jpeg", "images"])), None),
+                "city": loc_city,
+                "state": loc_state,
+                "country": loc_country,
             }
             self.success_data.append({k: record.get(k) for k in SCHEMA.field_names()})
             self.processed_count += 1
 
         return self.success_data
 
-    def run_analysis(self, data: Any, print_samples: bool = False) -> List[dict]:
-        results = self.to_json(data)
+    def run_analysis(self, data: Any, location: dict | None = None, print_samples: bool = False) -> List[dict]:
+        results = self.to_json(data, location=location)
         if not print_samples:
             return results
 
