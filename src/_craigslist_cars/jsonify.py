@@ -1,4 +1,6 @@
+"""Jsonify for _craigslist_cars."""
 from __future__ import annotations
+
 from typing import Any, List
 from datetime import datetime, timedelta
 import re
@@ -6,14 +8,12 @@ import json
 import random
 
 try:
-    from lib import Jsonify
     from _craigslist_cars.schema import SCHEMA
 except ModuleNotFoundError:
     import sys
     from pathlib import Path
     ROOT_DIR = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(ROOT_DIR / "src"))
-    from lib import Jsonify
     from _craigslist_cars.schema import SCHEMA
 
 from _craigslist_cars.demo_data import DEMO_DATA
@@ -25,9 +25,9 @@ RESET = "\033[0m"
 BOLD = "\033[1m"
 
 
-class CraigslistCarsJsonify(Jsonify):
-    def __init__(self, name: str, debug: bool = False):
-        super().__init__(name)
+class CraigslistCarsJsonify:
+    def __init__(self, name: str = "_craigslist_cars", debug: bool = False):
+        self.source_name = name
         self.processed_count = 0
         self.skipped_count = 0
         self.skipped_data = []
@@ -155,6 +155,6 @@ class CraigslistCarsJsonify(Jsonify):
 
 
 if __name__ == "__main__":
-    jsonifier = CraigslistCarsJsonify("_craigslist_cars")
+    jsonifier = CraigslistCarsJsonify()
     result = jsonifier.to_json(data_to_process)
     print(f"Processed: {jsonifier.processed_count} | Skipped: {jsonifier.skipped_count}")
