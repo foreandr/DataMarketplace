@@ -1,7 +1,7 @@
 """Schema for _craigslist_cars."""
 from __future__ import annotations
 
-from schemas.base import Field, Schema
+from lib import Field, Schema
 
 
 SCHEMA = Schema(

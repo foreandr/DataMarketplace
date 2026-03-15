@@ -6,14 +6,14 @@ import json
 import random
 
 try:
-    from jsonify_logic.base import Jsonify
+    from lib import Jsonify
     from _craigslist_cars.schema import SCHEMA
 except ModuleNotFoundError:
     import sys
     from pathlib import Path
     ROOT_DIR = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(ROOT_DIR / "src"))
-    from jsonify_logic.base import Jsonify
+    from lib import Jsonify
     from _craigslist_cars.schema import SCHEMA
 
 from _craigslist_cars.demo_data import DEMO_DATA

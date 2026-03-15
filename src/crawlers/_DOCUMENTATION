@@ -1,6 +1,0 @@
-Purpose: Source-specific crawlers that fetch raw data.
-Key files:
-- base.py: BaseCrawler + CrawlItem definitions.
-- registry.py: Loader for crawler classes by dotted path.
-- <source>.py: Each crawler implementation.
-Notes: Crawlers write raw items that are normalized by jsonify_logic.

@@ -1,4 +1,0 @@
-Purpose: Normalizes crawler output into JSON rows matching schemas.
-Key files:
-- base.py: Jsonify base class.
-- <source>.py: Transform logic for each crawler source.
