@@ -1,7 +1,7 @@
 """Schema stub for _imdb_movies."""
 from __future__ import annotations
 
-from schemas.base import Field, Schema
+from lib import Field, Schema
 
 
 SCHEMA = Schema(

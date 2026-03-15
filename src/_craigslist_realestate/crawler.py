@@ -4,13 +4,13 @@ from __future__ import annotations
 from typing import Iterable
 
 try:
-    from crawlers.base import BaseCrawler, CrawlItem
+    from lib import BaseCrawler, CrawlItem
 except ModuleNotFoundError:
     import sys
     from pathlib import Path
     ROOT_DIR = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(ROOT_DIR / "src"))
-    from crawlers.base import BaseCrawler, CrawlItem
+    from lib import BaseCrawler, CrawlItem
 
 
 class CraigslistRealestateCrawler(BaseCrawler):

@@ -1,4 +1,0 @@
-Purpose: Static dataset modules used by crawlers or schemas.
-Key files:
-- cities_us.py, cities_can.py: City reference datasets.
-Notes: Large modules intended for lookups.

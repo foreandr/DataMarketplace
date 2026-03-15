@@ -8,7 +8,7 @@ from datetime import datetime
 from hyperSel import instance, parser
 
 try:
-    from crawlers.base import BaseCrawler, CrawlItem
+    from lib import BaseCrawler, CrawlItem
     from utils.geo import get_all_cities
     from _craigslist_cars.jsonify import CraigslistCarsJsonify
     from _craigslist_cars.schema import SCHEMA
@@ -18,7 +18,7 @@ except ModuleNotFoundError:
 
     ROOT_DIR = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(ROOT_DIR / "src"))
-    from crawlers.base import BaseCrawler, CrawlItem
+    from lib import BaseCrawler, CrawlItem
     from utils.geo import get_all_cities
     from _craigslist_cars.jsonify import CraigslistCarsJsonify
     from _craigslist_cars.schema import SCHEMA
