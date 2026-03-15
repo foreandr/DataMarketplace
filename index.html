@@ -176,7 +176,6 @@ Example search payload:
   &quot;select&quot;: [&quot;*&quot;],
   &quot;filter&quot;: {&quot;price&quot;: {&quot;$gte&quot;: 5000}},
   &quot;order_by&quot;: [{&quot;field&quot;: &quot;price&quot;, &quot;direction&quot;: &quot;asc&quot;}],
-  &quot;limit&quot;: 100,
   &quot;offset&quot;: 0
 }
 ```
@@ -242,7 +241,6 @@ This documentation is intentionally high-level so it stays accurate as sources e
 
       async function runQuery() {
         const minPrice = 5000;
-        const limit = 5;
         setStatus('Running query...');
         setResult('Loading...');
 
@@ -250,12 +248,11 @@ This documentation is intentionally high-level so it stays accurate as sources e
           select: ['*'],
           filter: { price: { $gte: minPrice } },
           order_by: [{ field: 'price', direction: 'asc' }],
-          limit,
           offset: 0,
         };
 
         try {
-          const resp = await fetch('/v1/collections/cars/search', {
+          const resp = await fetch('/v1/collections/_craigslist_cars/search', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
