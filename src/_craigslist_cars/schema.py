@@ -1,0 +1,20 @@
+"""Schema for _craigslist_cars."""
+from __future__ import annotations
+
+from lib import Field, Schema
+
+
+SCHEMA = Schema(
+    table="items",
+    fields=[
+        Field("id", "TEXT", primary=True),
+        Field("title", "TEXT"),
+        Field("year", "INTEGER", indexed=True),
+        Field("posted_at", "TEXT", indexed=True),
+        Field("mileage", "INTEGER"),
+        Field("price", "INTEGER", indexed=True),
+        Field("url", "TEXT", unique=True, indexed=True),
+        Field("image_url", "TEXT"),
+        Field("crawled_at", "TEXT", indexed=True, default_sql="CURRENT_TIMESTAMP"),
+    ],
+)
