@@ -15,9 +15,16 @@
 
 <div class="offerings">
   <a class="card" href="{{ url_for('quick_query', crawler_name='_craigslist_cars') }}">
-    <span class="card-icon">🚗</span>
-    <h3>_craigslist_cars</h3>
+    <h3>Craigslist Cars</h3>
     <p>Used vehicle listings across US &amp; Canadian cities — price, mileage, year, and full location data.</p>
+    <div class="card-footer">
+      <span class="card-link">View docs →</span>
+      <span class="badge badge-green">● Live</span>
+    </div>
+  </a>
+  <a class="card" href="{{ url_for('quick_query', crawler_name='_craigslist_cars2') }}">
+    <h3>Craigslist Cars2</h3>
+    <p>Used vehicle listings across US & Canadian cities.</p>
     <div class="card-footer">
       <span class="card-link">View docs →</span>
       <span class="badge badge-green">● Live</span>
