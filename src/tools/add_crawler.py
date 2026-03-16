@@ -9,8 +9,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
-ROOT_DIR = Path(__file__).resolve().parents[2]
-SRC_DIR = ROOT_DIR / "src"
+ROOT_DIR      = Path(__file__).resolve().parents[2]
+SRC_DIR       = ROOT_DIR / "src"
 TEMPLATES_DIR = ROOT_DIR / "templates"
 sys.path.insert(0, str(SRC_DIR))
 
@@ -66,15 +66,12 @@ def _ensure_collection(
 # ── Field helpers ──────────────────────────────────────────────────────────────
 
 def _all_fields(extra_fields: list[dict]) -> list[dict]:
-    """Return the full ordered field list: id, title, [extra], city, state, country, crawled_at."""
+    """Return the full ordered field list: id, [extra_fields], crawled_at.
+    Only id and crawled_at are always included — everything else must be passed in."""
     base_leading: list[dict] = [
-        {"name": "id",    "type": "TEXT", "primary": True,  "description": "Unique listing identifier"},
-        {"name": "title", "type": "TEXT",                   "description": "Listing headline"},
+        {"name": "id", "type": "TEXT", "primary": True, "description": "Unique listing identifier"},
     ]
     base_trailing: list[dict] = [
-        {"name": "city",       "type": "TEXT", "indexed": True, "location": True, "description": "City where listing was crawled"},
-        {"name": "state",      "type": "TEXT", "indexed": True, "location": True, "description": "State or province"},
-        {"name": "country",    "type": "TEXT", "indexed": True, "location": True, "description": "Country of origin"},
         {"name": "crawled_at", "type": "TEXT", "indexed": True, "default_sql": "CURRENT_TIMESTAMP", "description": "Timestamp when row was ingested"},
     ]
     return base_leading + list(extra_fields) + base_trailing
@@ -82,7 +79,7 @@ def _all_fields(extra_fields: list[dict]) -> list[dict]:
 
 def _field_to_python(f: dict) -> str:
     """Return a Field(...) constructor line for schema.py."""
-    name = f["name"]
+    name  = f["name"]
     ftype = f["type"]
     kwargs: list[str] = []
     if f.get("primary"):
@@ -95,6 +92,15 @@ def _field_to_python(f: dict) -> str:
         kwargs.append(f'default_sql="{f["default_sql"]}"')
     kw = ", ".join(kwargs)
     return f'        Field("{name}", "{ftype}"{", " + kw if kw else ""}),'
+
+
+def _pick_example_fields(extra_fields: list[dict]) -> dict:
+    """Pick representative fields from the schema for HTML examples."""
+    int_field  = next((f for f in extra_fields if f["type"] == "INTEGER"), None)
+    text_field = next((f for f in extra_fields if f["type"] == "TEXT"),    None)
+    loc_field  = next((f for f in extra_fields if f.get("location")),      text_field)
+    idx_field  = next((f for f in extra_fields if f.get("indexed")),       extra_fields[0] if extra_fields else None)
+    return {"int": int_field, "text": text_field, "loc": loc_field, "idx": idx_field}
 
 
 # ── File writers ───────────────────────────────────────────────────────────────
@@ -128,7 +134,7 @@ def _write_schema_stub(module_name: str, extra_fields: list[dict]) -> None:
     path = _crawler_dir(module_name) / "schema.py"
     if path.exists():
         raise FileExistsError(f"Already exists: {path}")
-    fields = _all_fields(extra_fields)
+    fields      = _all_fields(extra_fields)
     field_lines = "\n".join(_field_to_python(f) for f in fields)
     path.write_text(
         f'"""Schema for {module_name}."""\n'
@@ -152,7 +158,7 @@ def _write_schema_stub(module_name: str, extra_fields: list[dict]) -> None:
         "        for f in self.fields:\n"
         '            col = f"{f.name} {f.type}"\n'
         "            if f.primary: col += \" PRIMARY KEY\"\n"
-        "            if f.unique: col += \" UNIQUE\"\n"
+        "            if f.unique:  col += \" UNIQUE\"\n"
         '            if f.default_sql: col += f" DEFAULT {f.default_sql}"\n'
         "            cols.append(col)\n"
         '        return f"CREATE TABLE IF NOT EXISTS {self.table} ({\', \'.join(cols)});"\n\n'
@@ -187,9 +193,9 @@ def _write_jsonify_stub(module_name: str, class_name: str) -> None:
         "    def to_json(self, data: Any, location: dict | None = None) -> List[dict]:\n"
         "        # TODO: convert scraped rows into dicts.\n"
         "        # Stamp each record with location data if provided:\n"
-        "        # loc_city    = (location or {}).get('city', '')\n"
-        "        # loc_state   = (location or {}).get('state', '')\n"
-        "        # loc_country = (location or {}).get('country', '')\n"
+        "        loc_city    = (location or {}).get('city', '')\n"
+        "        loc_state   = (location or {}).get('state', '')\n"
+        "        loc_country = (location or {}).get('country', '')\n"
         "        return data if isinstance(data, list) else []\n",
         encoding="utf-8",
     )
@@ -206,13 +212,19 @@ def _write_demo_data_stub(module_name: str) -> None:
     )
 
 
-def _write_publish_stub(module_name: str) -> None:
+def _write_publish_stub(
+    module_name: str,
+    short_desc: str = "",
+    long_desc: str  = "",
+) -> None:
     path = _crawler_dir(module_name) / "publish.py"
     if path.exists():
         raise FileExistsError(f"Already exists: {path}")
     path.write_text(
         f'"""Publish logic for {module_name}."""\n'
         "from __future__ import annotations\n\n"
+        f'SHORT_DESC = "{short_desc}"\n'
+        f'LONG_DESC  = """{long_desc}"""\n\n'
         "# TODO: implement publishing to RapidAPI, Zyla, etc.\n",
         encoding="utf-8",
     )
@@ -224,8 +236,8 @@ def _schema_table_rows(fields: list[dict]) -> str:
     for f in fields:
         name = f["name"]
         ftype = f["type"]
-        desc = f.get("description", name.replace("_", " ").capitalize())
-        tags = []
+        desc  = f.get("description", name.replace("_", " ").capitalize())
+        tags  = []
         if f.get("primary"):
             tags.append('<span class="ftag ftag-pk">PK</span>')
         if f.get("unique"):
@@ -234,7 +246,7 @@ def _schema_table_rows(fields: list[dict]) -> str:
             tags.append('<span class="ftag ftag-loc">location</span>')
         if f.get("indexed"):
             tags.append('<span class="ftag ftag-idx">indexed</span>')
-        inner = "".join(tags)
+        inner       = "".join(tags)
         constraints = f'<div class="field-tags">{inner}</div>' if tags else ""
         rows.append(
             f"    <tr>\n"
@@ -247,14 +259,47 @@ def _schema_table_rows(fields: list[dict]) -> str:
     return "\n".join(rows)
 
 
-def _write_html_template(module_name: str, extra_fields: list[dict]) -> None:
+def _write_html_template(
+    module_name:  str,
+    extra_fields: list[dict],
+    long_desc:    str = "",
+) -> None:
     """Generate templates/{module_name}.html styled like _craigslist_cars.html."""
     path = TEMPLATES_DIR / f"{module_name}.html"
     if path.exists():
         raise FileExistsError(f"Already exists: {path}")
 
-    fields = _all_fields(extra_fields)
+    fields      = _all_fields(extra_fields)
     schema_rows = _schema_table_rows(fields)
+    ex          = _pick_example_fields(extra_fields)
+
+    hero_desc    = long_desc if long_desc else f"Data scraped by <strong>{module_name}</strong>."
+    has_location = any(f.get("location") for f in extra_fields)
+
+    # Representative field names for examples — fall back to safe placeholders
+    int_name  = ex["int"]["name"]  if ex["int"]  else "value"
+    text_name = ex["text"]["name"] if ex["text"] else "field"
+    loc_name  = ex["loc"]["name"]  if ex["loc"]  else text_name
+    idx_name  = ex["idx"]["name"]  if ex["idx"]  else (extra_fields[0]["name"] if extra_fields else "field")
+
+    # Code-example filter block using actual field names
+    filter_lines: list[str] = []
+    if ex["text"]:
+        n = ex["text"]["name"]
+        filter_lines.append(
+            f'        <span class="ckey">"{n}"</span>'
+            f'<span class="cop">:</span>  '
+            f'<span class="cs">"example"</span>,'
+        )
+    if ex["int"]:
+        n = ex["int"]["name"]
+        filter_lines.append(
+            f'        <span class="ckey">"{n}"</span>'
+            f'<span class="cop">:</span>  '
+            f'{{<span class="cs">"$gte"</span><span class="cop">:</span> <span class="cn">0</span>}},'
+        )
+    if not filter_lines:
+        filter_lines.append('        <span class="cc"># add filters here</span>')
 
     L: list[str] = []
 
@@ -272,13 +317,13 @@ def _write_html_template(module_name: str, extra_fields: list[dict]) -> None:
     L.append("  </div>")
     L.append(f'  <div class="collection-title">{module_name}</div>')
     L.append('  <p class="collection-desc">')
-    L.append(f"    Data scraped by <strong>{module_name}</strong>. Each record includes")
-    L.append("    title, geo-location (city, state, country), and a crawl timestamp.")
+    L.append(f"    {hero_desc}")
     L.append("  </p>")
     L.append('  <div class="collection-meta">')
     L.append('    <span class="badge badge-green">● Live</span>')
     L.append('    <span class="badge badge-blue">SQLite</span>')
-    L.append('    <span class="badge badge-purple">geo-tagged</span>')
+    if has_location:
+        L.append('    <span class="badge badge-purple">geo-tagged</span>')
     L.append('    <span class="badge badge-muted">REST · POST /search</span>')
     L.append("  </div>")
     L.append("</div>")
@@ -317,42 +362,42 @@ def _write_html_template(module_name: str, extra_fields: list[dict]) -> None:
     L.append("    <tr>")
     L.append('      <td><span class="field-name">$gte</span></td>')
     L.append('      <td class="field-desc">Greater than or equal to</td>')
-    L.append('      <td><span class="field-type">{"price": {"$gte": 5000}}</span></td>')
+    L.append(f'      <td><span class="field-type">{{"{int_name}": {{"$gte": 0}}}}</span></td>')
     L.append("    </tr>")
     L.append("    <tr>")
     L.append('      <td><span class="field-name">$lte</span></td>')
     L.append('      <td class="field-desc">Less than or equal to</td>')
-    L.append('      <td><span class="field-type">{"price": {"$lte": 20000}}</span></td>')
+    L.append(f'      <td><span class="field-type">{{"{int_name}": {{"$lte": 100}}}}</span></td>')
     L.append("    </tr>")
     L.append("    <tr>")
     L.append('      <td><span class="field-name">$gt</span></td>')
     L.append('      <td class="field-desc">Strictly greater than</td>')
-    L.append('      <td><span class="field-type">{"year": {"$gt": 2010}}</span></td>')
+    L.append(f'      <td><span class="field-type">{{"{int_name}": {{"$gt": 0}}}}</span></td>')
     L.append("    </tr>")
     L.append("    <tr>")
     L.append('      <td><span class="field-name">$lt</span></td>')
     L.append('      <td class="field-desc">Strictly less than</td>')
-    L.append('      <td><span class="field-type">{"mileage": {"$lt": 100000}}</span></td>')
+    L.append(f'      <td><span class="field-type">{{"{int_name}": {{"$lt": 100}}}}</span></td>')
     L.append("    </tr>")
     L.append("    <tr>")
     L.append('      <td><span class="field-name">$eq</span></td>')
     L.append('      <td class="field-desc">Exact match (shorthand: pass the value directly)</td>')
-    L.append('      <td><span class="field-type">{"country": "United States"}</span></td>')
+    L.append(f'      <td><span class="field-type">{{"{text_name}": "example"}}</span></td>')
     L.append("    </tr>")
     L.append("    <tr>")
     L.append('      <td><span class="field-name">$ne</span></td>')
     L.append('      <td class="field-desc">Not equal to</td>')
-    L.append('      <td><span class="field-type">{"country": {"$ne": "Canada"}}</span></td>')
+    L.append(f'      <td><span class="field-type">{{"{text_name}": {{"$ne": "example"}}}}</span></td>')
     L.append("    </tr>")
     L.append("    <tr>")
     L.append('      <td><span class="field-name">$like</span></td>')
     L.append('      <td class="field-desc">SQL LIKE pattern match — use % as wildcard</td>')
-    L.append('      <td><span class="field-type">{"title": {"$like": "%keyword%"}}</span></td>')
+    L.append(f'      <td><span class="field-type">{{"{text_name}": {{"$like": "%keyword%"}}}}</span></td>')
     L.append("    </tr>")
     L.append("    <tr>")
     L.append('      <td><span class="field-name">$in</span></td>')
     L.append('      <td class="field-desc">Value must be in the provided list</td>')
-    L.append('      <td><span class="field-type">{"state": {"$in": ["Texas", "California"]}}</span></td>')
+    L.append(f'      <td><span class="field-type">{{"{loc_name}": {{"$in": ["a", "b"]}}}}</span></td>')
     L.append("    </tr>")
     L.append("  </tbody>")
     L.append("</table>")
@@ -371,7 +416,7 @@ def _write_html_template(module_name: str, extra_fields: list[dict]) -> None:
     L.append("    </div>")
     L.append('    <button class="code-copy" id="copySample">Copy</button>')
     L.append("  </div>")
-    # <pre> content must start on same line as the tag — no leading newline inside the block
+    # <pre> must open on the same line — no leading newline inside the block
     L.append('  <pre class="code-body" id="sampleCode"><span class="ck">import</span> requests')
     L.append("")
     L.append('<span class="cc"># Replace these with the credentials provided by your API platform</span>')
@@ -396,9 +441,16 @@ def _write_html_template(module_name: str, extra_fields: list[dict]) -> None:
     L.append('payload <span class="cop">=</span> {')
     L.append('    <span class="ckey">"select"</span><span class="cop">:</span>      [<span class="cs">"*"</span>],')
     L.append('    <span class="ckey">"filter"</span><span class="cop">:</span>      {')
-    L.append('        <span class="ckey">"country"</span><span class="cop">:</span>  <span class="cs">"United States"</span>,')
+    for fl in filter_lines:
+        L.append(fl)
     L.append("    },")
-    L.append('    <span class="ckey">"order_by"</span><span class="cop">:</span>    [],')
+    L.append(
+        f'    <span class="ckey">"order_by"</span><span class="cop">:</span>    '
+        f'[{{<span class="cs">"field"</span><span class="cop">:</span> '
+        f'<span class="cs">"{idx_name}"</span>, '
+        f'<span class="cs">"direction"</span><span class="cop">:</span> '
+        f'<span class="cs">"asc"</span>}}],'
+    )
     L.append('    <span class="ckey">"page_number"</span><span class="cop">:</span> <span class="cn">1</span>,')
     L.append("}")
     L.append("")
@@ -449,9 +501,57 @@ def _write_html_template(module_name: str, extra_fields: list[dict]) -> None:
     path.write_text("\n".join(L), encoding="utf-8")
 
 
+def _insert_index_card(module_name: str, short_desc: str) -> None:
+    """Insert a new <a class="card"> into templates/index.html offerings block."""
+    index_path = TEMPLATES_DIR / "index.html"
+    content    = index_path.read_text(encoding="utf-8")
+
+    # Idempotency — don't double-insert
+    if f"crawler_name='{module_name}'" in content:
+        logging.info("Card for %s already present in index.html", module_name)
+        return
+
+    href = "{{ url_for('quick_query', crawler_name='" + module_name + "') }}"
+    card = (
+        f'  <a class="card" href="{href}">\n'
+        f'    <h3>{module_name}</h3>\n'
+        f'    <p>{short_desc}</p>\n'
+        f'    <div class="card-footer">\n'
+        f'      <span class="card-link">View docs \u2192</span>\n'
+        f'      <span class="badge badge-green">\u25cf Live</span>\n'
+        f'    </div>\n'
+        f'  </a>\n'
+    )
+
+    # Insert before the closing </div> of the offerings block
+    marker = "</div>\n{% endblock %}"
+    if marker not in content:
+        raise ValueError("Could not find offerings </div> insertion point in index.html")
+
+    content = content.replace(marker, card + marker, 1)
+    index_path.write_text(content, encoding="utf-8")
+
+
+def _remove_index_card(module_name: str) -> bool:
+    """Remove the <a class="card"> block for module_name from index.html."""
+    index_path = TEMPLATES_DIR / "index.html"
+    if not index_path.exists():
+        return False
+    content = index_path.read_text(encoding="utf-8")
+    anchor  = f"crawler_name='{module_name}'"
+    if anchor not in content:
+        return False
+    idx   = content.index(anchor)
+    start = content.rindex("  <a ", 0, idx)
+    end   = content.index("  </a>", idx) + len("  </a>") + 1  # +1 eats the trailing \n
+    content = content[:start] + content[end:]
+    index_path.write_text(content, encoding="utf-8")
+    return True
+
+
 def _init_crawler_db(module_name: str, extra_fields: list[dict]) -> None:
     """Create the SQLite database with the full schema."""
-    fields = _all_fields(extra_fields)
+    fields   = _all_fields(extra_fields)
     col_defs: list[str] = []
     for f in fields:
         col = f"{f['name']} {f['type']}"
@@ -475,54 +575,150 @@ def _init_crawler_db(module_name: str, extra_fields: list[dict]) -> None:
     conn.close()
 
 
-def main(source_name: str, extra_fields: list[dict] | None = None) -> None:
+# ── Orchestrator ───────────────────────────────────────────────────────────────
+
+def main(
+    source_name:  str,
+    extra_fields: list[dict] | None = None,
+    short_desc:   str = "",
+    long_desc:    str = "",
+) -> None:
     load_dotenv()
     _setup_logging()
 
-    extra_fields = extra_fields or []
-    resources_path = ROOT_DIR / "config" / "resources.json"
-    module_name = _derive_module_name(source_name)
-    class_name = _derive_class_name(module_name)
+    extra_fields       = extra_fields or []
+    resources_path     = ROOT_DIR / "config" / "resources.json"
+    module_name        = _derive_module_name(source_name)
+    class_name         = _derive_class_name(module_name)
     jsonify_class_name = _derive_jsonify_class_name(module_name)
 
     _crawler_dir(module_name).mkdir(parents=True, exist_ok=True)
+
+    # ── STEP 1: __init__.py ───────────────────────────────────────────────────
+    print("\n[STEP 1] Writing __init__.py ...")
     _write_init(module_name)
-    _write_crawler_stub(module_name, class_name)
-    _write_schema_stub(module_name, extra_fields)
-    _write_jsonify_stub(module_name, jsonify_class_name)
-    _write_demo_data_stub(module_name)
-    _write_publish_stub(module_name)
-    _write_html_template(module_name, extra_fields)
-    _init_crawler_db(module_name, extra_fields)
+    print("  OK")
 
-    _ensure_collection(
-        resources_path,
-        module_name,
-        module_name,
-        f"src/{module_name}/database.sqlite",
-    )
+    # ── STEP 2: crawler.py ────────────────────────────────────────────────────
+    # print("\n[STEP 2] Writing crawler.py ...")
+    # _write_crawler_stub(module_name, class_name)
+    # print("  OK")
 
-    logging.info("Added crawler: %s -> src/%s/", module_name, module_name)
-    logging.info("Generated template: templates/%s.html", module_name)
+    # ── STEP 3: schema.py ─────────────────────────────────────────────────────
+    # print("\n[STEP 3] Writing schema.py ...")
+    # _write_schema_stub(module_name, extra_fields)
+    # print("  OK")
+
+    # ── STEP 4: jsonify.py ────────────────────────────────────────────────────
+    # print("\n[STEP 4] Writing jsonify.py ...")
+    # _write_jsonify_stub(module_name, jsonify_class_name)
+    # print("  OK")
+
+    # ── STEP 5: demo_data.py ──────────────────────────────────────────────────
+    # print("\n[STEP 5] Writing demo_data.py ...")
+    # _write_demo_data_stub(module_name)
+    # print("  OK")
+
+    # ── STEP 6: publish.py ────────────────────────────────────────────────────
+    # print("\n[STEP 6] Writing publish.py ...")
+    # _write_publish_stub(module_name, short_desc, long_desc)
+    # print("  OK")
+
+    # ── STEP 7: HTML template ─────────────────────────────────────────────────
+    # print("\n[STEP 7] Writing HTML template ...")
+    # _write_html_template(module_name, extra_fields, long_desc)
+    # print("  OK")
+
+    # ── STEP 8: SQLite database ───────────────────────────────────────────────
+    # print("\n[STEP 8] Initializing SQLite database ...")
+    # _init_crawler_db(module_name, extra_fields)
+    # print("  OK")
+
+    # ── STEP 9: resources.json ────────────────────────────────────────────────
+    # print("\n[STEP 9] Registering collection in resources.json ...")
+    # _ensure_collection(resources_path, module_name, module_name, f"src/{module_name}/database.sqlite")
+    # print("  OK")
+
+    # ── STEP 10: index.html card ──────────────────────────────────────────────
+    # print("\n[STEP 10] Inserting card into index.html ...")
+    # _insert_index_card(module_name, short_desc)
+    # print("  OK")
+
+    print("\nDone.")
+
+
+def delete_crawler(source_name: str) -> None:
+    """Remove everything created by main() for this crawler."""
+    import shutil
+
+    load_dotenv()
+    _setup_logging()
+
+    module_name    = _derive_module_name(source_name)
+    crawler_dir    = _crawler_dir(module_name)
+    template_path  = TEMPLATES_DIR / f"{module_name}.html"
+    resources_path = ROOT_DIR / "config" / "resources.json"
+
+    # src/{module_name}/ — covers __init__, crawler, schema, jsonify,
+    #                       demo_data, publish, database.sqlite
+    if crawler_dir.exists():
+        shutil.rmtree(crawler_dir)
+        print(f"  Deleted: {crawler_dir}")
+    else:
+        print(f"  Not found: {crawler_dir}")
+
+    # templates/{module_name}.html
+    if template_path.exists():
+        template_path.unlink()
+        print(f"  Deleted: {template_path}")
+    else:
+        print(f"  Not found: {template_path}")
+
+    # config/resources.json entry
+    data = _load_json(resources_path)
+    collections = data.get("collections", {})
+    if module_name in collections:
+        del collections[module_name]
+        data["collections"] = collections
+        _write_json(resources_path, data)
+        print(f"  Removed '{module_name}' from resources.json")
+    else:
+        print(f"  '{module_name}' not in resources.json")
+
+    # templates/index.html card
+    if _remove_index_card(module_name):
+        print(f"  Removed card for '{module_name}' from index.html")
+    else:
+        print(f"  No card for '{module_name}' in index.html")
+
+    print("\nClean.")
 
 
 if __name__ == "__main__":
-    # =========================
-    # CONFIG (edit these)
-    # =========================
-    SOURCE_NAME = "my_new_crawler"  # will become _my_new_crawler
-
-    # Add custom fields beyond the base set (id, title, city, state, country, crawled_at).
-    # These are inserted between title and the location fields.
-    # Valid keys: name (str), type ("TEXT"|"INTEGER"|"REAL"), indexed (bool),
-    #             unique (bool), description (str)
+    # ── CONFIG ───────────────────────────────────────────────────────────────────
+    SOURCE_NAME = "craigslist_cars2"
+    SHORT_DESC  = "Used vehicle listings across US & Canadian cities."
+    LONG_DESC   = """\
+Used vehicle listings scraped across US and Canadian cities. Each record includes \
+pricing, mileage, year, URL, and full geo-location data tagged at crawl time."""
+    # Only id and crawled_at are always included automatically.
+    # Every other field you want must be listed here — including title, city,
+    # state, country if relevant (e.g. classified ads). For something like stock
+    # tickers those location fields wouldn't apply, so don't add them.
+    # Valid keys: name, type ("TEXT"|"INTEGER"|"REAL"), indexed, unique,
+    #             location, primary, default_sql, description
     EXTRA_FIELDS: list[dict] = [
-        # {"name": "price",    "type": "INTEGER", "indexed": True,  "description": "Asking price in USD"},
-        # {"name": "mileage",  "type": "INTEGER",                   "description": "Odometer reading in miles"},
-        # {"name": "year",     "type": "INTEGER", "indexed": True,  "description": "Model year"},
-        # {"name": "url",      "type": "TEXT",    "unique": True, "indexed": True, "description": "Direct link to listing"},
-        # {"name": "image_url","type": "TEXT",                      "description": "Primary listing image"},
+        {"name": "title",     "type": "TEXT",                                       "description": "Listing headline"},
+        {"name": "price",     "type": "INTEGER", "indexed": True,                   "description": "Asking price in USD"},
+        {"name": "mileage",   "type": "INTEGER",                                    "description": "Odometer reading in miles"},
+        {"name": "year",      "type": "INTEGER", "indexed": True,                   "description": "Model year"},
+        {"name": "url",       "type": "TEXT",    "unique": True,  "indexed": True,  "description": "Direct link to listing"},
+        {"name": "image_url", "type": "TEXT",                                       "description": "Primary listing image"},
+        {"name": "city",      "type": "TEXT",    "indexed": True, "location": True, "description": "City where listing was crawled"},
+        {"name": "state",     "type": "TEXT",    "indexed": True, "location": True, "description": "State or province"},
+        {"name": "country",   "type": "TEXT",    "indexed": True, "location": True, "description": "Country of origin"},
     ]
-    # =========================
+    # ─────────────────────────────────────────────────────────────────────────────
 
-    main(SOURCE_NAME, EXTRA_FIELDS)
+    main(SOURCE_NAME, EXTRA_FIELDS, SHORT_DESC, LONG_DESC)
+    # delete_crawler(SOURCE_NAME)
