@@ -725,6 +725,16 @@ def main(
     _write_demo_data_stub(module_name)
     print("  OK")
 
+    # ── STEP 5b: logo ─────────────────────────────────────────────────────────
+    print("\n[STEP 5b] Generating logo ...")
+    try:
+        from utils.gen_logo import gen_logo
+        logo_path = _crawler_dir(module_name) / "logo.png"
+        gen_logo(module_name, out_path=logo_path)
+        print(f"  OK  → {logo_path}")
+    except Exception as exc:
+        print(f"  SKIP  (logo generation failed: {exc})")
+
     # ── STEP 6: publish.py ────────────────────────────────────────────────────
     print("\n[STEP 6] Writing publish.py ...")
     _write_publish_stub(module_name, short_desc, long_desc)
