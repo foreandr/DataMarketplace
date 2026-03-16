@@ -251,7 +251,8 @@ def index():
 
 @app.get("/demo/<crawler_name>")
 def quick_query(crawler_name: str):
-    valid = {"_craigslist_cars", "_craigslist_realestate", "_imdb_movies"}
+    resources = _load_resources()
+    valid = set(resources.get("collections", {}).keys())
     if crawler_name not in valid:
         return jsonify({"error": "Unknown crawler demo", "code": 404}), 404
     return render_template(f"{crawler_name}.html")

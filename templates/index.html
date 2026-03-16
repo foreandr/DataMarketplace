@@ -1,20 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="collection-hero" style="padding-bottom:28px">
+  <div class="collection-eyebrow">
+    <span class="eyebrow-dot"></span>
+    Data Marketplace API
+  </div>
+  <div class="collection-title" style="font-size:24px">Available Collections</div>
+  <p class="collection-desc">
+    Browse available datasets below. Each collection exposes a consistent
+    <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface-3);padding:2px 6px;border-radius:4px;color:var(--accent)">POST /v1/collections/&lt;name&gt;/search</code>
+    endpoint with filtering, sorting, and pagination.
+  </p>
+</div>
+
 <div class="offerings">
-  <article class="card">
-    <h3>Craigslist Cars</h3>
-    <p>Source: _craigslist_cars. Listings include ID, title, year, posted_at, mileage, price, location, and crawled_at.</p>
-    <a class="button" href="{{ url_for('quick_query', crawler_name='_craigslist_cars') }}">Open cars demo</a>
-  </article>
-  <article class="card">
-    <h3>Craigslist Realestate</h3>
-    <p>Source: _craigslist_realestate. Listings contain property details, posting dates, location details, and pricing.</p>
-    <a class="button" href="{{ url_for('quick_query', crawler_name='_craigslist_realestate') }}">Open realestate demo</a>
-  </article>
-  <article class="card">
-    <h3>IMDB Movies</h3>
-    <p>Source: _imdb_movies. Movie metadata, title, release year, rating, genre and URLs.</p>
-    <a class="button" href="{{ url_for('quick_query', crawler_name='_imdb_movies') }}">Open movies demo</a>
-  </article>
+  <a class="card" href="{{ url_for('quick_query', crawler_name='_craigslist_cars') }}">
+    <span class="card-icon">🚗</span>
+    <h3>_craigslist_cars</h3>
+    <p>Used vehicle listings across US &amp; Canadian cities — price, mileage, year, and full location data.</p>
+    <div class="card-footer">
+      <span class="card-link">View docs →</span>
+      <span class="badge badge-green">● Live</span>
+    </div>
+  </a>
 </div>
 {% endblock %}
