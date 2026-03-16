@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="offerings">
+  <article class="card">
+    <h3>Craigslist Cars</h3>
+    <p>Source: _craigslist_cars. Listings include ID, title, year, posted_at, mileage, price, location, and crawled_at.</p>
+    <a class="button" href="{{ url_for('quick_query', crawler_name='_craigslist_cars') }}">Open cars demo</a>
+  </article>
+  <article class="card">
+    <h3>Craigslist Realestate</h3>
+    <p>Source: _craigslist_realestate. Listings contain property details, posting dates, location details, and pricing.</p>
+    <a class="button" href="{{ url_for('quick_query', crawler_name='_craigslist_realestate') }}">Open realestate demo</a>
+  </article>
+  <article class="card">
+    <h3>IMDB Movies</h3>
+    <p>Source: _imdb_movies. Movie metadata, title, release year, rating, genre and URLs.</p>
+    <a class="button" href="{{ url_for('quick_query', crawler_name='_imdb_movies') }}">Open movies demo</a>
+  </article>
+</div>
+{% endblock %}

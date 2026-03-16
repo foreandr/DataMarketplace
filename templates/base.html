@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data Marketplace API</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <nav class="topnav">
+      <a class="brand" href="/">
+        <div class="brand-icon">⚡</div>
+        DataMarketplace
+      </a>
+      <div class="nav-links">
+        <a class="nav-link" href="/v1/collections">Collections</a>
+        <a class="nav-link" href="/health">Health</a>
+        <span class="nav-badge">v3</span>
+      </div>
+    </nav>
+
+    <div class="wrap">
+      {% block content %}{% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='quick_query.js') }}"></script>
+  </body>
+</html>
