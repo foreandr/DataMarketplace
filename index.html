@@ -235,6 +235,43 @@ This documentation is intentionally high-level so it stays accurate as sources e
         statusEl.classList.toggle('error', isError);
       }
 
+      function toJsValue(value, indent = '') {
+        if (value === null) return 'null';
+        if (Array.isArray(value)) {
+          if (value.length === 0) return '[]';
+          const items = value.map(item => `${indent}  ${toJsValue(item, indent + '  ')}`);
+          return `[
+${items.join(',\n')}
+${indent}]`;
+        }
+        if (typeof value === 'object') {
+          const keys = Object.keys(value);
+          if (!keys.length) return '{}';
+          const entries = keys.map(key => {
+            const formatted = toJsValue(value[key], indent + '  ');
+            return `${indent}  ${key}: ${formatted}`;
+          });
+          return `{
+${entries.join(',\n')}
+${indent}}`;
+        }
+        if (typeof value === 'string') {
+          const escaped = value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+          return `"${escaped}"`;
+        }
+        return String(value);
+      }
+
+      function formatResultAsJsLiteral(result) {
+        if (result && typeof result === 'object' && Array.isArray(result.data)) {
+          if (result.data.length === 0) {
+            return '[]';
+          }
+          return result.data.map(item => toJsValue(item)).join('\n\n');
+        }
+        return toJsValue(result);
+      }
+
       function setResult(payload) {
         resultEl.textContent = payload;
       }
@@ -260,11 +297,11 @@ This documentation is intentionally high-level so it stays accurate as sources e
           const body = await resp.json();
           if (!resp.ok) {
             setStatus(`Error: ${resp.status}`, true);
-            setResult(JSON.stringify(body, null, 2));
+            setResult(formatResultAsJsLiteral(body));
             return;
           }
           setStatus('Query complete');
-          setResult(JSON.stringify(body, null, 2));
+          setResult(formatResultAsJsLiteral(body));
         } catch (err) {
           setStatus('Network error', true);
           setResult(String(err));
