@@ -1,0 +1,120 @@
+PART 1 GENERAL 
+    #1 SIGN IN WITH GOOGLE
+    #2 STUDIO (https://rapidapi.com/studio)
+    #3 ADD API PROJECT
+    #4 TITLE DESC
+    #5 CATEGORY  = DATA
+    #6 drag created logo in
+    #7. put in long description
+    #8. put in base link to site http://143.110.158.119:5000/
+    #9 toggle visibility
+    #10. add base url of  http://143.110.158.119:5000/
+    11. add geaktg url http://143.110.158.119:5000/health
+
+PART 2 DEFINITIONS 
+    #1. DEFINITIONS TAB
+    #2. CREATE REST ENDPOINT
+    #3. name = Search (NAME OF CRAWLER WITH SPACES NO UNDERSCORES)
+    #4. description can be same as above?
+    #5. EXTERNAL doc url is the std one by name of crawler (eg http://143.110.158.119:5000/demo/_craigslist_cars)
+    #6. POST PATH IS /v1/collections/_craigslist_cars/search, where we replace craigslist cars with crawler name
+    #7. PAYLOD NAME=body
+    #8. PAYLOAD DESC
+        JSON object with optional fields:
+        - select: array of field names to return, or ["*"] for all
+        - filter: object of field filters (supports $gte, $lte, $gt, $lt, $eq, $ne, $like, $in)
+        - order_by: array of {field, direction} objects
+        - page_number: integer (1-based)
+        - offset: integer (row offset, alternative to page_number)
+    #9. add basic example 
+    #10. SCHEMA WILL COME FROM WHAT WE MAKE 
+
+Same settings as before but swap **Hard Limit → Soft Limit** everywhere, and add an overage price:
+
+================================================================================
+RAPIDAPI MONETIZE PLAN SETUP
+================================================================================
+
+Using SOFT LIMITS with overage pricing on all paid plans.
+
+--------------------------------------------------------------------------------
+BASIC (Free)
+--------------------------------------------------------------------------------
+Plan Modal:
+  - Plan Type:        Monthly Subscription
+  - Rate Limit:       leave unchecked
+  - Require Approval: unchecked
+  - Recommended Plan: unchecked
+  - Subscription Price: $0
+
+BASIC / Requests Object:
+  - Quota Type:  Monthly
+  - Quota Limit: 100
+  - Limit Type:  Soft Limit
+  - Overage:     $0.02 per request
+
+NOTE: Leave Rapid-free-plans-hard-limit as-is (RapidAPI system object, do not touch)
+
+--------------------------------------------------------------------------------
+PRO
+--------------------------------------------------------------------------------
+Plan Modal:
+  - Plan Type:          Monthly Subscription
+  - Subscription Price: $9.99
+  - Recommended Plan:   CHECK THIS (shows "Recommended" badge on marketplace)
+
+PRO / Requests Object (click + to add):
+  - Quota Type:  Monthly
+  - Quota Limit: 3,000
+  - Limit Type:  Soft Limit
+  - Overage:     $0.01 per request
+
+--------------------------------------------------------------------------------
+ULTRA
+--------------------------------------------------------------------------------
+Plan Modal:
+  - Plan Type:          Monthly Subscription
+  - Subscription Price: $29.99
+  - Recommended Plan:   unchecked
+
+ULTRA / Requests Object (click + to add):
+  - Quota Type:  Monthly
+  - Quota Limit: 15,000
+  - Limit Type:  Soft Limit
+  - Overage:     $0.005 per request
+
+--------------------------------------------------------------------------------
+MEGA
+--------------------------------------------------------------------------------
+Plan Modal:
+  - Plan Type:          Monthly Subscription
+  - Subscription Price: $99.99
+  - Recommended Plan:   unchecked
+
+MEGA / Requests Object (click + to add):
+  - Quota Type:  Monthly
+  - Quota Limit: 100,000
+  - Limit Type:  Soft Limit
+  - Overage:     $0.002 per request
+
+--------------------------------------------------------------------------------
+BANDWIDTH PLATFORM FEE
+--------------------------------------------------------------------------------
+  Leave blank on ALL plans. Do not add it anywhere for now.
+
+--------------------------------------------------------------------------------
+FINAL STEP
+--------------------------------------------------------------------------------
+  Toggle ON each plan using the toggle switch at the top of each column.
+  Order: BASIC → PRO → ULTRA → MEGA
+
+================================================================================
+OVERAGE LOGIC (why prices are set this way)
+================================================================================
+  BASIC  $0.02/req  — expensive on purpose, pushes free users to upgrade
+  PRO    $0.01/req  — half of BASIC
+  ULTRA  $0.005/req — half of PRO
+  MEGA   $0.002/req — cheapest, rewards highest-tier subscribers
+
+  Soft limits = users are never hard-blocked, they just get billed for overages.
+================================================================================
