@@ -96,8 +96,12 @@ class CraigslistCarsCrawler:
 
         cols = [r[1] for r in conn.execute("PRAGMA table_info(items);").fetchall()]
         if "crawled_at" not in cols:
-            conn.execute("ALTER TABLE items ADD COLUMN crawled_at TEXT;")
-            conn.execute("UPDATE items SET crawled_at = CURRENT_TIMESTAMP WHERE crawled_at IS NULL;")
+            conn.execute("ALTER TABLE items ADD COLUMN crawled_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP;")
+        # ensure all existing/legacy rows have a valid crawled_at value
+        conn.execute(
+            "UPDATE items SET crawled_at = CURRENT_TIMESTAMP "
+            "WHERE crawled_at IS NULL OR crawled_at = '' OR LOWER(TRIM(crawled_at)) IN ('null', 'none');"
+        )
         if "city" not in cols:
             conn.execute("ALTER TABLE items ADD COLUMN city TEXT;")
         if "state" not in cols:
@@ -110,7 +114,8 @@ class CraigslistCarsCrawler:
             for item in clean_data:
                 if not isinstance(item, dict):
                     continue
-                if "crawled_at" not in item:
+                crawled_at = item.get("crawled_at")
+                if crawled_at is None or str(crawled_at).strip().lower() in {"", "null", "none"}:
                     item["crawled_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 row = [item.get(k) for k in SCHEMA.field_names()]
                 rows.append(row)

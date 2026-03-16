@@ -10,7 +10,7 @@ from importlib import import_module
 from pathlib import Path
 from typing import Any
 
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, render_template
 from dotenv import load_dotenv
 
 
@@ -246,10 +246,15 @@ def health():
 
 @app.get("/")
 def index():
-    index_path = ROOT_DIR / "index.html"
-    if not index_path.exists():
-        return jsonify({"error": "index.html not found", "code": 404}), 404
-    return Response(index_path.read_text(encoding="utf-8"), mimetype="text/html")
+    return render_template("index.html")
+
+
+@app.get("/demo/<crawler_name>")
+def quick_query(crawler_name: str):
+    valid = {"_craigslist_cars", "_craigslist_realestate", "_imdb_movies"}
+    if crawler_name not in valid:
+        return jsonify({"error": "Unknown crawler demo", "code": 404}), 404
+    return render_template(f"{crawler_name}.html")
 
 
 @app.get("/schemas")
@@ -293,6 +298,12 @@ def search_collection(name: str):
         else:
             select_sql = ", ".join(schema.field_names())
 
+        page_number = int(payload.get("page_number", 1))
+        if page_number < 1:
+            raise ValueError("page_number must be >= 1")
+        limit = 5
+        offset = (page_number - 1) * limit
+
         where_sql, params = _build_where_from_filter(schema, flt)
         order_sql = _build_order_by(schema, order_by)
 
@@ -302,16 +313,25 @@ def search_collection(name: str):
         )
 
         conn = sqlite3.connect(str(db_path))
+        conn.execute(schema.create_table_sql())
+        for stmt in schema.create_indexes_sql():
+            conn.execute(stmt)
+
         cur = conn.execute(sql, params)
-        rows = cur.fetchall()
+        rows_data = cur.fetchall()
         col_names = [d[0] for d in cur.description] if cur.description else []
         conn.close()
 
+        def normalize(row: dict) -> dict:
+            if "crawled_at" in row and (row["crawled_at"] is None or str(row["crawled_at"]).strip().lower() in {"", "null", "none"}):
+                row["crawled_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            return row
+
         return jsonify(
             {
-                "data": [dict(zip(col_names, r)) for r in rows],
+                "data": [normalize(dict(zip(col_names, r))) for r in rows_data],
                 "metadata": {
-                    "count": len(rows),
+                    "count": len(rows_data),
                     "limit": limit,
                     "offset": offset,
                 },
@@ -319,6 +339,10 @@ def search_collection(name: str):
         )
     except (KeyError, ValueError, TypeError) as exc:
         return jsonify({"error": str(exc), "code": 400}), 400
+    except sqlite3.OperationalError as exc:
+        return jsonify({"error": str(exc), "code": 500}), 500
+    except Exception as exc:
+        return jsonify({"error": "Internal server error", "details": str(exc), "code": 500}), 500
 
 
 if __name__ == "__main__":

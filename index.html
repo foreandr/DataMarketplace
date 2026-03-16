@@ -1,318 +1,626 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Data Marketplace API v3</title>
-    <style>
-      :root {
-        --bg: #0b0d10;
-        --panel: #11151a;
-        --panel-2: #0f1419;
-        --text: #e7edf2;
-        --muted: #9fb0bf;
-        --accent: #7fd7c4;
-        --accent-2: #f6c453;
-        --danger: #ff7b7b;
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data Marketplace API</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & TOKENS ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:        #070a10;
+      --surface:   #0d1117;
+      --surface-2: #161b22;
+      --surface-3: #21262d;
+      --border:    rgba(255,255,255,0.07);
+      --border-2:  rgba(255,255,255,0.14);
+      --text:      #e6edf3;
+      --muted:     #8b949e;
+      --dim:       #6e7681;
+      --accent:    #58a6ff;
+      --green:     #3fb950;
+      --yellow:    #d29922;
+      --red:       #f85149;
+      --orange:    #ffa657;
+      --purple:    #bc8cff;
+      --radius:    10px;
+      --radius-lg: 16px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      font-size: 14px; line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ─── APP SHELL ─────────────────────────────────────────── */
+    .app {
+      display: grid;
+      grid-template-rows: 56px 1fr;
+      grid-template-columns: 240px 1fr 320px;
+      grid-template-areas:
+        "nav  nav   nav"
+        "side docs  play";
+      min-height: 100vh;
+    }
+    @media (max-width: 1100px) {
+      .app {
+        grid-template-columns: 220px 1fr;
+        grid-template-areas: "nav nav" "side docs";
       }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: radial-gradient(circle at 10% 10%, #18202a 0%, #0b0d10 40%, #07090c 100%);
-        color: var(--text);
-        font-family: "Iosevka", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
-        line-height: 1.6;
-      }
-      .wrap {
-        max-width: 1280px;
-        margin: 36px auto;
-        padding: 24px;
-      }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px;
-      }
-      @media (max-width: 980px) {
-        .grid { grid-template-columns: 1fr; }
-      }
-      .panel {
-        background: var(--panel);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 12px;
-        padding: 24px;
-        box-shadow: 0 18px 50px rgba(0,0,0,0.35);
-        min-height: 70vh;
-      }
-      .panel.right {
-        background: var(--panel-2);
-      }
-      h1 {
-        margin: 0 0 16px;
-        font-size: 26px;
-        color: var(--accent);
-      }
-      h2 {
-        margin: 0 0 12px;
-        font-size: 18px;
-        color: var(--accent-2);
-      }
-      .subtitle {
-        color: var(--muted);
-        margin-bottom: 18px;
-      }
-      pre {
-        margin: 0;
-        white-space: pre-wrap;
-        font-size: 13px;
-      }
-      .tool-row {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        align-items: center;
-      }
-      label {
-        color: var(--muted);
-        font-size: 12px;
-      }
-      input {
-        background: #0b0f14;
-        border: 1px solid rgba(255,255,255,0.12);
-        border-radius: 8px;
-        color: var(--text);
-        padding: 8px 10px;
-        font-family: inherit;
-        font-size: 13px;
-        width: 120px;
-      }
-      button {
-        background: var(--accent);
-        border: none;
-        border-radius: 8px;
-        color: #0b0d10;
-        padding: 8px 14px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-      button.secondary {
-        background: transparent;
-        color: var(--accent);
-        border: 1px solid rgba(127,215,196,0.4);
-      }
-      .status {
-        margin-top: 12px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-      .status.error {
-        color: var(--danger);
-      }
-      .result {
-        margin-top: 18px;
-        background: #0b0f14;
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 10px;
-        padding: 12px;
-        max-height: 420px;
-        overflow: auto;
-        font-size: 12px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <div class="grid">
-        <section class="panel">
-          <h1>Data Marketplace API</h1>
-          <div class="subtitle">Documentation (rendered from README.md)</div>
-          <pre>﻿# Data Marketplace API
+      .playground { display: none; }
+    }
+    @media (max-width: 700px) {
+      .app { grid-template-columns: 1fr; grid-template-areas: "nav" "docs"; }
+      .sidebar, .playground { display: none; }
+    }
 
-A lightweight data marketplace service that collects public data from multiple sources, stores it in structured SQLite databases, and exposes consistent query endpoints for downstream apps.
+    /* ─── TOP NAV ───────────────────────────────────────────── */
+    .topnav {
+      grid-area: nav;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(7,10,16,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 9px;
+      font-weight: 700; font-size: 14px;
+      color: var(--text); text-decoration: none;
+    }
+    .brand-icon {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-link {
+      color: var(--muted); text-decoration: none; font-size: 13px;
+      font-weight: 500; padding: 5px 11px; border-radius: 7px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-link:hover  { color: var(--text); background: var(--surface-2); }
+    .nav-link.active { color: var(--text); }
+    .nav-badge {
+      font-size: 10px; font-weight: 700; padding: 2px 9px;
+      background: rgba(88,166,255,0.1); color: var(--accent);
+      border: 1px solid rgba(88,166,255,0.22); border-radius: 20px;
+      margin-left: 4px;
+    }
 
-This system is designed to:
-- Ingest data via modular crawlers
-- Normalize output into predictable schemas
-- Provide simple, documented query APIs
-- Keep the infrastructure small and self-hostable
+    /* ─── SIDEBAR ───────────────────────────────────────────── */
+    .sidebar {
+      grid-area: side;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 20px 10px;
+      position: sticky; top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+    }
+    .sb-section { margin-bottom: 28px; }
+    .sb-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.09em;
+      text-transform: uppercase; color: var(--dim);
+      padding: 0 10px; margin-bottom: 6px;
+    }
+    .sb-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 10px; border-radius: 7px;
+      color: var(--muted); font-size: 13px; font-weight: 500;
+      text-decoration: none; cursor: pointer;
+      transition: color 0.15s, background 0.15s;
+    }
+    .sb-item:hover  { color: var(--text); background: var(--surface-2); }
+    .sb-item.active { color: var(--text); background: var(--surface-3); }
+    .sb-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0;
+      box-shadow: 0 0 5px rgba(63,185,80,0.5);
+    }
+    .sb-dot.off { background: var(--surface-3); box-shadow: none; }
 
-## What It Does
+    /* ─── DOCS PANE ─────────────────────────────────────────── */
+    .docs {
+      grid-area: docs;
+      padding: 44px 52px;
+      overflow-y: auto;
+      height: calc(100vh - 56px);
+    }
+    .docs-section { max-width: 660px; margin-bottom: 60px; }
 
-At a high level, the platform:
-- Runs source-specific crawlers to collect data
-- Transforms raw crawler output into structured rows
-- Persists data in SQLite databases (one per collection)
-- Exposes a uniform search API across collections
-- Tracks health, logs, and operational telemetry
+    .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    h1.page-title {
+      font-size: 30px; font-weight: 700; line-height: 1.2;
+      letter-spacing: -0.02em; color: var(--text); margin-bottom: 14px;
+    }
+    .page-desc {
+      font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 32px;
+    }
+    h2.section-title {
+      font-size: 15px; font-weight: 700; color: var(--text);
+      margin-bottom: 16px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    p { color: var(--muted); font-size: 13.5px; line-height: 1.7; margin-bottom: 14px; }
 
-It is intended for building API products, internal dashboards, and data-driven tools that need reliable, queryable datasets without heavy infrastructure.
+    /* ─── COLLECTION CARDS ──────────────────────────────────── */
+    .collections {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 13px;
+    }
+    .coll-card {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 20px;
+      text-decoration: none; display: block; transition: all 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .coll-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(88,166,255,0.06), transparent);
+      opacity: 0; transition: opacity 0.2s; pointer-events: none;
+    }
+    .coll-card:hover {
+      border-color: rgba(88,166,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    }
+    .coll-card:hover::after { opacity: 1; }
+    .coll-icon { font-size: 22px; margin-bottom: 12px; display: block; }
+    .coll-name {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 7px;
+    }
+    .coll-desc { font-size: 12px; color: var(--muted); line-height: 1.55; margin-bottom: 14px; }
+    .coll-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .tag {
+      font-size: 10px; font-weight: 600; padding: 1px 7px;
+      border-radius: 20px; border: 1px solid;
+    }
+    .tag-live   { color: var(--green);  background: rgba(63,185,80,0.1);  border-color: rgba(63,185,80,0.25); }
+    .tag-muted  { color: var(--muted);  background: var(--surface-3);     border-color: var(--border); }
+    .tag-purple { color: var(--purple); background: rgba(188,140,255,0.08); border-color: rgba(188,140,255,0.22); }
 
-## How It Is Organized
+    /* ─── ENDPOINT LIST ─────────────────────────────────────── */
+    .endpoints { display: flex; flex-direction: column; gap: 8px; }
+    .endpoint {
+      display: flex; align-items: flex-start; gap: 13px;
+      padding: 13px 16px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius); transition: border-color 0.15s;
+    }
+    .endpoint:hover { border-color: var(--border-2); }
+    .method {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px; font-weight: 700;
+      padding: 3px 7px; border-radius: 5px; flex-shrink: 0; margin-top: 2px;
+    }
+    .m-get  { background: rgba(63,185,80,0.15);  color: var(--green); }
+    .m-post { background: rgba(88,166,255,0.15); color: var(--accent); }
+    .ep-path {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12.5px; color: var(--text); font-weight: 500;
+    }
+    .ep-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-Key locations in the repository:
-- `src/crawlers/`: Source-specific crawlers
-- `src/jsonify_logic/`: Transform logic to normalize crawler output
-- `src/schemas/`: Table schemas for each collection
-- `data/`: SQLite databases (one per collection)
-- `config/`: Runtime and source configuration files
-- `src/report/`: Operational reports and telemetry scripts
-- `src/publish/`: Marketplace publishing scripts
-- `src/tools/`: Add/remove crawler automation
+    /* ─── CODE BLOCK ────────────────────────────────────────── */
+    .code-block {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 0;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--surface-3); border-bottom: 1px solid var(--border);
+    }
+    .code-traffic { display: flex; align-items: center; gap: 6px; }
+    .code-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+    .code-label { font-size: 11px; font-weight: 600; color: var(--dim); margin-left: 10px; }
+    .code-copy {
+      font-size: 11px; font-weight: 600;
+      color: var(--muted); background: transparent;
+      border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 6px;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.15s;
+    }
+    .code-copy:hover { color: var(--text); border-color: var(--border-2); }
+    .code-body {
+      padding: 20px 22px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12.5px; line-height: 1.8;
+      white-space: pre; overflow-x: auto; color: var(--text);
+    }
+    /* syntax */
+    .ck  { color: #ff7b72; }
+    .cs  { color: #a5d6ff; }
+    .cn  { color: #79c0ff; }
+    .cf  { color: #d2a8ff; }
+    .cc  { color: var(--dim); font-style: italic; }
+    .ckey { color: var(--accent); }
+    .cop  { color: var(--muted); }
 
-## API Overview
+    /* ─── OPERATOR TABLE ────────────────────────────────────── */
+    .op-table {
+      width: 100%; border-collapse: collapse;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden; font-size: 13px;
+    }
+    .op-table th {
+      background: var(--surface-3); padding: 9px 14px;
+      text-align: left; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--dim); border-bottom: 1px solid var(--border);
+    }
+    .op-table td {
+      padding: 10px 14px; border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .op-table tr:last-child td { border-bottom: none; }
+    .op-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .op-name {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px; font-weight: 600; color: var(--purple);
+    }
+    .op-example {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px; color: var(--muted);
+    }
 
-Base URL:
-- `/` renders this documentation
+    /* ─── PLAYGROUND ────────────────────────────────────────── */
+    .playground {
+      grid-area: play;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      padding: 28px 22px;
+      position: sticky; top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .pg-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.09em;
+      text-transform: uppercase; color: var(--dim);
+    }
+    .pg-controls { display: flex; gap: 8px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 8px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; border: none; font-family: inherit;
+      transition: all 0.15s;
+    }
+    .btn-primary { background: var(--accent); color: #070a10; }
+    .btn-primary:hover { filter: brightness(1.12); }
+    .btn-ghost {
+      background: var(--surface-2); color: var(--muted);
+      border: 1px solid var(--border-2);
+    }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .pg-status {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; color: var(--muted); min-height: 18px;
+    }
+    .pg-status::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--dim); flex-shrink: 0;
+    }
+    .pg-status.running::before { background: var(--yellow); animation: blink 1s infinite; }
+    .pg-status.ok::before  { background: var(--green); }
+    .pg-status.err::before { background: var(--red); }
+    .pg-status.err { color: var(--red); }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .pg-result {
+      flex: 1; background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11.5px; line-height: 1.65;
+      padding: 14px; overflow-y: auto; white-space: pre;
+      color: var(--muted); min-height: 160px;
+    }
+  </style>
+</head>
+<body>
+<div class="app">
 
-Core endpoints:
-- `GET /health` returns service status
-- `GET /schemas` lists available schemas
-- `GET /v1/collections` lists available collections
-- `POST /v1/collections/&lt;name&gt;/search` runs a query
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav class="topnav">
+    <a class="brand" href="/">
+      <div class="brand-icon">⚡</div>
+      DataMarketplace
+    </a>
+    <div class="nav-links">
+      <a class="nav-link active" href="/">Docs</a>
+      <a class="nav-link" href="/v1/collections">Collections</a>
+      <a class="nav-link" href="/health">Health</a>
+      <span class="nav-badge">v3 · Local</span>
+    </div>
+  </nav>
 
-Example search payload:
-```json
-{
-  &quot;select&quot;: [&quot;*&quot;],
-  &quot;filter&quot;: {&quot;price&quot;: {&quot;$gte&quot;: 5000}},
-  &quot;order_by&quot;: [{&quot;field&quot;: &quot;price&quot;, &quot;direction&quot;: &quot;asc&quot;}],
-  &quot;offset&quot;: 0
-}
-```
+  <!-- ── SIDEBAR ───────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sb-section">
+      <div class="sb-label">Getting Started</div>
+      <a class="sb-item active" href="#intro">Introduction</a>
+      <a class="sb-item" href="#endpoints">Endpoints</a>
+      <a class="sb-item" href="#query-syntax">Query Syntax</a>
+      <a class="sb-item" href="#operators">Filter Operators</a>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Collections</div>
+      <a class="sb-item" href="/templates/_craigslist_cars">
+        <span class="sb-dot"></span>_craigslist_cars
+      </a>
+      <a class="sb-item" href="#">
+        <span class="sb-dot off"></span>_craigslist_realestate
+      </a>
+      <a class="sb-item" href="#">
+        <span class="sb-dot off"></span>_imdb_movies
+      </a>
+    </div>
+  </aside>
 
-## Request Logging
+  <!-- ── DOCS ─────────────────────────────────────────────── -->
+  <main class="docs">
 
-All API requests are logged to `logs/api_requests.log` in JSONL format, including:
-- IP and forwarding headers
-- User agent and request metadata
-- Full request headers
-- Body snapshot (JSON when possible)
+    <!-- INTRO -->
+    <div class="docs-section" id="intro">
+      <div class="eyebrow">Data Marketplace API</div>
+      <h1 class="page-title">Self-hosted data pipeline &amp; query API</h1>
+      <p class="page-desc">
+        A lightweight service that ingests public data through modular crawlers,
+        normalises it into structured SQLite databases, and exposes clean REST
+        query endpoints. Built to be small, self-hostable, and easy to extend.
+      </p>
 
-This log is intended for auditing, debugging, and usage analysis.
-
-## Crawler Lifecycle
-
-Adding a crawler:
-- Generates crawler, schema, jsonify logic, and demo data stubs
-- Inserts a new source entry into `config/sources.json`
-- Creates a backing SQLite database in `data/`
-
-Removing a crawler:
-- Removes the source entry
-- Deletes related code stubs and the database
-
-The automation scripts live in `src/tools/`.
-
-## Publishing
-
-Marketplace publishing scripts live in `src/publish/` and each one targets a specific marketplace. They are intended to be run individually depending on where the dataset should be listed.
-
-## Notes
-
-This documentation is intentionally high-level so it stays accurate as sources evolve. The system is built to be extended by adding new sources without changing the API surface.
-</pre>
-        </section>
-        <section class="panel right">
-          <h2>Quick Query Tool</h2>
-          <div class="subtitle">Click to pull a small sample from the cars collection.</div>
-          <div class="tool-row">
-            <button id="runQuery">Run Query</button>
-            <button id="clearQuery" class="secondary">Clear</button>
+      <h2 class="section-title">Collections</h2>
+      <div class="collections">
+        <a class="coll-card" href="/templates/_craigslist_cars">
+          <span class="coll-icon">🚗</span>
+          <div class="coll-name">_craigslist_cars</div>
+          <p class="coll-desc">Used vehicle listings with price, mileage, year, and full geo-location across US &amp; Canada.</p>
+          <div class="coll-tags">
+            <span class="tag tag-live">● Live</span>
+            <span class="tag tag-purple">geo-tagged</span>
+            <span class="tag tag-muted">SQLite</span>
           </div>
-          <div id="status" class="status">Idle</div>
-          <div id="result" class="result">No results yet.</div>
-        </section>
+        </a>
+        <a class="coll-card" href="#">
+          <span class="coll-icon">🏠</span>
+          <div class="coll-name">_craigslist_realestate</div>
+          <p class="coll-desc">Real estate listings with property details, pricing, and location data.</p>
+          <div class="coll-tags">
+            <span class="tag tag-muted">Stub</span>
+            <span class="tag tag-muted">SQLite</span>
+          </div>
+        </a>
+        <a class="coll-card" href="#">
+          <span class="coll-icon">🎬</span>
+          <div class="coll-name">_imdb_movies</div>
+          <p class="coll-desc">Movie metadata including ratings, cast, and release information.</p>
+          <div class="coll-tags">
+            <span class="tag tag-muted">Stub</span>
+            <span class="tag tag-muted">SQLite</span>
+          </div>
+        </a>
       </div>
     </div>
-    <script>
-      const statusEl = document.getElementById('status');
-      const resultEl = document.getElementById('result');
-      const runBtn = document.getElementById('runQuery');
-      const clearBtn = document.getElementById('clearQuery');
 
-      function setStatus(text, isError = false) {
-        statusEl.textContent = text;
-        statusEl.classList.toggle('error', isError);
-      }
+    <!-- ENDPOINTS -->
+    <div class="docs-section" id="endpoints">
+      <h2 class="section-title">Endpoints</h2>
+      <div class="endpoints">
+        <div class="endpoint">
+          <span class="method m-get">GET</span>
+          <div>
+            <div class="ep-path">/health</div>
+            <div class="ep-desc">Service health check — returns <code style="font-family:monospace;font-size:11px">{"status":"ok"}</code></div>
+          </div>
+        </div>
+        <div class="endpoint">
+          <span class="method m-get">GET</span>
+          <div>
+            <div class="ep-path">/v1/collections</div>
+            <div class="ep-desc">List all available collections and their config</div>
+          </div>
+        </div>
+        <div class="endpoint">
+          <span class="method m-get">GET</span>
+          <div>
+            <div class="ep-path">/schemas</div>
+            <div class="ep-desc">List all registered schemas and field definitions</div>
+          </div>
+        </div>
+        <div class="endpoint">
+          <span class="method m-post">POST</span>
+          <div>
+            <div class="ep-path">/v1/collections/&lt;name&gt;/search</div>
+            <div class="ep-desc">Run a filtered, ordered, paginated query against a collection</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      function toJsValue(value, indent = '') {
-        if (value === null) return 'null';
-        if (Array.isArray(value)) {
-          if (value.length === 0) return '[]';
-          const items = value.map(item => `${indent}  ${toJsValue(item, indent + '  ')}`);
-          return `[
-${items.join(',\n')}
-${indent}]`;
+    <!-- QUERY SYNTAX -->
+    <div class="docs-section" id="query-syntax">
+      <h2 class="section-title">Query Syntax</h2>
+      <p>All searches hit <code style="font-family:monospace;font-size:12px;background:var(--surface-2);padding:2px 6px;border-radius:4px;color:var(--accent)">POST /v1/collections/&lt;name&gt;/search</code> with a JSON body.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-traffic">
+            <span class="code-dot dot-r"></span>
+            <span class="code-dot dot-y"></span>
+            <span class="code-dot dot-g"></span>
+            <span class="code-label">Python · requests</span>
+          </div>
+          <button class="code-copy" id="copyBtn">Copy</button>
+        </div>
+        <pre class="code-body" id="codeSnippet"><span class="ck">import</span> requests
+
+url <span class="cop">=</span> <span class="cs">"http://localhost:5000/v1/collections/_craigslist_cars/search"</span>
+
+payload <span class="cop">=</span> {
+    <span class="ckey">"select"</span><span class="cop">:</span>      [<span class="cs">"*"</span>],
+    <span class="ckey">"filter"</span><span class="cop">:</span>      {
+        <span class="ckey">"country"</span><span class="cop">:</span>  <span class="cs">"United States"</span>,
+        <span class="ckey">"price"</span><span class="cop">:</span>    {<span class="cs">"$gte"</span><span class="cop">:</span> <span class="cn">1000</span>, <span class="cs">"$lte"</span><span class="cop">:</span> <span class="cn">15000</span>},
+        <span class="ckey">"year"</span><span class="cop">:</span>     {<span class="cs">"$gte"</span><span class="cop">:</span> <span class="cn">2010</span>},
+        <span class="ckey">"mileage"</span><span class="cop">:</span>  {<span class="cs">"$lt"</span><span class="cop">:</span>  <span class="cn">150000</span>},
+    },
+    <span class="ckey">"order_by"</span><span class="cop">:</span>    [{<span class="cs">"field"</span><span class="cop">:</span> <span class="cs">"price"</span>, <span class="cs">"direction"</span><span class="cop">:</span> <span class="cs">"asc"</span>}],
+    <span class="ckey">"offset"</span><span class="cop">:</span>      <span class="cn">0</span>,
+}
+
+resp <span class="cop">=</span> requests.<span class="cf">post</span>(url, json<span class="cop">=</span>payload)
+<span class="cf">print</span>(resp.<span class="cf">json</span>())</pre>
+      </div>
+    </div>
+
+    <!-- OPERATORS -->
+    <div class="docs-section" id="operators">
+      <h2 class="section-title">Filter Operators</h2>
+      <table class="op-table">
+        <thead>
+          <tr><th>Operator</th><th>Meaning</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="op-name">$eq</span></td>
+            <td style="color:var(--muted);font-size:13px">Exact match (shorthand: pass value directly)</td>
+            <td><span class="op-example">{"city": "Denver"}</span></td>
+          </tr>
+          <tr>
+            <td><span class="op-name">$ne</span></td>
+            <td style="color:var(--muted);font-size:13px">Not equal</td>
+            <td><span class="op-example">{"country": {"$ne": "Canada"}}</span></td>
+          </tr>
+          <tr>
+            <td><span class="op-name">$gt / $gte</span></td>
+            <td style="color:var(--muted);font-size:13px">Greater than / greater than or equal</td>
+            <td><span class="op-example">{"year": {"$gte": 2015}}</span></td>
+          </tr>
+          <tr>
+            <td><span class="op-name">$lt / $lte</span></td>
+            <td style="color:var(--muted);font-size:13px">Less than / less than or equal</td>
+            <td><span class="op-example">{"price": {"$lte": 10000}}</span></td>
+          </tr>
+          <tr>
+            <td><span class="op-name">$like</span></td>
+            <td style="color:var(--muted);font-size:13px">SQL LIKE pattern — use % as wildcard</td>
+            <td><span class="op-example">{"title": {"$like": "%toyota%"}}</span></td>
+          </tr>
+          <tr>
+            <td><span class="op-name">$in</span></td>
+            <td style="color:var(--muted);font-size:13px">Value must be in the provided list</td>
+            <td><span class="op-example">{"state": {"$in": ["Texas", "California"]}}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- ── PLAYGROUND ────────────────────────────────────────── -->
+  <aside class="playground">
+    <div class="pg-label">API Playground</div>
+    <div class="pg-controls">
+      <button class="btn btn-primary" id="runQuery">▶ Run</button>
+      <button class="btn btn-ghost"    id="clearQuery">Clear</button>
+    </div>
+    <div class="pg-status" id="status">Idle — click Run to fire a request</div>
+    <div class="pg-result" id="result">// Fires against _craigslist_cars
+// with price >= $1 000</div>
+  </aside>
+
+</div>
+
+<script>
+  /* ── Copy button ───────────────────────────────── */
+  document.getElementById('copyBtn').addEventListener('click', function () {
+    navigator.clipboard.writeText(document.getElementById('codeSnippet').innerText).then(() => {
+      this.textContent = '✓ Copied';
+      setTimeout(() => (this.textContent = 'Copy'), 1600);
+    });
+  });
+
+  /* ── Playground ────────────────────────────────── */
+  const statusEl = document.getElementById('status');
+  const resultEl = document.getElementById('result');
+
+  function setStatus(txt, cls) {
+    statusEl.textContent = txt;
+    statusEl.className = 'pg-status ' + (cls || '');
+  }
+
+  function syntaxHL(json) {
+    return json.replace(
+      /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+      function (m) {
+        if (/^"/.test(m)) {
+          if (/:$/.test(m)) return '<span style="color:#58a6ff">' + m + '</span>';
+          return '<span style="color:#a5d6ff">' + m + '</span>';
         }
-        if (typeof value === 'object') {
-          const keys = Object.keys(value);
-          if (!keys.length) return '{}';
-          const entries = keys.map(key => {
-            const formatted = toJsValue(value[key], indent + '  ');
-            return `${indent}  ${key}: ${formatted}`;
-          });
-          return `{
-${entries.join(',\n')}
-${indent}}`;
-        }
-        if (typeof value === 'string') {
-          const escaped = value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
-          return `"${escaped}"`;
-        }
-        return String(value);
+        if (/true|false/.test(m)) return '<span style="color:#79c0ff">' + m + '</span>';
+        if (/null/.test(m))       return '<span style="color:#6e7681">' + m + '</span>';
+        return '<span style="color:#ffa657">' + m + '</span>';
       }
+    );
+  }
 
-      function formatResultAsJsLiteral(result) {
-        if (result && typeof result === 'object' && Array.isArray(result.data)) {
-          if (result.data.length === 0) {
-            return '[]';
-          }
-          return result.data.map(item => toJsValue(item)).join('\n\n');
-        }
-        return toJsValue(result);
-      }
-
-      function setResult(payload) {
-        resultEl.textContent = payload;
-      }
-
-      async function runQuery() {
-        const minPrice = 5000;
-        setStatus('Running query...');
-        setResult('Loading...');
-
-        const payload = {
+  async function runQuery() {
+    setStatus('Running…', 'running');
+    resultEl.innerHTML = '<span style="color:#6e7681">// Fetching…</span>';
+    const t0 = Date.now();
+    try {
+      const resp = await fetch('/v1/collections/_craigslist_cars/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           select: ['*'],
-          filter: { price: { $gte: minPrice } },
+          filter: { price: { $gte: 1000 } },
           order_by: [{ field: 'price', direction: 'asc' }],
           offset: 0,
-        };
-
-        try {
-          const resp = await fetch('/v1/collections/_craigslist_cars/search', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          });
-          const body = await resp.json();
-          if (!resp.ok) {
-            setStatus(`Error: ${resp.status}`, true);
-            setResult(formatResultAsJsLiteral(body));
-            return;
-          }
-          setStatus('Query complete');
-          setResult(formatResultAsJsLiteral(body));
-        } catch (err) {
-          setStatus('Network error', true);
-          setResult(String(err));
-        }
-      }
-
-      runBtn.addEventListener('click', runQuery);
-      clearBtn.addEventListener('click', () => {
-        setStatus('Idle');
-        setResult('No results yet.');
+        }),
       });
-    </script>
-  </body>
+      const body = await resp.json();
+      const ms = Date.now() - t0;
+      if (!resp.ok) {
+        setStatus('Error ' + resp.status, 'err');
+        resultEl.innerHTML = syntaxHL(JSON.stringify(body, null, 2));
+        return;
+      }
+      const count = Array.isArray(body.data) ? body.data.length : '?';
+      setStatus(count + ' rows · ' + ms + 'ms', 'ok');
+      resultEl.innerHTML = syntaxHL(JSON.stringify(body.data || body, null, 2));
+    } catch (e) {
+      setStatus('Network error', 'err');
+      resultEl.textContent = String(e);
+    }
+  }
+
+  document.getElementById('runQuery').addEventListener('click', runQuery);
+  document.getElementById('clearQuery').addEventListener('click', () => {
+    setStatus('Idle — click Run to fire a request', '');
+    resultEl.innerHTML = '// Fires against _craigslist_cars\n// with price >= $1 000';
+  });
+</script>
+</body>
 </html>
