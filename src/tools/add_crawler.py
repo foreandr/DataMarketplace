@@ -103,6 +103,88 @@ def _pick_example_fields(extra_fields: list[dict]) -> dict:
     return {"int": int_field, "text": text_field, "loc": loc_field, "idx": idx_field}
 
 
+def _make_filter_lines(extra_fields: list[dict]) -> list[str]:
+    """Build a rich multi-operator filter block for the HTML code example."""
+    def _kv(key, val):
+        return f'        <span class="ckey">"{key}"</span><span class="cop">:</span> {val},'
+    def _cs(s):
+        return f'<span class="cs">"{s}"</span>'
+    def _cn(n):
+        return f'<span class="cn">{n}</span>'
+    def _op(o):
+        return f'<span class="cs">"{o}"</span><span class="cop">:</span>'
+    def _range(lo, hi):
+        return f'{{{_op("$gte")} {_cn(lo)}, {_op("$lte")} {_cn(hi)}}}'
+    def _gte(v):
+        return f'{{{_op("$gte")} {_cn(v)}}}'
+    def _lt(v):
+        return f'{{{_op("$lt")} {_cn(v)}}}'
+    def _like(s):
+        return f'{{{_op("$like")} {_cs(s)}}}'
+    def _in(*vals):
+        return f'{{{_op("$in")} [{", ".join(_cs(v) for v in vals)}]}}'
+
+    int_fields  = [f for f in extra_fields if f["type"] == "INTEGER"]
+    text_nonloc = [f for f in extra_fields if f["type"] == "TEXT"
+                   and not f.get("location") and not f.get("unique") and f["name"] != "id"]
+    loc_fields  = [f for f in extra_fields if f.get("location")]
+
+    lines: list[str] = []
+
+    # Country as simple equality
+    country_f = next((f for f in loc_fields if "country" in f["name"]), None)
+    if country_f:
+        lines.append(_kv(country_f["name"], _cs("United States")))
+
+    # Integer fields — first gets a range, second gets single-bound, third gets $lt
+    for i, f in enumerate(int_fields[:3]):
+        n  = f["name"]
+        nl = n.lower()
+        if i == 0:
+            if any(k in nl for k in ("price", "cost", "amount", "wage", "salary")):
+                lines.append(_kv(n, _range(1000, 15000)))
+            elif any(k in nl for k in ("year", "date")):
+                lines.append(_kv(n, _range(2010, 2024)))
+            else:
+                lines.append(_kv(n, _range(0, 100)))
+        elif i == 1:
+            if any(k in nl for k in ("mile", "odo", "dist")):
+                lines.append(_kv(n, _lt(150000)))
+            elif any(k in nl for k in ("year",)):
+                lines.append(_kv(n, _gte(2010)))
+            else:
+                lines.append(_kv(n, _gte(0)))
+        else:
+            lines.append(_kv(n, _lt(100)))
+
+    # Non-location, non-unique text field → $like
+    if text_nonloc:
+        n  = text_nonloc[0]["name"]
+        nl = n.lower()
+        kw = "keyword"
+        lines.append(_kv(n, _like(f"%{kw}%")))
+
+    # State/province as $in
+    state_f = next(
+        (f for f in loc_fields if f is not country_f
+         and any(k in f["name"] for k in ("state", "province", "region"))),
+        None,
+    )
+    city_f = next(
+        (f for f in loc_fields if f is not country_f and "city" in f["name"]),
+        None,
+    )
+    if state_f:
+        lines.append(_kv(state_f["name"], _in("Texas", "California")))
+    elif city_f:
+        lines.append(_kv(city_f["name"], _in("New York", "Los Angeles")))
+
+    if not lines:
+        lines.append('        <span class="cc"># add filters here</span>')
+
+    return lines
+
+
 # ── File writers ───────────────────────────────────────────────────────────────
 
 def _write_init(module_name: str) -> None:
@@ -282,24 +364,7 @@ def _write_html_template(
     loc_name  = ex["loc"]["name"]  if ex["loc"]  else text_name
     idx_name  = ex["idx"]["name"]  if ex["idx"]  else (extra_fields[0]["name"] if extra_fields else "field")
 
-    # Code-example filter block using actual field names
-    filter_lines: list[str] = []
-    if ex["text"]:
-        n = ex["text"]["name"]
-        filter_lines.append(
-            f'        <span class="ckey">"{n}"</span>'
-            f'<span class="cop">:</span>  '
-            f'<span class="cs">"example"</span>,'
-        )
-    if ex["int"]:
-        n = ex["int"]["name"]
-        filter_lines.append(
-            f'        <span class="ckey">"{n}"</span>'
-            f'<span class="cop">:</span>  '
-            f'{{<span class="cs">"$gte"</span><span class="cop">:</span> <span class="cn">0</span>}},'
-        )
-    if not filter_lines:
-        filter_lines.append('        <span class="cc"># add filters here</span>')
+    filter_lines = _make_filter_lines(extra_fields)
 
     L: list[str] = []
 
@@ -511,10 +576,11 @@ def _insert_index_card(module_name: str, short_desc: str) -> None:
         logging.info("Card for %s already present in index.html", module_name)
         return
 
+    display_name = module_name.lstrip("_").replace("_", " ").title()
     href = "{{ url_for('quick_query', crawler_name='" + module_name + "') }}"
     card = (
         f'  <a class="card" href="{href}">\n'
-        f'    <h3>{module_name}</h3>\n'
+        f'    <h3>{display_name}</h3>\n'
         f'    <p>{short_desc}</p>\n'
         f'    <div class="card-footer">\n'
         f'      <span class="card-link">View docs \u2192</span>\n'
@@ -575,6 +641,46 @@ def _init_crawler_db(module_name: str, extra_fields: list[dict]) -> None:
     conn.close()
 
 
+def _insert_example_row(module_name: str, extra_fields: list[dict]) -> None:
+    """Insert one clearly-synthetic row so the live-query tool returns data immediately."""
+    fields = _all_fields(extra_fields)
+    row: dict = {}
+    for f in fields:
+        name  = f["name"]
+        ftype = f["type"]
+        nl    = name.lower()
+        if f.get("primary"):
+            row[name] = "__SYNTHETIC_EXAMPLE__"
+        elif ftype == "INTEGER":
+            row[name] = 0
+        elif ftype == "REAL":
+            row[name] = 0.0
+        elif "image" in nl and "url" in nl:
+            row[name] = "https://example.com/image/synthetic.jpg"
+        elif "url" in nl:
+            row[name] = "https://example.com/synthetic"
+        elif "country" in nl:
+            row[name] = "United States"
+        elif any(k in nl for k in ("state", "province", "region")):
+            row[name] = "EX"
+        elif "city" in nl:
+            row[name] = "Example City"
+        elif f.get("location"):
+            row[name] = "Example"
+        elif name == "crawled_at":
+            row[name] = "2000-01-01 00:00:00"
+        else:
+            row[name] = f"[SYNTHETIC — {name} — for testing only]"
+
+    cols         = ", ".join(row.keys())
+    placeholders = ", ".join(["?"] * len(row))
+    db_path      = SRC_DIR / module_name / "database.sqlite"
+    conn         = sqlite3.connect(str(db_path))
+    conn.execute(f"INSERT OR IGNORE INTO items ({cols}) VALUES ({placeholders});", list(row.values()))
+    conn.commit()
+    conn.close()
+
+
 # ── Orchestrator ───────────────────────────────────────────────────────────────
 
 def main(
@@ -600,49 +706,54 @@ def main(
     print("  OK")
 
     # ── STEP 2: crawler.py ────────────────────────────────────────────────────
-    # print("\n[STEP 2] Writing crawler.py ...")
-    # _write_crawler_stub(module_name, class_name)
-    # print("  OK")
+    print("\n[STEP 2] Writing crawler.py ...")
+    _write_crawler_stub(module_name, class_name)
+    print("  OK")
 
     # ── STEP 3: schema.py ─────────────────────────────────────────────────────
-    # print("\n[STEP 3] Writing schema.py ...")
-    # _write_schema_stub(module_name, extra_fields)
-    # print("  OK")
+    print("\n[STEP 3] Writing schema.py ...")
+    _write_schema_stub(module_name, extra_fields)
+    print("  OK")
 
     # ── STEP 4: jsonify.py ────────────────────────────────────────────────────
-    # print("\n[STEP 4] Writing jsonify.py ...")
-    # _write_jsonify_stub(module_name, jsonify_class_name)
-    # print("  OK")
+    print("\n[STEP 4] Writing jsonify.py ...")
+    _write_jsonify_stub(module_name, jsonify_class_name)
+    print("  OK")
 
     # ── STEP 5: demo_data.py ──────────────────────────────────────────────────
-    # print("\n[STEP 5] Writing demo_data.py ...")
-    # _write_demo_data_stub(module_name)
-    # print("  OK")
+    print("\n[STEP 5] Writing demo_data.py ...")
+    _write_demo_data_stub(module_name)
+    print("  OK")
 
     # ── STEP 6: publish.py ────────────────────────────────────────────────────
-    # print("\n[STEP 6] Writing publish.py ...")
-    # _write_publish_stub(module_name, short_desc, long_desc)
-    # print("  OK")
+    print("\n[STEP 6] Writing publish.py ...")
+    _write_publish_stub(module_name, short_desc, long_desc)
+    print("  OK")
 
     # ── STEP 7: HTML template ─────────────────────────────────────────────────
-    # print("\n[STEP 7] Writing HTML template ...")
-    # _write_html_template(module_name, extra_fields, long_desc)
-    # print("  OK")
+    print("\n[STEP 7] Writing HTML template ...")
+    _write_html_template(module_name, extra_fields, long_desc)
+    print("  OK")
 
-    # ── STEP 8: SQLite database ───────────────────────────────────────────────
-    # print("\n[STEP 8] Initializing SQLite database ...")
-    # _init_crawler_db(module_name, extra_fields)
-    # print("  OK")
+    # ── STEP 8: index.html card ───────────────────────────────────────────────
+    print("\n[STEP 8] Inserting card into index.html ...")
+    _insert_index_card(module_name, short_desc)
+    print("  OK")
 
-    # ── STEP 9: resources.json ────────────────────────────────────────────────
-    # print("\n[STEP 9] Registering collection in resources.json ...")
-    # _ensure_collection(resources_path, module_name, module_name, f"src/{module_name}/database.sqlite")
-    # print("  OK")
+    # ── STEP 9: SQLite database ───────────────────────────────────────────────
+    print("\n[STEP 9] Initializing SQLite database ...")
+    _init_crawler_db(module_name, extra_fields)
+    print("  OK")
 
-    # ── STEP 10: index.html card ──────────────────────────────────────────────
-    # print("\n[STEP 10] Inserting card into index.html ...")
-    # _insert_index_card(module_name, short_desc)
-    # print("  OK")
+    # ── STEP 9b: synthetic example row ────────────────────────────────────────
+    print("\n[STEP 9b] Inserting synthetic example row ...")
+    _insert_example_row(module_name, extra_fields)
+    print("  OK  (row id='__SYNTHETIC_EXAMPLE__' — for testing only)")
+
+    # ── STEP 10: resources.json ───────────────────────────────────────────────
+    print("\n[STEP 10] Registering collection in resources.json ...")
+    _ensure_collection(resources_path, module_name, module_name, f"src/{module_name}/database.sqlite")
+    print("  OK")
 
     print("\nDone.")
 

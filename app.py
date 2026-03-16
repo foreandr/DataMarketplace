@@ -251,9 +251,8 @@ def index():
 
 @app.get("/demo/<crawler_name>")
 def quick_query(crawler_name: str):
-    resources = _load_resources()
-    valid = set(resources.get("collections", {}).keys())
-    if crawler_name not in valid:
+    template_path = ROOT_DIR / "templates" / f"{crawler_name}.html"
+    if not template_path.exists():
         return jsonify({"error": "Unknown crawler demo", "code": 404}), 404
     return render_template(f"{crawler_name}.html")
 
