@@ -55,6 +55,14 @@ def _delete_crawler_folder(module_name: str) -> bool:
     return True
 
 
+def _delete_html_template(module_name: str) -> bool:
+    path = ROOT_DIR / "templates" / f"{module_name}.html"
+    if not path.exists():
+        return False
+    path.unlink()
+    return True
+
+
 def main(source_name: str) -> None:
     load_dotenv()
     _setup_logging()
@@ -64,9 +72,11 @@ def main(source_name: str) -> None:
 
     removed_collection = _remove_collection(resources_path, module_name)
     deleted_folder = _delete_crawler_folder(module_name)
+    deleted_template = _delete_html_template(module_name)
 
-    logging.info("Removed collection: %s", removed_collection)
+    logging.info("Removed collection entry: %s", removed_collection)
     logging.info("Deleted src/%s/: %s", module_name, deleted_folder)
+    logging.info("Deleted templates/%s.html: %s", module_name, deleted_template)
 
 
 if __name__ == "__main__":
