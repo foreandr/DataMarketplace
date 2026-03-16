@@ -283,6 +283,138 @@ def _write_jsonify_stub(module_name: str, class_name: str) -> None:
     )
 
 
+def _build_json_schema(extra_fields: list[dict]) -> dict:
+    """Build a RapidAPI-ready JSON Schema dict from extra_fields."""
+    type_map = {"INTEGER": "integer", "REAL": "number", "TEXT": "string"}
+    all_fields = _all_fields(extra_fields)
+    filter_props = {}
+    for f in all_fields:
+        if f.get("primary"):
+            continue
+        filter_props[f["name"]] = {
+            "type": type_map.get(f["type"], "string"),
+            "description": f.get("description", f["name"].replace("_", " ").capitalize()),
+        }
+    return {
+        "type": "object",
+        "properties": {
+            "select": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": 'Fields to return. Use ["*"] for all fields.',
+            },
+            "filter": {
+                "type": "object",
+                "description": "Field filters. Supported operators: $gte, $lte, $gt, $lt, $eq, $ne, $like, $in.",
+                "properties": filter_props,
+            },
+            "order_by": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "field":     {"type": "string"},
+                        "direction": {"type": "string", "enum": ["asc", "desc"]},
+                    },
+                },
+            },
+            "page_number": {"type": "integer", "description": "1-based page number."},
+            "offset":      {"type": "integer", "description": "Row offset, alternative to page_number."},
+        },
+    }
+
+
+def _build_example_body(extra_fields: list[dict]) -> dict:
+    """Build a realistic example POST body from extra_fields."""
+    int_fields = [f for f in extra_fields if f["type"] == "INTEGER"]
+    loc_fields = [f for f in extra_fields if f.get("location")]
+    state_f = next((f for f in loc_fields if any(k in f["name"] for k in ("state", "province", "region"))), None)
+
+    filter_ex: dict = {}
+    for i, f in enumerate(int_fields[:3]):
+        nl = f["name"].lower()
+        if i == 0:
+            if any(k in nl for k in ("price", "cost", "amount", "wage", "salary")):
+                filter_ex[f["name"]] = {"$gte": 1000, "$lte": 15000}
+            elif any(k in nl for k in ("year", "date")):
+                filter_ex[f["name"]] = {"$gte": 2010, "$lte": 2024}
+            else:
+                filter_ex[f["name"]] = {"$gte": 0, "$lte": 100}
+        elif i == 1:
+            if any(k in nl for k in ("mile", "odo", "dist")):
+                filter_ex[f["name"]] = {"$lt": 150000}
+            elif any(k in nl for k in ("year",)):
+                filter_ex[f["name"]] = {"$gte": 2010}
+            else:
+                filter_ex[f["name"]] = {"$gte": 0}
+
+    if state_f:
+        filter_ex[state_f["name"]] = {"$in": ["TX", "CA"]}
+
+    idx_f = next((f for f in extra_fields if f.get("indexed")), extra_fields[0] if extra_fields else None)
+    order_field = idx_f["name"] if idx_f else "id"
+
+    return {
+        "select": ["*"],
+        "filter": filter_ex,
+        "order_by": [{"field": order_field, "direction": "asc"}],
+        "page_number": 1,
+    }
+
+
+def _write_listing(
+    module_name:  str,
+    short_desc:   str,
+    long_desc:    str,
+    extra_fields: list[dict],
+) -> None:
+    """Write LISTING.md — title, descriptions, RapidAPI schema, and example body."""
+    path = _crawler_dir(module_name) / "LISTING.md"
+    if path.exists():
+        return  # don't overwrite manual edits
+
+    display_name = module_name.lstrip("_").replace("_", " ").title()
+    schema_json  = json.dumps(_build_json_schema(extra_fields), indent=2)
+    example_json = json.dumps(_build_example_body(extra_fields), indent=2)
+
+    content = f"""\
+# RapidAPI Listing Info — {display_name}
+
+## API Name (short title)
+```
+{display_name}
+```
+
+## Short Description (one-liner shown in search results)
+```
+{short_desc}
+```
+
+## Long Description (shown on the API page)
+```
+{long_desc}
+```
+
+## Category (RapidAPI)
+```
+Data
+```
+
+---
+
+## RapidAPI Body Schema (paste into Schema tab)
+```json
+{schema_json}
+```
+
+## RapidAPI Example Body (paste into Body tab)
+```json
+{example_json}
+```
+"""
+    path.write_text(content, encoding="utf-8")
+
+
 def _write_demo_data_stub(module_name: str) -> None:
     path = _crawler_dir(module_name) / "demo_data.py"
     if path.exists():
@@ -293,23 +425,6 @@ def _write_demo_data_stub(module_name: str) -> None:
         encoding="utf-8",
     )
 
-
-def _write_publish_stub(
-    module_name: str,
-    short_desc: str = "",
-    long_desc: str  = "",
-) -> None:
-    path = _crawler_dir(module_name) / "publish.py"
-    if path.exists():
-        raise FileExistsError(f"Already exists: {path}")
-    path.write_text(
-        f'"""Publish logic for {module_name}."""\n'
-        "from __future__ import annotations\n\n"
-        f'SHORT_DESC = "{short_desc}"\n'
-        f'LONG_DESC  = """{long_desc}"""\n\n'
-        "# TODO: implement publishing to RapidAPI, Zyla, etc.\n",
-        encoding="utf-8",
-    )
 
 
 def _schema_table_rows(fields: list[dict]) -> str:
@@ -725,6 +840,11 @@ def main(
     _write_demo_data_stub(module_name)
     print("  OK")
 
+    # ── STEP 5c: LISTING.md ───────────────────────────────────────────────────
+    print("\n[STEP 5c] Writing LISTING.md ...")
+    _write_listing(module_name, short_desc, long_desc, extra_fields)
+    print("  OK")
+
     # ── STEP 5b: logo ─────────────────────────────────────────────────────────
     print("\n[STEP 5b] Generating logo ...")
     try:
@@ -735,13 +855,8 @@ def main(
     except Exception as exc:
         print(f"  SKIP  (logo generation failed: {exc})")
 
-    # ── STEP 6: publish.py ────────────────────────────────────────────────────
-    print("\n[STEP 6] Writing publish.py ...")
-    _write_publish_stub(module_name, short_desc, long_desc)
-    print("  OK")
-
-    # ── STEP 7: HTML template ─────────────────────────────────────────────────
-    print("\n[STEP 7] Writing HTML template ...")
+    # ── STEP 6: HTML template ─────────────────────────────────────────────────
+    print("\n[STEP 6] Writing HTML template ...")
     _write_html_template(module_name, extra_fields, long_desc)
     print("  OK")
 
@@ -781,7 +896,7 @@ def delete_crawler(source_name: str) -> None:
     resources_path = ROOT_DIR / "config" / "resources.json"
 
     # src/{module_name}/ — covers __init__, crawler, schema, jsonify,
-    #                       demo_data, publish, database.sqlite
+    #                       demo_data, database.sqlite
     if crawler_dir.exists():
         shutil.rmtree(crawler_dir)
         print(f"  Deleted: {crawler_dir}")
