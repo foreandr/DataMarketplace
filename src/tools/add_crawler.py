@@ -415,6 +415,84 @@ Data
     path.write_text(content, encoding="utf-8")
 
 
+def _write_publish_stub(
+    module_name: str,
+    short_desc:  str = "",
+    long_desc:   str = "",
+) -> None:
+    """Write publish.py — hyperSel-based RapidAPI publishing automation."""
+    path = _crawler_dir(module_name) / "publish.py"
+    if path.exists():
+        return  # don't overwrite manual edits
+
+    display_name = module_name.lstrip("_").replace("_", " ").title()
+    collection_path = f"/v1/collections/{module_name}/search"
+
+    path.write_text(
+        f'"""RapidAPI publishing automation for {module_name}."""\n'
+        "from __future__ import annotations\n\n"
+        "import os\n"
+        "from dotenv import load_dotenv\n"
+        "from hyperSel import instance, log\n\n"
+        "load_dotenv()\n\n"
+        "# ── Crawler metadata ─────────────────────────────────────────────────────────\n"
+        f'DISPLAY_NAME     = "{display_name}"\n'
+        f'SHORT_DESC       = "{short_desc}"\n'
+        f'LONG_DESC        = """{long_desc}"""\n'
+        f'COLLECTION_PATH  = "{collection_path}"\n\n'
+        "# ── Credentials (set in .env) ─────────────────────────────────────────────────\n"
+        'RAPID_API_EMAIL = os.getenv("RAPID_API_EMAIL")\n'
+        'RAPID_API_PASSW = os.getenv("RAPID_API_PASSW")\n\n\n"'
+        "def sign_in_process(browser) -> None:\n"
+        '    browser.go_to_site("https://rapidapi.com/auth/login")\n'
+        '    browser.clear_and_enter_text(by_type="xpath", value=\'/html/body/div[2]/main/div[1]/section/section/form/div[1]/div/input\', content_to_enter=RAPID_API_EMAIL)\n'
+        '    browser.clear_and_enter_text(by_type="xpath", value=\'/html/body/div[2]/main/div[1]/section/section/form/div[2]/div/div/input\', content_to_enter=RAPID_API_PASSW)\n'
+        '    browser.click_element(by_type="xpath", value=\'/html/body/div[2]/main/div[1]/section/section/button\')\n'
+        "    # accept cookies popup\n"
+        '    browser.click_element(by_type="xpath", value=\'/html/body/div[4]/div[2]/div/div/div[2]/div/div/button[2]\')\n'
+        '    print("SIGN IN SUCCESSFUL")\n\n\n'
+        "def uploading_new_process(browser) -> None:\n"
+        "    def creation_process():\n"
+        "        # TODO: click Workspace\n"
+        "        # TODO: click Create New Project\n"
+        "        # TODO: enter DISPLAY_NAME\n"
+        "        # TODO: enter SHORT_DESC\n"
+        "        # TODO: select category = Data\n"
+        "        # TODO: click Add API Project\n"
+        "        pass\n\n"
+        "    def general_process():\n"
+        "        # TODO: upload logo (logo.png lives next to this file)\n"
+        "        # TODO: add LONG_DESC\n"
+        "        # TODO: add website link\n"
+        "        # TODO: tick 'I confirm I own or have rights'\n"
+        "        # TODO: add base URL  http://<your-server>:5000/\n"
+        "        pass\n\n"
+        "    def create_rest_endpoint():\n"
+        "        # TODO: click Create REST Endpoint\n"
+        "        # TODO: set name = DISPLAY_NAME\n"
+        "        # TODO: set description (payload desc)\n"
+        "        # TODO: set method = POST\n"
+        f"        # TODO: set path = {collection_path}\n"
+        "        # TODO: set payload name = body\n"
+        "        # TODO: paste example body from LISTING.md\n"
+        "        # TODO: paste schema JSON from LISTING.md\n"
+        "        # TODO: click Save\n"
+        "        pass\n\n"
+        "    creation_process()\n"
+        "    general_process()\n"
+        "    create_rest_endpoint()\n\n\n"
+        "def main() -> None:\n"
+        "    browser = instance.Browser(headless=False, zoom_level=100)\n"
+        "    browser.init_browser()\n"
+        "    sign_in_process(browser)\n"
+        "    uploading_new_process(browser)\n"
+        '    input("Paused — press Enter to close browser")\n\n\n'
+        'if __name__ == "__main__":\n'
+        "    main()\n",
+        encoding="utf-8",
+    )
+
+
 def _write_demo_data_stub(module_name: str) -> None:
     path = _crawler_dir(module_name) / "demo_data.py"
     if path.exists():
@@ -838,6 +916,11 @@ def main(
     # ── STEP 5: demo_data.py ──────────────────────────────────────────────────
     print("\n[STEP 5] Writing demo_data.py ...")
     _write_demo_data_stub(module_name)
+    print("  OK")
+
+    # ── STEP 5d: publish.py ───────────────────────────────────────────────────
+    print("\n[STEP 5d] Writing publish.py ...")
+    _write_publish_stub(module_name, short_desc, long_desc)
     print("  OK")
 
     # ── STEP 5c: LISTING.md ───────────────────────────────────────────────────
