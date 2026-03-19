@@ -210,7 +210,7 @@ class CraigslistCarsCrawler:
             placeholders = ", ".join(["?"] * len(SCHEMA.field_names()))
             columns      = ", ".join(SCHEMA.field_names())
             conn.executemany(
-                f"INSERT OR REPLACE INTO items ({columns}) VALUES ({placeholders});",
+                f"INSERT OR IGNORE INTO items ({columns}) VALUES ({placeholders});",
                 rows,
             )
         conn.commit()
@@ -219,6 +219,43 @@ class CraigslistCarsCrawler:
 
     def _db_path(self) -> Path:
         return Path(__file__).resolve().parents[2] / "src" / self.name / "database.sqlite"
+
+
+def dedup_database(db_path: Path | None = None) -> int:
+    """Delete duplicate rows that share the same URL, keeping the oldest (lowest rowid).
+
+    Returns the number of rows deleted.
+    """
+    if db_path is None:
+        db_path = Path(__file__).resolve().parents[2] / "src" / "_craigslist_cars" / "database.sqlite"
+
+    if not db_path.exists():
+        print(f"  {RD}DB not found:{R} {db_path}")
+        return 0
+
+    conn = sqlite3.connect(str(db_path))
+
+    before = conn.execute("SELECT COUNT(*) FROM items;").fetchone()[0]
+
+    conn.execute("""
+        DELETE FROM items
+        WHERE rowid NOT IN (
+            SELECT MIN(rowid) FROM items GROUP BY url
+        );
+    """)
+    conn.commit()
+
+    after = conn.execute("SELECT COUNT(*) FROM items;").fetchone()[0]
+    conn.close()
+
+    deleted = before - after
+    _banner([
+        "🧹  DEDUP COMPLETE",
+        f"  Before : {before:,}",
+        f"  After  : {after:,}",
+        f"  Deleted: {deleted:,} duplicate rows",
+    ], color=GR)
+    return deleted
 
 
 if __name__ == "__main__":

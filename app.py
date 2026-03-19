@@ -5,6 +5,8 @@ import logging
 import os
 import sqlite3
 import sys
+import time
+from collections import defaultdict, deque
 from datetime import datetime
 from importlib import import_module
 from pathlib import Path
@@ -25,6 +27,14 @@ SERVER_LOG_PATH = FOREVER_LOG_DIR / "server.log"
 ERROR_LOG_PATH = FOREVER_LOG_DIR / "errors.log"
 
 app = Flask(__name__)
+
+# ── Rate limiting ──────────────────────────────────────────────────────────────
+RATE_LIMIT_REQUESTS = int(os.environ.get("RATE_LIMIT_REQUESTS", 1000))  # per window
+RATE_LIMIT_WINDOW   = int(os.environ.get("RATE_LIMIT_WINDOW",   60))    # seconds
+RATE_LIMITED_IPS_PATH = LOG_DIR / "rate_limited_ips.txt"
+
+# in-memory store: ip -> deque of request timestamps
+_rate_store: dict[str, deque] = defaultdict(deque)
 
 
 def _setup_server_logging() -> None:
@@ -216,8 +226,42 @@ def _log_request() -> None:
         pass
 
 
+def _client_ip() -> str:
+    forwarded = request.headers.get("X-Forwarded-For", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.remote_addr or "unknown"
+
+
+def _log_rate_limited_ip(ip: str) -> None:
+    try:
+        LOG_DIR.mkdir(parents=True, exist_ok=True)
+        with RATE_LIMITED_IPS_PATH.open("a", encoding="utf-8") as fh:
+            fh.write(f"{datetime.now().isoformat(timespec='seconds')} {ip}\n")
+    except Exception:
+        pass
+
+
+def _check_rate_limit() -> Response | None:
+    ip = _client_ip()
+    now = time.time()
+    window_start = now - RATE_LIMIT_WINDOW
+    q = _rate_store[ip]
+    # Drop timestamps outside the window
+    while q and q[0] < window_start:
+        q.popleft()
+    if len(q) >= RATE_LIMIT_REQUESTS:
+        _log_rate_limited_ip(ip)
+        return jsonify({"error": "Rate limit exceeded", "code": 429}), 429
+    q.append(now)
+    return None
+
+
 @app.before_request
 def _log_incoming_request():
+    rate_limit_response = _check_rate_limit()
+    if rate_limit_response is not None:
+        return rate_limit_response
     _log_request()
 
 
@@ -339,6 +383,49 @@ def search_collection(name: str):
         )
     except (KeyError, ValueError, TypeError) as exc:
         return jsonify({"error": str(exc), "code": 400}), 400
+    except sqlite3.OperationalError as exc:
+        return jsonify({"error": str(exc), "code": 500}), 500
+    except Exception as exc:
+        return jsonify({"error": "Internal server error", "details": str(exc), "code": 500}), 500
+
+
+@app.get("/v1/collections/<name>/freshness")
+def collection_freshness(name: str):
+    try:
+        resources = _load_resources()
+        collection = resources.get("collections", {}).get(name)
+        if not collection:
+            return jsonify({"error": "Resource not found", "code": 404}), 404
+
+        db_path = ROOT_DIR / collection["db_path"]
+        schema_name = collection["schema"]
+        schema = _load_schema(schema_name)
+
+        conn = sqlite3.connect(str(db_path))
+        conn.execute(schema.create_table_sql())
+        for stmt in schema.create_indexes_sql():
+            conn.execute(stmt)
+
+        row = conn.execute("""
+            SELECT
+                COUNT(CASE WHEN date(crawled_at) = date('now') THEN 1 END)                    AS today,
+                COUNT(CASE WHEN crawled_at >= datetime('now', '-7 days') THEN 1 END)           AS this_week,
+                COUNT(CASE WHEN crawled_at >= datetime('now', 'start of month') THEN 1 END)    AS this_month,
+                COUNT(CASE WHEN crawled_at >= datetime('now', 'start of year') THEN 1 END)     AS this_year,
+                COUNT(*)                                                                        AS total
+            FROM items;
+        """).fetchone()
+        conn.close()
+
+        return jsonify({
+            "data": {
+                "today":      row[0],
+                "this_week":  row[1],
+                "this_month": row[2],
+                "this_year":  row[3],
+                "total":      row[4],
+            }
+        })
     except sqlite3.OperationalError as exc:
         return jsonify({"error": str(exc), "code": 500}), 500
     except Exception as exc:
