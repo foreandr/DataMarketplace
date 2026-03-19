@@ -1,3 +1,5 @@
 internal IP based RATE LIMITING, we cant just rely on the api marketplaces rate limiters, though i think we can be generous,WE CAN JUST keep the ips ina  txt file
 
 get rid of dupes, basically say ALL urls have to be unique, cuz rn thgere are gunna be many many dupe urls 
+
+SHOW IN THE ROOT uis HOW MUCH NEW DATA WE'VE gotten this day, this week, this month, this year, so LIKE WHEN i GO TO THE CREAIGSLIST CARS HTML FILE, PEOPLE CAN SEE HOW MCUH DATA THEYURE GETTING
