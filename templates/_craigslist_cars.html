@@ -20,6 +20,64 @@
   </div>
 </div>
 
+<!-- ── DATA FRESHNESS ─────────────────────────────────────── -->
+<div class="section-label">Data Freshness</div>
+<div class="freshness-grid" id="freshnessGrid">
+  <div class="freshness-card" id="fc-today">
+    <div class="freshness-num" id="fn-today">—</div>
+    <div class="freshness-label">Added Today</div>
+  </div>
+  <div class="freshness-card" id="fc-week">
+    <div class="freshness-num" id="fn-week">—</div>
+    <div class="freshness-label">Last 7 Days</div>
+  </div>
+  <div class="freshness-card" id="fc-month">
+    <div class="freshness-num" id="fn-month">—</div>
+    <div class="freshness-label">This Month</div>
+  </div>
+  <div class="freshness-card" id="fc-year">
+    <div class="freshness-num" id="fn-year">—</div>
+    <div class="freshness-label">This Year</div>
+  </div>
+  <div class="freshness-card freshness-card-total" id="fc-total">
+    <div class="freshness-num" id="fn-total">—</div>
+    <div class="freshness-label">Total Records</div>
+  </div>
+</div>
+<style>
+  .freshness-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .freshness-card {
+    background: var(--surface-2, #1e1e2e);
+    border: 1px solid var(--border, #2e2e3e);
+    border-radius: 10px;
+    padding: 18px 24px;
+    min-width: 130px;
+    flex: 1;
+    text-align: center;
+  }
+  .freshness-card-total {
+    border-color: var(--accent, #7c6af7);
+  }
+  .freshness-num {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent, #7c6af7);
+    letter-spacing: -0.5px;
+  }
+  .freshness-label {
+    font-size: 11px;
+    color: var(--text-muted, #888);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+</style>
+
 <!-- ── SCHEMA ────────────────────────────────────────────── -->
 <div class="section-label">Schema</div>
 <table class="schema-table">
@@ -238,5 +296,24 @@ resp <span class="cop">=</span> requests.<span class="cf">post</span>(url, json<
       setTimeout(() => (this.textContent = 'Copy'), 1600);
     });
   });
+
+  // ── Freshness stats ───────────────────────────────────────────────────────
+  (function () {
+    function fmt(n) {
+      if (n === null || n === undefined) return '—';
+      return Number(n).toLocaleString();
+    }
+    fetch('/v1/collections/_craigslist_cars/freshness')
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        var d = j.data || {};
+        document.getElementById('fn-today').textContent  = fmt(d.today);
+        document.getElementById('fn-week').textContent   = fmt(d.this_week);
+        document.getElementById('fn-month').textContent  = fmt(d.this_month);
+        document.getElementById('fn-year').textContent   = fmt(d.this_year);
+        document.getElementById('fn-total').textContent  = fmt(d.total);
+      })
+      .catch(function () { /* silently fail if server is down */ });
+  })();
 </script>
 {% endblock %}

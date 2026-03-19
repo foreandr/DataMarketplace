@@ -834,6 +834,34 @@ def _init_crawler_db(module_name: str, extra_fields: list[dict]) -> None:
     conn.close()
 
 
+def dedup_database(db_path: Path) -> int:
+    """Delete duplicate rows sharing the same URL, keeping the oldest (lowest rowid).
+
+    This is safe to run at any time — rows without a URL are left untouched.
+    Returns the number of rows deleted.
+    """
+    if not db_path.exists():
+        logging.warning("dedup_database: DB not found at %s", db_path)
+        return 0
+
+    conn = sqlite3.connect(str(db_path))
+    before = conn.execute("SELECT COUNT(*) FROM items;").fetchone()[0]
+    # Only dedup rows where url is non-null
+    conn.execute("""
+        DELETE FROM items
+        WHERE url IS NOT NULL
+          AND rowid NOT IN (
+              SELECT MIN(rowid) FROM items WHERE url IS NOT NULL GROUP BY url
+          );
+    """)
+    conn.commit()
+    after = conn.execute("SELECT COUNT(*) FROM items;").fetchone()[0]
+    conn.close()
+    deleted = before - after
+    logging.info("dedup_database: removed %d duplicate URL rows (%d → %d)", deleted, before, after)
+    return deleted
+
+
 def _insert_example_row(module_name: str, extra_fields: list[dict]) -> None:
     """Insert one clearly-synthetic row so the live-query tool returns data immediately."""
     fields = _all_fields(extra_fields)
@@ -957,6 +985,12 @@ def main(
     print("\n[STEP 9b] Inserting synthetic example row ...")
     _insert_example_row(module_name, extra_fields)
     print("  OK  (row id='__SYNTHETIC_EXAMPLE__' — for testing only)")
+
+    # ── STEP 9c: dedup (no-op on fresh DB, safety net on existing) ────────────
+    print("\n[STEP 9c] Deduplicating database (url uniqueness) ...")
+    db_path = SRC_DIR / module_name / "database.sqlite"
+    removed = dedup_database(db_path)
+    print(f"  OK  ({removed} duplicate URL rows removed)")
 
     # ── STEP 10: resources.json ───────────────────────────────────────────────
     print("\n[STEP 10] Registering collection in resources.json ...")
