@@ -278,7 +278,17 @@ def _write_jsonify_stub(module_name: str, class_name: str) -> None:
         "        loc_city    = (location or {}).get('city', '')\n"
         "        loc_state   = (location or {}).get('state', '')\n"
         "        loc_country = (location or {}).get('country', '')\n"
-        "        return data if isinstance(data, list) else []\n",
+        "        return data if isinstance(data, list) else []\n\n"
+        "    def run_analysis(\n"
+        "        self,\n"
+        "        data: Any,\n"
+        "        location: dict | None = None,\n"
+        "        print_samples: bool = False,\n"
+        "    ) -> List[dict]:\n"
+        "        # Placeholder to match crawler API.\n"
+        "        # When you implement parsing, return cleaned records here.\n"
+        "        _ = print_samples  # unused for now\n"
+        "        return self.to_json(data, location=location)\n",
         encoding="utf-8",
     )
 
@@ -442,7 +452,7 @@ def _write_publish_stub(
         f'COLLECTION_PATH  = "{collection_path}"\n\n'
         "# ── Credentials (set in .env) ─────────────────────────────────────────────────\n"
         'RAPID_API_EMAIL = os.getenv("RAPID_API_EMAIL")\n'
-        'RAPID_API_PASSW = os.getenv("RAPID_API_PASSW")\n\n\n"'
+        'RAPID_API_PASSW = os.getenv("RAPID_API_PASSW")\n\n\n'
         "def sign_in_process(browser) -> None:\n"
         '    browser.go_to_site("https://rapidapi.com/auth/login")\n'
         '    browser.clear_and_enter_text(by_type="xpath", value=\'/html/body/div[2]/main/div[1]/section/section/form/div[1]/div/input\', content_to_enter=RAPID_API_EMAIL)\n'
@@ -1049,11 +1059,13 @@ def delete_crawler(source_name: str) -> None:
 
 if __name__ == "__main__":
     # ── CONFIG ───────────────────────────────────────────────────────────────────
-    SOURCE_NAME = "craigslist_cars2"
-    SHORT_DESC  = "Used vehicle listings across US & Canadian cities."
+    SOURCE_NAME = "craigslist_realestate"
+    SHORT_DESC  = "Craigslist real estate listings with price, beds, baths, and location."
     LONG_DESC   = """\
-Used vehicle listings scraped across US and Canadian cities. Each record includes \
-pricing, mileage, year, URL, and full geo-location data tagged at crawl time."""
+Real estate listings scraped from Craigslist across US & Canadian cities. Records \
+include pricing, bedrooms, bathrooms, square footage when available, listing URL, \
+image, and geo-location data tagged at crawl time. Bedrooms and square footage can \
+be missing for some listings."""
     # Only id and crawled_at are always included automatically.
     # Every other field you want must be listed here — including title, city,
     # state, country if relevant (e.g. classified ads). For something like stock
@@ -1061,15 +1073,19 @@ pricing, mileage, year, URL, and full geo-location data tagged at crawl time."""
     # Valid keys: name, type ("TEXT"|"INTEGER"|"REAL"), indexed, unique,
     #             location, primary, default_sql, description
     EXTRA_FIELDS: list[dict] = [
-        {"name": "title",     "type": "TEXT",                                       "description": "Listing headline"},
-        {"name": "price",     "type": "INTEGER", "indexed": True,                   "description": "Asking price in USD"},
-        {"name": "mileage",   "type": "INTEGER",                                    "description": "Odometer reading in miles"},
-        {"name": "year",      "type": "INTEGER", "indexed": True,                   "description": "Model year"},
-        {"name": "url",       "type": "TEXT",    "unique": True,  "indexed": True,  "description": "Direct link to listing"},
-        {"name": "image_url", "type": "TEXT",                                       "description": "Primary listing image"},
-        {"name": "city",      "type": "TEXT",    "indexed": True, "location": True, "description": "City where listing was crawled"},
-        {"name": "state",     "type": "TEXT",    "indexed": True, "location": True, "description": "State or province"},
-        {"name": "country",   "type": "TEXT",    "indexed": True, "location": True, "description": "Country of origin"},
+        {"name": "title",        "type": "TEXT",                                       "description": "Listing headline"},
+        {"name": "price",        "type": "INTEGER", "indexed": True,                   "description": "Asking price in USD or CAD"},
+        {"name": "bedrooms",     "type": "INTEGER", "indexed": True,                   "description": "Number of bedrooms (nullable)"},
+        {"name": "bathrooms",    "type": "REAL",    "indexed": True,                   "description": "Number of bathrooms (nullable)"},
+        {"name": "square_feet",  "type": "INTEGER",                                    "description": "Interior size in square feet (nullable)"},
+        {"name": "housing_type", "type": "TEXT",    "indexed": True,                   "description": "Apartment, house, condo, etc."},
+        {"name": "location",     "type": "TEXT",                                       "description": "Neighborhood or area label"},
+        {"name": "posted_date",  "type": "TEXT",    "indexed": True,                   "description": "Posting date as shown on Craigslist"},
+        {"name": "url",          "type": "TEXT",    "unique": True,  "indexed": True,  "description": "Direct link to listing"},
+        {"name": "image_url",    "type": "TEXT",                                       "description": "Primary listing image"},
+        {"name": "city",         "type": "TEXT",    "indexed": True, "location": True, "description": "City where listing was crawled"},
+        {"name": "state",        "type": "TEXT",    "indexed": True, "location": True, "description": "State or province"},
+        {"name": "country",      "type": "TEXT",    "indexed": True, "location": True, "description": "Country of origin"},
     ]
     # ─────────────────────────────────────────────────────────────────────────────
 
