@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import ctypes
+import os
 import subprocess
 import sys
 import time
@@ -11,7 +12,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 SRC_DIR = ROOT_DIR / "src"
 
 # ---- Runtime settings ----
-RAM_CAP_PERCENT = 80.0
+RAM_CAP_PERCENT = 95.0
 RUN_MINUTES = 15
 CHECK_INTERVAL_SEC = 5
 
@@ -48,7 +49,9 @@ def _discover_crawlers() -> list[str]:
 
 def _run_one(module: str) -> None:
     cmd = [sys.executable, "-m", f"{module}.crawler"]
-    proc = subprocess.Popen(cmd, cwd=ROOT_DIR)
+    env = dict(**dict(**dict(os.environ)))
+    env["PYTHONPATH"] = str(SRC_DIR)
+    proc = subprocess.Popen(cmd, cwd=ROOT_DIR, env=env)
     start = time.time()
     timeout = RUN_MINUTES * 60
 
