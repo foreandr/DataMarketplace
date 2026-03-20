@@ -70,6 +70,17 @@ def _load_schema(schema_module: str):
     return mod.SCHEMA
 
 
+def _ensure_location_column(conn: sqlite3.Connection) -> None:
+    cols = [r[1] for r in conn.execute("PRAGMA table_info(items);").fetchall()]
+    if "location" not in cols:
+        conn.execute("ALTER TABLE items ADD COLUMN location TEXT;")
+        if "neighborhood" in cols:
+            conn.execute(
+                "UPDATE items SET location = neighborhood "
+                "WHERE location IS NULL OR TRIM(location) = '';"
+            )
+
+
 def _field_type_map(schema) -> dict[str, str]:
     return {f.name: f.type for f in schema.fields}
 
@@ -360,6 +371,7 @@ def search_collection(name: str):
         conn.execute(schema.create_table_sql())
         for stmt in schema.create_indexes_sql():
             conn.execute(stmt)
+        _ensure_location_column(conn)
 
         cur = conn.execute(sql, params)
         rows_data = cur.fetchall()
@@ -405,6 +417,7 @@ def collection_freshness(name: str):
         conn.execute(schema.create_table_sql())
         for stmt in schema.create_indexes_sql():
             conn.execute(stmt)
+        _ensure_location_column(conn)
 
         row = conn.execute("""
             SELECT

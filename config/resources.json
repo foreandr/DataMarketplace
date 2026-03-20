@@ -3,6 +3,10 @@
     "_craigslist_cars": {
       "db_path": "src/_craigslist_cars/database.sqlite",
       "schema": "_craigslist_cars"
+    },
+    "_craigslist_realestate": {
+      "db_path": "src/_craigslist_realestate/database.sqlite",
+      "schema": "_craigslist_realestate"
     }
   }
 }
