@@ -7718,3 +7718,1455 @@
   url: https://goldcountry.craigslist.org/sha/d/needs-home/7920229317.html
   raw: ['7920229317', 'Needs a home', 'Garden Valley', 'Needs a home', '3/9', 'pic', 'hide', 'https://goldcountry.craigslist.org/sha/d/needs-home/7920229317.html', 'https://www.craigslist.org/images/d/7920229317/empty.png']
 
+
+=== SKIPPED @ 2026-03-20 12:42:42 ===
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-central-air-fitness-center/7914696908.html
+  raw: ['7914696908', 'Amherst', 'Central Air, Fitness Center', '2/12', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-central-air-fitness-center/7914696908.html', 'https://www.craigslist.org/images/d/7914696908/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-dyouville-university-ele-heat/7919025487.html
+  raw: ['7919025487', 'Buffalo', "D'Youville University Ele. & Heat Included 1 bedroom", '3/4', '1br', '900ft', '2', '$1,100', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-dyouville-university-ele-heat/7919025487.html', 'https://www.craigslist.org/images/d/7919025487/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pets-welcome-incredible/7915698238.html
+  raw: ['7915698238', 'Amherst', 'Pets Welcome, Incredible Amenities', '2/17', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pets-welcome-incredible/7915698238.html', 'https://www.craigslist.org/images/d/7915698238/empty.png']
+
+- Title too short
+  title: Kenmore
+  url: https://buffalo.craigslist.org/apa/d/buffalo-kenmore-tonawanda-br-includes/7914121461.html
+  raw: ['7914121461', 'Kenmore', 'Kenmore/Tonawanda - 1 BR - Includes Heat', '2/9', '1br', '650ft', '2', '$1,095', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-kenmore-tonawanda-br-includes/7914121461.html', 'https://www.craigslist.org/images/d/7914121461/empty.png']
+
+- Missing price
+  title: Lakefront Room Avail.
+  url: https://buffalo.craigslist.org/sha/d/lakefront-room-avail/7920922032.html
+  raw: ['7920922032', 'Lakefront Room Avail.', 'Somerset/Barker. NY', 'Lakefront Room Avail.', '3/16', 'hide', 'https://buffalo.craigslist.org/sha/d/lakefront-room-avail/7920922032.html', 'https://www.craigslist.org/images/d/7920922032/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917711606.html
+  raw: ['7917711606', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/26', '1br', '700ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917711606.html', 'https://www.craigslist.org/images/d/7917711606/empty.png']
+
+- Missing price
+  title: Sr Male is looking for Room to Rent
+  url: https://buffalo.craigslist.org/sha/d/sr-male-is-looking-for-room-to-rent/7922337946.html
+  raw: ['7922337946', 'Sr Male is looking for Room to Rent', 'Buffalo', 'Sr Male is looking for Room to Rent', '3/19', 'pic', 'hide', 'https://buffalo.craigslist.org/sha/d/sr-male-is-looking-for-room-to-rent/7922337946.html', 'https://www.craigslist.org/images/d/7922337946/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site/7915778905.html
+  raw: ['7915778905', 'Amherst', 'Laundry on Site', '2/17', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site/7915778905.html', 'https://www.craigslist.org/images/d/7915778905/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7915771421.html
+  raw: ['7915771421', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/17', '2br', '850ft', '2', '$1,390', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7915771421.html', 'https://www.craigslist.org/images/d/7915771421/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-verizon-fios-ready-incredible/7916228498.html
+  raw: ['7916228498', 'Amherst', 'Verizon Fios Ready, Incredible Amenities, Perfect Location', '2/19', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-verizon-fios-ready-incredible/7916228498.html', 'https://www.craigslist.org/images/d/7916228498/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly-fitness-center/7920276969.html
+  raw: ['7920276969', 'Amherst', 'Pet Friendly, Fitness Center', '3/10', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly-fitness-center/7920276969.html', 'https://www.craigslist.org/images/d/7920276969/empty.png']
+
+- Title too short
+  title: Kenmore
+  url: https://buffalo.craigslist.org/apa/d/buffalo-kenmore-tonawanda-br-includes/7914122610.html
+  raw: ['7914122610', 'Kenmore', 'Kenmore/Tonawanda - 1 BR - Includes Heat', '2/9', '1br', '650ft', '2', '$1,095', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-kenmore-tonawanda-br-includes/7914122610.html', 'https://www.craigslist.org/images/d/7914122610/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-call-for-details/7920923407.html
+  raw: ['7920923407', 'Amherst', 'Laundry on Site,  Call for Details', '3/13', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-call-for-details/7920923407.html', 'https://www.craigslist.org/images/d/7920923407/empty.png']
+
+- Title too short
+  title: East Otto
+  url: https://buffalo.craigslist.org/apa/d/east-otto-10-minutes-to-springville/7917986275.html
+  raw: ['7917986275', 'East Otto', '10 Minutes to Springville, Ellicottville', '3/6', '2br', '950ft', '2', '$1,100', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/east-otto-10-minutes-to-springville/7917986275.html', 'https://www.craigslist.org/images/d/7917986275/empty.png']
+
+- Unrealistic bathrooms (247.0)
+  title: 247 Barton St Unit 1, Buffalo, NY 14213
+  url: https://buffalo.craigslist.org/apa/d/buffalo-247-barton-st-unit-buffalo-ny/7913201793.html
+  raw: ['7913201793', '247 Barton St Unit 1, Buffalo, NY 14213', '2/5', '2br', '1100ft', '2', '$1,100', 'pic', 'show duplicates', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-247-barton-st-unit-buffalo-ny/7913201793.html', 'https://www.craigslist.org/images/d/7913201793/empty.png']
+
+- Price too low ($1)
+  title: member partners/EB-5 Investors building and development opportunity
+  url: https://buffalo.craigslist.org/reo/d/elma-member-partners-eb-investors/7920457800.html
+  raw: ['7920457800', 'member partners/EB-5 Investors building and development opportunity', '$1     Western New York', 'member partners/EB-5 Investors building and development opportunity', '3/10', '6br', '2880ft', '2', '$1', 'hide', 'https://buffalo.craigslist.org/reo/d/elma-member-partners-eb-investors/7920457800.html', 'https://www.craigslist.org/images/d/7920457800/empty.png']
+
+- Title too short
+  title: Cambria
+  url: https://buffalo.craigslist.org/apa/d/sanborn-large-luxurious-bedroom-house/7916068493.html
+  raw: ['7916068493', 'Cambria', 'Large Luxurious 5 bedroom house for rent 3700 SQFT   STARPOINT schools', '3/7', '5br', '$4,200', 'hide', 'https://buffalo.craigslist.org/apa/d/sanborn-large-luxurious-bedroom-house/7916068493.html', 'https://www.craigslist.org/images/d/7916068493/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917055186.html
+  raw: ['7917055186', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/23', '1br', '700ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917055186.html', 'https://www.craigslist.org/images/d/7917055186/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-leasing-now/7914866605.html
+  raw: ['7914866605', 'Amherst', 'Laundry on Site, Leasing Now, Call for Details', '2/13', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-leasing-now/7914866605.html', 'https://www.craigslist.org/images/d/7914866605/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-maple-rd/7917923291.html
+  raw: ['7917923291', 'Amherst', 'Beautiful Apartment On Maple Rd Sturbridge Village Apartments', '2/27', '2br', '930ft', '2', '$1,535', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-maple-rd/7917923291.html', 'https://www.craigslist.org/images/d/7917923291/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-playground-incredible-amenities/7914045121.html
+  raw: ['7914045121', 'Amherst', 'Playground, Incredible Amenities, Stylish Features', '2/9', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-playground-incredible-amenities/7914045121.html', 'https://www.craigslist.org/images/d/7914045121/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7917044850.html
+  raw: ['7917044850', 'Amherst', 'Beautiful Apartment Near North Forest Rd Sturbridge Village Apartments', '2/23', '2br', '970ft', '2', '$1,610', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7917044850.html', 'https://www.craigslist.org/images/d/7917044850/empty.png']
+
+- Missing price
+  title: Room for rent
+  url: https://allentown.craigslist.org/sha/d/room-for-rent/7914178536.html
+  raw: ['7914178536', 'Room for rent', 'Laurys Station', 'Room for rent', '2/9', 'hide', 'https://allentown.craigslist.org/sha/d/room-for-rent/7914178536.html', 'https://www.craigslist.org/images/d/7914178536/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7918991945.html
+  raw: ['7918991945', 'Amherst', 'All Utilities Included', '3/4', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7918991945.html', 'https://www.craigslist.org/images/d/7918991945/empty.png']
+
+- Missing price
+  title: Rommate in Webster Needed
+  url: https://rochester.craigslist.org/sha/d/rommate-in-webster-needed/7918480502.html
+  raw: ['7918480502', 'Rommate in Webster Needed', 'Webster', 'Rommate in Webster Needed', '3/1', 'hide', 'https://rochester.craigslist.org/sha/d/rommate-in-webster-needed/7918480502.html', 'https://www.craigslist.org/images/d/7918480502/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7912971721.html
+  raw: ['7912971721', 'Amherst', 'All Utilities Included', '2/4', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7912971721.html', 'https://www.craigslist.org/images/d/7912971721/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-townhouse-behind/7917058470.html
+  raw: ['7917058470', 'Amherst', 'Beautiful Townhouse behind Niagara Falls Blvd Fountain View West', '2/23', '2br', '1200ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-townhouse-behind/7917058470.html', 'https://www.craigslist.org/images/d/7917058470/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-central-air-fitness-center/7916190695.html
+  raw: ['7916190695', 'Amherst', 'Central Air, Fitness Center', '2/19', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-central-air-fitness-center/7916190695.html', 'https://www.craigslist.org/images/d/7916190695/empty.png']
+
+- Title too short
+  title: Darien
+  url: https://buffalo.craigslist.org/apa/d/darien-center-bedroom-apartment/7920077276.html
+  raw: ['7920077276', 'Darien', '3 Bedroom apartment', '3/9', '3br', '$950', 'hide', 'https://buffalo.craigslist.org/apa/d/darien-center-bedroom-apartment/7920077276.html', 'https://www.craigslist.org/images/d/7920077276/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7914482570.html
+  raw: ['7914482570', 'Amherst', 'All Utilities Included, Stylish Features, Call for Details', '2/11', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7914482570.html', 'https://www.craigslist.org/images/d/7914482570/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-lovely-bedroom-single-family/7916043386.html
+  raw: ['7916043386', 'Buffalo', 'Lovely 6 bedroom Single Family Home', '2/18', '6br', '3300ft', '2', '$3,250', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-lovely-bedroom-single-family/7916043386.html', 'https://www.craigslist.org/images/d/7916043386/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7915782533.html
+  raw: ['7915782533', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/17', '2br', '1055ft', '2', '$1,495', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7915782533.html', 'https://www.craigslist.org/images/d/7915782533/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly-fitness-center/7917228505.html
+  raw: ['7917228505', 'Amherst', 'Pet Friendly, Fitness Center', '2/24', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly-fitness-center/7917228505.html', 'https://www.craigslist.org/images/d/7917228505/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-930ft2-beautiful-apartment-on/7917050810.html
+  raw: ['7917050810', 'Amherst', '930ft2 - Beautiful Apartment On Maple Rd Sturbridge Village Apartment', '2/23', '2br', '930ft', '2', '$1,535', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-930ft2-beautiful-apartment-on/7917050810.html', 'https://www.craigslist.org/images/d/7917050810/empty.png']
+
+- Title too short
+  title: N Ton.
+  url: https://buffalo.craigslist.org/apa/d/tonawanda-two-bed-updated-includes/7912832052.html
+  raw: ['7912832052', 'N Ton.', 'TWO BED.,  Updated, Includes Everything  $1195', '3/7', '2br', '$1,195', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/tonawanda-two-bed-updated-includes/7912832052.html', 'https://www.craigslist.org/images/d/7912832052/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-perfect/7919221739.html
+  raw: ['7919221739', 'Amherst', 'Laundry Facilities, Perfect Location', '3/5', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-perfect/7919221739.html', 'https://www.craigslist.org/images/d/7919221739/empty.png']
+
+- Title too short
+  title: Albion NY
+  url: https://buffalo.craigslist.org/apa/d/albion-albion-ny-small-bdrm-house-for/7915642178.html
+  raw: ['7915642178', 'Albion NY', 'Albion NY small 2 bdrm house for rent', '3/10', '2br', '950ft', '2', '$1,500', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/albion-albion-ny-small-bdrm-house-for/7915642178.html', 'https://www.craigslist.org/images/d/7915642178/empty.png']
+
+- Unrealistic sqft (85)
+  title: Beautiful Apartment off of Tonawanda Creek West Summerset Apartments
+  url: https://buffalo.craigslist.org/apa/d/north-tonawanda-beautiful-apartment-off/7921984674.html
+  raw: ['7921984674', 'Beautiful Apartment off of Tonawanda Creek West Summerset Apartments', 'Amherst NY', 'Beautiful Apartment off of Tonawanda Creek West Summerset Apartments', '3/18', '2br', '85ft', '2', '$1,390', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/north-tonawanda-beautiful-apartment-off/7921984674.html', 'https://www.craigslist.org/images/d/7921984674/empty.png']
+
+- Wanted ad (not a listing)
+  title: Young Male Video Gamer Wanted
+  url: https://buffalo.craigslist.org/roo/d/buffalo-young-male-video-gamer-wanted/7916771341.html
+  raw: ['7916771341', 'Young Male Video Gamer Wanted', 'BabCock & Seneca', 'Young Male Video Gamer Wanted', '7h ago', '4br', '$450', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-young-male-video-gamer-wanted/7916771341.html', 'https://www.craigslist.org/images/d/7916771341/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-fitness/7918618493.html
+  raw: ['7918618493', 'Amherst', 'Laundry Facilities, Fitness Center, Pet Friendly', '3/2', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-fitness/7918618493.html', 'https://www.craigslist.org/images/d/7918618493/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-playground-pet-friendly/7919476758.html
+  raw: ['7919476758', 'Amherst', 'Playground, Pet Friendly', '3/6', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-playground-pet-friendly/7919476758.html', 'https://www.craigslist.org/images/d/7919476758/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7915779997.html
+  raw: ['7915779997', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/17', '2br', '1055ft', '2', '$1,495', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7915779997.html', 'https://www.craigslist.org/images/d/7915779997/empty.png']
+
+- Price too low ($25)
+  title: Lockport, NY
+  url: https://buffalo.craigslist.org/apa/d/lockport-seniors-bedroom-apartments/7919288531.html
+  raw: ['7919288531', 'Lockport, NY', 'Seniors: 1-Bedroom Apartments Available! Rent is based on Income!', '3/5', '1br', '$25', 'pic', 'show duplicates', 'hide', 'https://buffalo.craigslist.org/apa/d/lockport-seniors-bedroom-apartments/7919288531.html', 'https://www.craigslist.org/images/d/7919288531/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-bed-bath-condo-for-rent-off/7914217604.html
+  raw: ['7914217604', 'Buffalo', '2-Bed 2-Bath Condo For Rent | Off Street Parking | In-unit Laundry', '2/26', '2br', '$2,095', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-bed-bath-condo-for-rent-off/7914217604.html', 'https://www.craigslist.org/images/d/7914217604/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7914535505.html
+  raw: ['7914535505', 'Amherst', 'Near Shopping, Professionally Managed', '2/11', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7914535505.html', 'https://www.craigslist.org/images/d/7914535505/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-patio-or-balcony-call-for/7914872487.html
+  raw: ['7914872487', 'Amherst', 'Patio or Balcony, Call for Details, Convenient Location', '2/13', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-patio-or-balcony-call-for/7914872487.html', 'https://www.craigslist.org/images/d/7914872487/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-denrose/7915773095.html
+  raw: ['7915773095', 'Amherst', 'Beautiful Town House On Denrose Drive ! Denrose Town Houses', '2/17', '2br', '900ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-denrose/7915773095.html', 'https://www.craigslist.org/images/d/7915773095/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7915770044.html
+  raw: ['7915770044', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/17', '1br', '700ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7915770044.html', 'https://www.craigslist.org/images/d/7915770044/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-behind-near/7917057464.html
+  raw: ['7917057464', 'Amherst', 'Beautiful Apartment behind Near Niagara Falls Blvd Fountain View', '2/23', '2br', '900ft', '2', '$1,340', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-behind-near/7917057464.html', 'https://www.craigslist.org/images/d/7917057464/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7920706364.html
+  raw: ['7920706364', 'Amherst', 'Near Shopping, Professionally Managed', '3/12', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7920706364.html', 'https://www.craigslist.org/images/d/7920706364/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly/7914218423.html
+  raw: ['7914218423', 'Amherst', 'Pet Friendly', '2/10', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly/7914218423.html', 'https://www.craigslist.org/images/d/7914218423/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-patio-or-balcony-call-for/7916380947.html
+  raw: ['7916380947', 'Amherst', 'Patio or Balcony, Call for Details, Convenient Location', '2/20', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-patio-or-balcony-call-for/7916380947.html', 'https://www.craigslist.org/images/d/7916380947/empty.png']
+
+- Missing price
+  title: Quiet , single 37  year old man looking for a room/ studio apt for rent to moe i
+  url: https://lancaster.craigslist.org/sha/d/quiet-single-37-year-old-man-looking/7921554663.html
+  raw: ['7921554663', 'Quiet , single 37  year old man looking for a room/ studio apt for rent to moe i', 'Lancaster', 'Quiet , single 37  year old man looking for a room/ studio apt for rent to moe i', '3/16', 'pic', 'hide', 'https://lancaster.craigslist.org/sha/d/quiet-single-37-year-old-man-looking/7921554663.html', 'https://www.craigslist.org/images/d/7921554663/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/bowmansville-beautiful-town-house-on/7917267631.html
+  raw: ['7917267631', 'Amherst', 'Beautiful Town House On North Forest Road at Bowdoin Square', '2/24', '2br', '1380ft', '2', '$1,740', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/bowmansville-beautiful-town-house-on/7917267631.html', 'https://www.craigslist.org/images/d/7917267631/empty.png']
+
+- Price too low ($1)
+  title: Wanted- Lakeside Crescent Home in Lancaster
+  url: https://buffalo.craigslist.org/reo/d/lancaster-wanted-lakeside-crescent-home/7915272694.html
+  raw: ['7915272694', 'Wanted- Lakeside Crescent Home in Lancaster', 'Lancaster', 'Wanted- Lakeside Crescent Home in Lancaster', '3/19', '$1', 'hide', 'https://buffalo.craigslist.org/reo/d/lancaster-wanted-lakeside-crescent-home/7915272694.html', 'https://www.craigslist.org/images/d/7915272694/empty.png']
+
+- Title too short
+  title: Tonawanda
+  url: https://buffalo.craigslist.org/apa/d/tonawanda-floor-bath-for-rent/7918154653.html
+  raw: ['7918154653', 'Tonawanda', '2 floor 2 bath for rent', '3/7', '2br', '1100ft', '2', '$1,100', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/tonawanda-floor-bath-for-rent/7918154653.html', 'https://www.craigslist.org/images/d/7918154653/empty.png']
+
+- Missing price
+  title: Two Armchairs for Sale
+  url: https://toronto.craigslist.org/tor/sha/d/two-armchairs-for-sale/7915749408.html
+  raw: ['7915749408', 'Two Armchairs for Sale', 'North York', 'Two Armchairs for Sale', '4h ago', 'pic', 'hide', 'https://toronto.craigslist.org/tor/sha/d/two-armchairs-for-sale/7915749408.html', 'https://www.craigslist.org/images/d/7915749408/empty.png']
+
+- Title too short
+  title: Barker
+  url: https://buffalo.craigslist.org/apa/d/barker-move-your-mobile-home-on-our/7917712118.html
+  raw: ['7917712118', 'Barker', 'Move your Mobile Home on our park lot in the country', '3/12', '3br', '$550', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/barker-move-your-mobile-home-on-our/7917712118.html', 'https://www.craigslist.org/images/d/7917712118/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-independent-55-living-community/7912795839.html
+  raw: ['7912795839', 'Amherst', 'Independent 55+ Living Community - Meyer Pointe Senior Apartments', '2/3', '2br', '$1,755', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-independent-55-living-community/7912795839.html', 'https://www.craigslist.org/images/d/7912795839/empty.png']
+
+- Missing price
+  title: Looking for room
+  url: https://mansfield.craigslist.org/sha/d/looking-for-room/7921638740.html
+  raw: ['7921638740', 'Looking for room', 'Mansfield', 'Looking for room', '3/16', 'hide', 'https://mansfield.craigslist.org/sha/d/looking-for-room/7921638740.html', 'https://www.craigslist.org/images/d/7921638740/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7917529966.html
+  raw: ['7917529966', 'Amherst', 'Near Shopping, Professionally Managed', '2/25', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7917529966.html', 'https://www.craigslist.org/images/d/7917529966/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7915929588.html
+  raw: ['7915929588', 'Amherst', 'All Utilities Included', '2/18', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7915929588.html', 'https://www.craigslist.org/images/d/7915929588/empty.png']
+
+- Missing price
+  title: Room for rent needed
+  url: https://toronto.craigslist.org/tor/sha/d/room-for-rent-needed/7914190359.html
+  raw: ['7914190359', 'Room for rent needed', 'Toronto', 'Room for rent needed', '2/10', 'hide', 'https://toronto.craigslist.org/tor/sha/d/room-for-rent-needed/7914190359.html', 'https://www.craigslist.org/images/d/7914190359/empty.png']
+
+- Missing price
+  title: In search of a cheap room
+  url: https://martinsburg.craigslist.org/sha/d/in-search-of-cheap-room/7917404546.html
+  raw: ['7917404546', 'In search of a cheap room', 'Martinsburg', 'In search of a cheap room', '3/15', 'hide', 'https://martinsburg.craigslist.org/sha/d/in-search-of-cheap-room/7917404546.html', 'https://www.craigslist.org/images/d/7917404546/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7919028023.html
+  raw: ['7919028023', 'Amherst', 'All Utilities Included, Stylish Features, Call for Details', '3/4', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7919028023.html', 'https://www.craigslist.org/images/d/7919028023/empty.png']
+
+- Missing price
+  title: Single woman seeking room for rent
+  url: https://allentown.craigslist.org/sha/d/single-woman-seeking-room-for-rent/7920237707.html
+  raw: ['7920237707', 'Single woman seeking room for rent', 'Quakertown, PA', 'Single woman seeking room for rent', '3/9', 'hide', 'https://allentown.craigslist.org/sha/d/single-woman-seeking-room-for-rent/7920237707.html', 'https://www.craigslist.org/images/d/7920237707/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-north-buffalo-bedroom/7918979583.html
+  raw: ['7918979583', 'Buffalo', 'North buffalo 2 bedroom', '3/4', '2br', '800ft', '2', '$1,050', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-north-buffalo-bedroom/7918979583.html', 'https://www.craigslist.org/images/d/7918979583/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-freshly-painted-br-lower/7916261965.html
+  raw: ['7916261965', 'Buffalo', 'Freshly painted 3-BR Lower unit*Close TO 190 to downtown', '2/19', '3br', '1227ft', '2', '$1,150', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-freshly-painted-br-lower/7916261965.html', 'https://www.craigslist.org/images/d/7916261965/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-verizon-fios-ready-incredible/7920786438.html
+  raw: ['7920786438', 'Amherst', 'Verizon Fios Ready, Incredible Amenities, Perfect Location', '3/12', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-verizon-fios-ready-incredible/7920786438.html', 'https://www.craigslist.org/images/d/7920786438/empty.png']
+
+- Title too short
+  title: Hamburg
+  url: https://buffalo.craigslist.org/apa/d/hamburg-lake-heights-apartments/7920219477.html
+  raw: ['7920219477', 'Hamburg', 'Lake Heights Apartments', '3/9', '2br', '800ft', '2', '$1,160', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/hamburg-lake-heights-apartments/7920219477.html', 'https://www.craigslist.org/images/d/7920219477/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917060602.html
+  raw: ['7917060602', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/23', '2br', '81ft', '2', '$1,430', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917060602.html', 'https://www.craigslist.org/images/d/7917060602/empty.png']
+
+- Missing price
+  title: Looking for a parking spot
+  url: https://toronto.craigslist.org/tor/sha/d/looking-for-parking-spot/7914653532.html
+  raw: ['7914653532', 'Looking for a parking spot', 'North York', 'Looking for a parking spot', '4h ago', 'pic', 'hide', 'https://toronto.craigslist.org/tor/sha/d/looking-for-parking-spot/7914653532.html', 'https://www.craigslist.org/images/d/7914653532/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-north/7917925586.html
+  raw: ['7917925586', 'Amherst', 'Beautiful Town House On North Forest Road at Bowdoin Square', '2/27', '2br', '1380ft', '2', '$1,740', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-north/7917925586.html', 'https://www.craigslist.org/images/d/7917925586/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pets-welcome-incredible/7918553943.html
+  raw: ['7918553943', 'Amherst', 'Pets Welcome, Incredible Amenities', '3/2', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pets-welcome-incredible/7918553943.html', 'https://www.craigslist.org/images/d/7918553943/empty.png']
+
+- Title too short
+  title: East Otto
+  url: https://buffalo.craigslist.org/apa/d/east-otto-10-minutes-to-springville/7916517922.html
+  raw: ['7916517922', 'East Otto', '10 Minutes to Springville, Ellicottville', '2/20', '1br', '925ft', '2', '$900', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/east-otto-10-minutes-to-springville/7916517922.html', 'https://www.craigslist.org/images/d/7916517922/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7917921136.html
+  raw: ['7917921136', 'Amherst', 'Beautiful Apartment Near North Forest Rd Sturbridge Village Apartments', '2/27', '2br', '970ft', '2', '$1,610', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7917921136.html', 'https://www.craigslist.org/images/d/7917921136/empty.png']
+
+- Missing price
+  title: Discounted Properties in Western NY
+  url: https://buffalo.craigslist.org/reo/d/buffalo-discounted-properties-in/7917394750.html
+  raw: ['7917394750', 'Discounted Properties in Western NY', 'Discounted Properties in Western NY', '3/11', 'hide', 'https://buffalo.craigslist.org/reo/d/buffalo-discounted-properties-in/7917394750.html', 'https://www.craigslist.org/images/d/7917394750/empty.png']
+
+- Missing price
+  title: 224 Niagara St, Buffalo, NY
+  url: https://buffalo.craigslist.org/apa/d/buffalo-fully-applianced-kitchens-large/7919330316.html
+  raw: ['7919330316', '224 Niagara St, Buffalo, NY', 'Fully Applianced Kitchens, Large Closets, 3/BD', '3/5', '3br', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-fully-applianced-kitchens-large/7919330316.html', 'https://www.craigslist.org/images/d/7919330316/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917273863.html
+  raw: ['7917273863', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/24', '1br', '650ft', '2', '$1,255', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917273863.html', 'https://www.craigslist.org/images/d/7917273863/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-playground-pet-friendly/7916406744.html
+  raw: ['7916406744', 'Amherst', 'Playground, Pet Friendly', '2/20', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-playground-pet-friendly/7916406744.html', 'https://www.craigslist.org/images/d/7916406744/empty.png']
+
+- Title too short
+  title: Wilson
+  url: https://buffalo.craigslist.org/apa/d/wilson-spacious-bright-loft-style/7913549982.html
+  raw: ['7913549982', 'Wilson', 'Spacious & bright loft style apartment - no smoking $900', '3/7', '2br', '$900', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/wilson-spacious-bright-loft-style/7913549982.html', 'https://www.craigslist.org/images/d/7913549982/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-maple-rd/7916142781.html
+  raw: ['7916142781', 'amherst', 'Beautiful Apartment On Maple Rd Sturbridge Village Apartments', '2/19', '2br', '930ft', '2', '$1,535', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-maple-rd/7916142781.html', 'https://www.craigslist.org/images/d/7916142781/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-house-for-rent/7914705255.html
+  raw: ['7914705255', 'Buffalo', 'House for rent', '2/12', '3br', '$1,300', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-house-for-rent/7914705255.html', 'https://www.craigslist.org/images/d/7914705255/empty.png']
+
+- Missing price
+  title: Will clean and cook for a room
+  url: https://londonon.craigslist.org/sha/d/will-clean-and-cook-for-room/7922116794.html
+  raw: ['7922116794', 'Will clean and cook for a room', 'London ontario', 'Will clean and cook for a room', '3/18', 'hide', 'https://londonon.craigslist.org/sha/d/will-clean-and-cook-for-room/7922116794.html', 'https://www.craigslist.org/images/d/7922116794/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly/7912760085.html
+  raw: ['7912760085', 'Amherst', 'Pet Friendly', '2/3', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly/7912760085.html', 'https://www.craigslist.org/images/d/7912760085/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7917454921.html
+  raw: ['7917454921', 'Amherst', 'Beautiful Apartment Near North Forest Rd Sturbridge Village Apartments', '2/25', '2br', '970ft', '2', '$1,610', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7917454921.html', 'https://www.craigslist.org/images/d/7917454921/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7920550031.html
+  raw: ['7920550031', 'Amherst', 'All Utilities Included, Stylish Features, Call for Details', '3/11', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7920550031.html', 'https://www.craigslist.org/images/d/7920550031/empty.png']
+
+- Missing price
+  title: ISO room
+  url: https://harrisburg.craigslist.org/sha/d/iso-room/7922065493.html
+  raw: ['7922065493', 'ISO room', 'Hershey', 'ISO room', '3/18', 'hide', 'https://harrisburg.craigslist.org/sha/d/iso-room/7922065493.html', 'https://www.craigslist.org/images/d/7922065493/empty.png']
+
+- Unrealistic sqft (80100)
+  title: Set on over 22 acres of land
+  url: https://buffalo.craigslist.org/reb/d/springville-set-on-over-22-acres-of-land/7918809708.html
+  raw: ['7918809708', 'Set on over 22 acres of land', 'Sardinia', 'Set on over 22 acres of land', '3/16', '4br', '980100ft', '2', '$259,900', 'pic', 'hide', 'https://buffalo.craigslist.org/reb/d/springville-set-on-over-22-acres-of-land/7918809708.html', 'https://www.craigslist.org/images/d/7918809708/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-5th-floor-studio-by-ub-north/7918298475.html
+  raw: ['7918298475', 'Amherst', '5th Floor Studio by UB North (350 SF)', '2/28', '350ft', '2', '$1,100', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-5th-floor-studio-by-ub-north/7918298475.html', 'https://www.craigslist.org/images/d/7918298475/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7915752632.html
+  raw: ['7915752632', 'Amherst', 'Beautiful Landscape, Close to shopping, banks and businesses', '2/17', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7915752632.html', 'https://www.craigslist.org/images/d/7915752632/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917926867.html
+  raw: ['7917926867', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/27', '2br', '850ft', '2', '$1,390', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917926867.html', 'https://www.craigslist.org/images/d/7917926867/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7913049069.html
+  raw: ['7913049069', 'Amherst', 'Near Shopping, Professionally Managed', '2/4', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7913049069.html', 'https://www.craigslist.org/images/d/7913049069/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-aspen-heights-looking-for/7920241067.html
+  raw: ['7920241067', 'Amherst', 'Aspen Heights - looking for roommate', '3/9', '1br', '2038ft', '2', '$905', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-aspen-heights-looking-for/7920241067.html', 'https://www.craigslist.org/images/d/7920241067/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-playground-incredible-amenities/7918575627.html
+  raw: ['7918575627', 'Amherst', 'Playground, Incredible Amenities, Stylish Features', '3/2', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-playground-incredible-amenities/7918575627.html', 'https://www.craigslist.org/images/d/7918575627/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-rooms-for-rent/7915490474.html
+  raw: ['7915490474', 'Amherst', 'Rooms for rent', '2/16', '$2,010', 'pic', 'show duplicates', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-rooms-for-rent/7915490474.html', 'https://www.craigslist.org/images/d/7915490474/empty.png']
+
+- Missing price
+  title: East Akron housing
+  url: https://akroncanton.craigslist.org/sha/d/east-akron-housing/7919132137.html
+  raw: ['7919132137', 'East Akron housing', 'Akron', 'East Akron housing', '3/4', 'hide', 'https://akroncanton.craigslist.org/sha/d/east-akron-housing/7919132137.html', 'https://www.craigslist.org/images/d/7919132137/empty.png']
+
+- Missing price
+  title: 224 Niagara St, Buffalo, NY
+  url: https://buffalo.craigslist.org/apa/d/buffalo-bd-stainless-steel-appliances/7920099824.html
+  raw: ['7920099824', '224 Niagara St, Buffalo, NY', '1/BD, Stainless Steel Appliances, Plank Flooring', '3/9', '1br', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-bd-stainless-steel-appliances/7920099824.html', 'https://www.craigslist.org/images/d/7920099824/empty.png']
+
+- Missing price
+  title: SWM looking for female who wants to share House
+  url: https://buffalo.craigslist.org/roo/d/north-tonawanda-swm-looking-for-female/7920672902.html
+  raw: ['7920672902', 'SWM looking for female who wants to share House', 'N falls/ n tonawanda', 'SWM looking for female who wants to share House', '3/17', '2br', 'hide', 'https://buffalo.craigslist.org/roo/d/north-tonawanda-swm-looking-for-female/7920672902.html', 'https://www.craigslist.org/images/d/7920672902/empty.png']
+
+- Price too low ($100)
+  title: lockport NY
+  url: https://buffalo.craigslist.org/apa/d/lockport-affordable-senior-housing/7917992349.html
+  raw: ['7917992349', 'lockport NY', 'Affordable senior housing', '2/27', '1br', '$100', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/lockport-affordable-senior-housing/7917992349.html', 'https://www.craigslist.org/images/d/7917992349/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-maple-rd/7917265352.html
+  raw: ['7917265352', 'Amherst', 'Beautiful Apartment On Maple Rd Sturbridge Village Apartments', '2/24', '2br', '930ft', '2', '$1,535', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-maple-rd/7917265352.html', 'https://www.craigslist.org/images/d/7917265352/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-townhouse-behind/7915775481.html
+  raw: ['7915775481', 'Amherst', 'Beautiful Townhouse behind Niagara Falls Blvd Fountain View West', '2/17', '2br', '1200ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-townhouse-behind/7915775481.html', 'https://www.craigslist.org/images/d/7915775481/empty.png']
+
+- Missing price
+  title: Temporary Housing
+  url: https://pittsburgh.craigslist.org/sha/d/temporary-housing/7920516852.html
+  raw: ['7920516852', 'Temporary Housing', 'Glenshaw', 'Temporary Housing', '3/11', 'hide', 'https://pittsburgh.craigslist.org/sha/d/temporary-housing/7920516852.html', 'https://www.craigslist.org/images/d/7920516852/empty.png']
+
+- Missing price
+  title: Investor Looking For Property Locators / Bird Dogs
+  url: https://buffalo.craigslist.org/reo/d/buffalo-investor-looking-for-property/7919649443.html
+  raw: ['7919649443', 'Investor Looking For Property Locators / Bird Dogs', 'Buffalo', 'Investor Looking For Property Locators / Bird Dogs', '3/7', 'hide', 'https://buffalo.craigslist.org/reo/d/buffalo-investor-looking-for-property/7919649443.html', 'https://www.craigslist.org/images/d/7919649443/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7915776725.html
+  raw: ['7915776725', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/17', '1br', '650ft', '2', '$1,255', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7915776725.html', 'https://www.craigslist.org/images/d/7915776725/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-300/7917838394.html
+  raw: ['7917838394', 'Buffalo', '$300', '2/26', '1br', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-300/7917838394.html', 'https://www.craigslist.org/images/d/7917838394/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-perfect/7914655473.html
+  raw: ['7914655473', 'Amherst', 'Laundry Facilities, Perfect Location', '2/12', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-perfect/7914655473.html', 'https://www.craigslist.org/images/d/7914655473/empty.png']
+
+- Price too low ($225)
+  title: House, 6.9 acres in Cattaraugus County
+  url: https://buffalo.craigslist.org/reo/d/east-otto-house-69-acres-in-cattaraugus/7919631270.html
+  raw: ['7919631270', 'House, 6.9 acres in Cattaraugus County', 'East Otto', 'House, 6.9 acres in Cattaraugus County', '3/6', '3br', '$225', 'pic', 'hide', 'https://buffalo.craigslist.org/reo/d/east-otto-house-69-acres-in-cattaraugus/7919631270.html', 'https://www.craigslist.org/images/d/7919631270/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7917264214.html
+  raw: ['7917264214', 'Amherst', 'Beautiful Apartment Near North Forest Rd Sturbridge Village', '2/24', '2br', '970ft', '2', '$1,610', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7917264214.html', 'https://www.craigslist.org/images/d/7917264214/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-playground-pet-friendly/7914907641.html
+  raw: ['7914907641', 'Amherst', 'Playground, Pet Friendly', '2/13', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-playground-pet-friendly/7914907641.html', 'https://www.craigslist.org/images/d/7914907641/empty.png']
+
+- Unrealistic sqft (23958)
+  title: .55 Acre Wooded Lot for Sale
+  url: https://buffalo.craigslist.org/reo/d/buffalo-55-acre-wooded-lot-for-sale/7920639346.html
+  raw: ['7920639346', '.55 Acre Wooded Lot for Sale', 'Amherst', '.55 Acre Wooded Lot for Sale', '3/11', '23958ft', '2', '$55,000', 'pic', 'hide', 'https://buffalo.craigslist.org/reo/d/buffalo-55-acre-wooded-lot-for-sale/7920639346.html', 'https://www.craigslist.org/images/d/7920639346/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916396045.html
+  raw: ['7916396045', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet', '2/20', '2br', '1055ft', '2', '$1,495', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916396045.html', 'https://www.craigslist.org/images/d/7916396045/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7916004215.html
+  raw: ['7916004215', 'Amherst', 'Near Shopping, Professionally Managed', '2/18', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7916004215.html', 'https://www.craigslist.org/images/d/7916004215/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-fitness-center/7917333776.html
+  raw: ['7917333776', 'Amherst', 'Laundry on Site, Fitness Center', '2/24', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-fitness-center/7917333776.html', 'https://www.craigslist.org/images/d/7917333776/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-rooms-for-rent/7916246960.html
+  raw: ['7916246960', 'Amherst', 'Rooms for rent', '2/19', '$2,010', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-rooms-for-rent/7916246960.html', 'https://www.craigslist.org/images/d/7916246960/empty.png']
+
+- Missing price
+  title: Rehoming
+  url: https://buffalo.craigslist.org/sha/d/rehoming/7922215469.html
+  raw: ['7922215469', 'Rehoming', 'Buffalo', 'Rehoming', '3/19', 'pic', 'hide', 'https://buffalo.craigslist.org/sha/d/rehoming/7922215469.html', 'https://www.craigslist.org/images/d/7922215469/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities/7915700080.html
+  raw: ['7915700080', 'Amherst', 'Laundry Facilities', '2/17', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities/7915700080.html', 'https://www.craigslist.org/images/d/7915700080/empty.png']
+
+- Title too short
+  title: Blackrock
+  url: https://buffalo.craigslist.org/apa/d/buffalo-bedroom-riverside-blackrock/7917306354.html
+  raw: ['7917306354', 'Blackrock', '2 Bedroom - Riverside/Blackrock', '3/4', '2br', '$1,090', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-bedroom-riverside-blackrock/7917306354.html', 'https://www.craigslist.org/images/d/7917306354/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-patio-or-balcony-call-for/7917907728.html
+  raw: ['7917907728', 'Amherst', 'Patio or Balcony, Call for Details, Convenient Location', '2/27', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-patio-or-balcony-call-for/7917907728.html', 'https://www.craigslist.org/images/d/7917907728/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-perfect/7917684287.html
+  raw: ['7917684287', 'Amherst', 'Laundry Facilities, Perfect Location', '2/26', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-perfect/7917684287.html', 'https://www.craigslist.org/images/d/7917684287/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7915778341.html
+  raw: ['7915778341', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Ho', '2/17', '2br', '881ft', '2', '$1,430', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7915778341.html', 'https://www.craigslist.org/images/d/7915778341/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/north-tonawanda-beautiful-apartment/7917512953.html
+  raw: ['7917512953', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/25', '1br', '700ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/north-tonawanda-beautiful-apartment/7917512953.html', 'https://www.craigslist.org/images/d/7917512953/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-patio-or-balcony-call-for/7919439929.html
+  raw: ['7919439929', 'Amherst', 'Patio or Balcony, Call for Details, Convenient Location', '3/6', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-patio-or-balcony-call-for/7919439929.html', 'https://www.craigslist.org/images/d/7919439929/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-townhouse-behind/7917938571.html
+  raw: ['7917938571', 'Amherst', 'Beautiful Townhouse behind Niagara Falls Blvd Fountain View West', '2/27', '2br', '1200ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-townhouse-behind/7917938571.html', 'https://www.craigslist.org/images/d/7917938571/empty.png']
+
+- Missing price
+  title: Desperate need a room/apartment/house asap
+  url: https://harrisburg.craigslist.org/sha/d/desperate-need-room-apartment-house-asap/7915390226.html
+  raw: ['7915390226', 'Desperate need a room/apartment/house asap', 'Palmyra', 'Desperate need a room/apartment/house asap', '2/15', 'hide', 'https://harrisburg.craigslist.org/sha/d/desperate-need-room-apartment-house-asap/7915390226.html', 'https://www.craigslist.org/images/d/7915390226/empty.png']
+
+- Price too low ($16)
+  title: Mobile home / manufactured – private
+  url: https://buffalo.craigslist.org/reo/d/medina-mobile-home-manufactured-private/7915257755.html
+  raw: ['7915257755', 'Mobile home / manufactured – private', 'Mobile home / manufactured – private', '3/11', '2br', '$16', 'pic', 'hide', 'https://buffalo.craigslist.org/reo/d/medina-mobile-home-manufactured-private/7915257755.html', 'https://www.craigslist.org/images/d/7915257755/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-1br-delaware-ave/7920495091.html
+  raw: ['7920495091', 'Buffalo', 'ALL UTILITIES 1BR Delaware Ave', '3/11', '1br', '700ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-1br-delaware-ave/7920495091.html', 'https://www.craigslist.org/images/d/7920495091/empty.png']
+
+- Missing price
+  title: House For Rent
+  url: https://rochester.craigslist.org/sha/d/house-for-rent/7919371760.html
+  raw: ['7919371760', 'House For Rent', 'Richester Ny', 'House For Rent', '3/5', 'hide', 'https://rochester.craigslist.org/sha/d/house-for-rent/7919371760.html', 'https://www.craigslist.org/images/d/7919371760/empty.png']
+
+- Price too low ($250)
+  title: Room for rent
+  url: https://buffalo.craigslist.org/roo/d/gasport-room-for-rent/7916899101.html
+  raw: ['7916899101', 'Room for rent', 'Gasport', 'Room for rent', '2/22', '4br', '$250', 'hide', 'https://buffalo.craigslist.org/roo/d/gasport-room-for-rent/7916899101.html', 'https://www.craigslist.org/images/d/7916899101/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-townhouse-behind/7916393369.html
+  raw: ['7916393369', 'Amherst', 'Beautiful Townhouse behind Niagara Falls Blvd Fountain View West', '2/20', '2br', '1200ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-townhouse-behind/7916393369.html', 'https://www.craigslist.org/images/d/7916393369/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly-fitness-center/7918761087.html
+  raw: ['7918761087', 'Amherst', 'Pet Friendly, Fitness Center', '3/3', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly-fitness-center/7918761087.html', 'https://www.craigslist.org/images/d/7918761087/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7917454239.html
+  raw: ['7917454239', 'Amherst', 'All Utilities Included', '2/25', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7917454239.html', 'https://www.craigslist.org/images/d/7917454239/empty.png']
+
+- Title too short
+  title: Blackrock
+  url: https://buffalo.craigslist.org/apa/d/buffalo-bedroom-riverside-blackrock/7920792931.html
+  raw: ['7920792931', 'Blackrock', '2 Bedroom - Riverside/Blackrock', '3/12', '2br', '$1,000', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-bedroom-riverside-blackrock/7920792931.html', 'https://www.craigslist.org/images/d/7920792931/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-forest/7916143489.html
+  raw: ['7916143489', 'amherst', 'Beautiful Apartment on N Forest Rd Sturbridge Village Apartments', '2/19', '3br', '1274ft', '2', '$2,040', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-forest/7916143489.html', 'https://www.craigslist.org/images/d/7916143489/empty.png']
+
+- Title too short
+  title: Medina
+  url: https://buffalo.craigslist.org/apa/d/medina-land-for-mobile-home/7919954403.html
+  raw: ['7919954403', 'Medina', 'Land for a Mobile Home', '3/8', '$495', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/medina-land-for-mobile-home/7919954403.html', 'https://www.craigslist.org/images/d/7919954403/empty.png']
+
+- Price too low ($1)
+  title: Lockport’s
+  url: https://buffalo.craigslist.org/apa/d/lockport-bedroom/7920716917.html
+  raw: ['7920716917', 'Lockport’s', '2 bedroom', '3/12', '2br', '$1', 'hide', 'https://buffalo.craigslist.org/apa/d/lockport-bedroom/7920716917.html', 'https://www.craigslist.org/images/d/7920716917/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/spacious-bedroom-apartment-near/7915780565.html
+  raw: ['7915780565', 'Buffalo', 'Spacious 3 Bedroom apartment near Downtown/Allentown', '3/11', '3br', '1300ft', '2', '$1,350', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/spacious-bedroom-apartment-near/7915780565.html', 'https://www.craigslist.org/images/d/7915780565/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pets-welcome-incredible/7917000284.html
+  raw: ['7917000284', 'Amherst', 'Pets Welcome, Incredible Amenities', '2/23', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pets-welcome-incredible/7917000284.html', 'https://www.craigslist.org/images/d/7917000284/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917514406.html
+  raw: ['7917514406', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/25', '2br', '881ft', '2', '$1,430', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917514406.html', 'https://www.craigslist.org/images/d/7917514406/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-verizon-fios-ready-incredible/7919322308.html
+  raw: ['7919322308', 'Amherst', 'Verizon Fios Ready, Incredible Amenities, Perfect Location', '3/5', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-verizon-fios-ready-incredible/7919322308.html', 'https://www.craigslist.org/images/d/7919322308/empty.png']
+
+- Missing price
+  title: Mature professional male seeks room to rent
+  url: https://mansfield.craigslist.org/sha/d/mature-professional-male-seeks-room-to/7913904311.html
+  raw: ['7913904311', 'Mature professional male seeks room to rent', 'Ontario , Mansfield, and surrounding', 'Mature professional male seeks room to rent', '2/8', 'hide', 'https://mansfield.craigslist.org/sha/d/mature-professional-male-seeks-room-to/7913904311.html', 'https://www.craigslist.org/images/d/7913904311/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-playground-pet-friendly/7920975948.html
+  raw: ['7920975948', 'Amherst', 'Playground, Pet Friendly', '3/13', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-playground-pet-friendly/7920975948.html', 'https://www.craigslist.org/images/d/7920975948/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-house-for-rent/7913273745.html
+  raw: ['7913273745', 'Amherst', 'House for rent', '2/19', '3br', '1200ft', '2', '$2,200', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-house-for-rent/7913273745.html', 'https://www.craigslist.org/images/d/7913273745/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917062327.html
+  raw: ['7917062327', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet', '2/23', '2br', '985ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917062327.html', 'https://www.craigslist.org/images/d/7917062327/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-buffalo-bedroom-apartment-north/7918857098.html
+  raw: ['7918857098', 'Buffalo', 'N Buffalo 1 Bedroom Apartment (North Buffalo)', '3/3', '1br', '750ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-buffalo-bedroom-apartment-north/7918857098.html', 'https://www.craigslist.org/images/d/7918857098/empty.png']
+
+- Title too short
+  title: East Otto
+  url: https://buffalo.craigslist.org/apa/d/east-otto-10-minutes-to-springville/7917980801.html
+  raw: ['7917980801', 'East Otto', '10 Minutes to Springville, Ellicottville', '3/6', '1br', '$975', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/east-otto-10-minutes-to-springville/7917980801.html', 'https://www.craigslist.org/images/d/7917980801/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-central-air-apply-now/7917724146.html
+  raw: ['7917724146', 'Amherst', 'Central Air, Apply Now', '2/26', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-central-air-apply-now/7917724146.html', 'https://www.craigslist.org/images/d/7917724146/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7917494335.html
+  raw: ['7917494335', 'Amherst', 'All Utilities Included, Stylish Features, Call for Details', '2/25', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7917494335.html', 'https://www.craigslist.org/images/d/7917494335/empty.png']
+
+- Missing price
+  title: Iso room to rent
+  url: https://rochester.craigslist.org/sha/d/iso-room-to-rent/7913904649.html
+  raw: ['7913904649', 'Iso room to rent', 'Albion', 'Iso room to rent', '3/19', 'pic', 'hide', 'https://rochester.craigslist.org/sha/d/iso-room-to-rent/7913904649.html', 'https://www.craigslist.org/images/d/7913904649/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-south-buffalo-one-bedroom-with/7921166546.html
+  raw: ['7921166546', 'Buffalo', 'South Buffalo One Bedroom With Den', '3/14', '1br', '550ft', '2', '$875', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-south-buffalo-one-bedroom-with/7921166546.html', 'https://www.craigslist.org/images/d/7921166546/empty.png']
+
+- Missing price
+  title: Iso a room or apartment for rent
+  url: https://martinsburg.craigslist.org/sha/d/iso-room-or-apartment-for-rent/7916102287.html
+  raw: ['7916102287', 'Iso a room or apartment for rent', 'Martinsburg', 'Iso a room or apartment for rent', '3/15', 'hide', 'https://martinsburg.craigslist.org/sha/d/iso-room-or-apartment-for-rent/7916102287.html', 'https://www.craigslist.org/images/d/7916102287/empty.png']
+
+- Price too low ($45)
+  title: MARRIOTT BONVOY
+  url: https://buffalo.craigslist.org/roo/d/buffalo-marriott-bonvoy/7916253750.html
+  raw: ['7916253750', 'MARRIOTT BONVOY', 'Any', 'MARRIOTT BONVOY', '2/19', '1br', '1200ft', '2', '$45', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-marriott-bonvoy/7916253750.html', 'https://www.craigslist.org/images/d/7916253750/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-denrose/7917270392.html
+  raw: ['7917270392', 'Amherst', 'Beautiful Town House On Denrose Drive ! Denrose Town Houses', '2/24', '2br', '900ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-denrose/7917270392.html', 'https://www.craigslist.org/images/d/7917270392/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7918869014.html
+  raw: ['7918869014', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '3/3', '1br', '650ft', '2', '$1,255', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7918869014.html', 'https://www.craigslist.org/images/d/7918869014/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7915781545.html
+  raw: ['7915781545', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/17', '2br', '985ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7915781545.html', 'https://www.craigslist.org/images/d/7915781545/empty.png']
+
+- Title too short
+  title: 14150
+  url: https://buffalo.craigslist.org/apa/d/buffalo-br-townhouse-with-garage-for/7913189009.html
+  raw: ['7913189009', '14150', '$1,295/ 2br- Townhouse With Garage for Rent in Tonawanda/Chatsworth', '2/5', '2br', '$1,295', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-br-townhouse-with-garage-for/7913189009.html', 'https://www.craigslist.org/images/d/7913189009/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-north/7917054248.html
+  raw: ['7917054248', 'Amherst', 'Beautiful Town House On North Forest Road at Bowdoin Square', '2/23', '2br', '1380ft', '2', '$1,740', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-north/7917054248.html', 'https://www.craigslist.org/images/d/7917054248/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site/7914302525.html
+  raw: ['7914302525', 'Amherst', 'Laundry on Site', '2/10', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site/7914302525.html', 'https://www.craigslist.org/images/d/7914302525/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917299299.html
+  raw: ['7917299299', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/24', '2br', '881ft', '2', '$1,430', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917299299.html', 'https://www.craigslist.org/images/d/7917299299/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-playground-pet-friendly/7917935180.html
+  raw: ['7917935180', 'Amherst', 'Playground, Pet Friendly', '2/27', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-playground-pet-friendly/7917935180.html', 'https://www.craigslist.org/images/d/7917935180/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7920495098.html
+  raw: ['7920495098', 'Amherst', 'All Utilities Included', '3/11', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7920495098.html', 'https://www.craigslist.org/images/d/7920495098/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-spacious-bedroom-single-family/7916808327.html
+  raw: ['7916808327', 'Buffalo', 'Spacious 6 bedroom Single Family Home', '3/12', '6br', '3300ft', '2', '$2,975', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-spacious-bedroom-single-family/7916808327.html', 'https://www.craigslist.org/images/d/7916808327/empty.png']
+
+- Missing price
+  title: Need room May 1st
+  url: https://buffalo.craigslist.org/sha/d/need-room-may-1st/7921117133.html
+  raw: ['7921117133', 'Need room May 1st', 'Buffalo ny', 'Need room May 1st', '3/14', 'hide', 'https://buffalo.craigslist.org/sha/d/need-room-may-1st/7921117133.html', 'https://www.craigslist.org/images/d/7921117133/empty.png']
+
+- Missing price
+  title: Room Available
+  url: https://buffalo.craigslist.org/roo/d/depew-room-available/7918344631.html
+  raw: ['7918344631', 'Room Available', 'Depew', 'Room Available', '3/15', '3br', '1800ft', '2', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/depew-room-available/7918344631.html', 'https://www.craigslist.org/images/d/7918344631/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916176808.html
+  raw: ['7916176808', 'amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/19', '2br', '1055ft', '2', '$1,495', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916176808.html', 'https://www.craigslist.org/images/d/7916176808/empty.png']
+
+- Price too low ($45)
+  title: MARRIOTT BONVOY
+  url: https://buffalo.craigslist.org/roo/d/buffalo-marriott-bonvoy/7916173865.html
+  raw: ['7916173865', 'MARRIOTT BONVOY', 'Any', 'MARRIOTT BONVOY', '2/19', '1br', '1200ft', '2', '$45', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-marriott-bonvoy/7916173865.html', 'https://www.craigslist.org/images/d/7916173865/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916174122.html
+  raw: ['7916174122', 'amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/19', '2br', '881ft', '2', '$1,430', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916174122.html', 'https://www.craigslist.org/images/d/7916174122/empty.png']
+
+- Missing price
+  title: Young male looking for short/long term
+  url: https://toronto.craigslist.org/yrk/sha/d/young-male-looking-for-short-long-term/7919893536.html
+  raw: ['7919893536', 'Young male looking for short/long term', 'Scarborough', 'Young male looking for short/long term', '3/15', 'hide', 'https://toronto.craigslist.org/yrk/sha/d/young-male-looking-for-short-long-term/7919893536.html', 'https://www.craigslist.org/images/d/7919893536/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-behind-near/7916167653.html
+  raw: ['7916167653', 'amherst', 'Beautiful Apartment behind Near Niagara Falls Blvd Fountain View West', '2/19', '2br', '900ft', '2', '$1,340', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-behind-near/7916167653.html', 'https://www.craigslist.org/images/d/7916167653/empty.png']
+
+- Title too short
+  title: Tonawanda
+  url: https://buffalo.craigslist.org/apa/d/tonawanda-br-1100-sq-ft-apt-for-rent-on/7917906718.html
+  raw: ['7917906718', 'Tonawanda', '$1,395/2br-1,100 SQ FT Apt for Rent on Colvin Blvd/Fairway Village Apt', '2/27', '2br', '$1,395', 'pic', 'show duplicates', 'hide', 'https://buffalo.craigslist.org/apa/d/tonawanda-br-1100-sq-ft-apt-for-rent-on/7917906718.html', 'https://www.craigslist.org/images/d/7917906718/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7913019080.html
+  raw: ['7913019080', 'Amherst', 'All Utilities Included, Stylish Features, Call for Details', '2/4', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7913019080.html', 'https://www.craigslist.org/images/d/7913019080/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7919063348.html
+  raw: ['7919063348', 'Amherst', 'Near Shopping, Professionally Managed', '3/4', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-near-shopping-professionally/7919063348.html', 'https://www.craigslist.org/images/d/7919063348/empty.png']
+
+- Title too short
+  title: Medina
+  url: https://buffalo.craigslist.org/apa/d/medina-land-for-mobile-home/7918105766.html
+  raw: ['7918105766', 'Medina', 'Land for a Mobile Home', '2/28', '$495', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/medina-land-for-mobile-home/7918105766.html', 'https://www.craigslist.org/images/d/7918105766/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-call-for-details/7916375460.html
+  raw: ['7916375460', 'Amherst', 'Laundry on Site, Call for Details', '2/20', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-call-for-details/7916375460.html', 'https://www.craigslist.org/images/d/7916375460/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-for-rent-bedroom-house/7915622916.html
+  raw: ['7915622916', 'Buffalo', 'For Rent: 4 Bedroom House', '2/16', '4br', '$1,500', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-for-rent-bedroom-house/7915622916.html', 'https://www.craigslist.org/images/d/7915622916/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917513547.html
+  raw: ['7917513547', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/25', '1br', '650ft', '2', '$1,255', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917513547.html', 'https://www.craigslist.org/images/d/7917513547/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7914261380.html
+  raw: ['7914261380', 'Amherst', 'Beautiful Landscape, Close to shopping, banks and businesses', '2/10', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7914261380.html', 'https://www.craigslist.org/images/d/7914261380/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-rooms-for-rent/7914716071.html
+  raw: ['7914716071', 'Amherst', 'Rooms for rent.', '2/12', '$2,010', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-rooms-for-rent/7914716071.html', 'https://www.craigslist.org/images/d/7914716071/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7914437729.html
+  raw: ['7914437729', 'Amherst', 'All Utilities Included', '2/11', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included/7914437729.html', 'https://www.craigslist.org/images/d/7914437729/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916175078.html
+  raw: ['7916175078', 'amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home (A', '2/19', '2br', '985ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916175078.html', 'https://www.craigslist.org/images/d/7916175078/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-denrose/7916166810.html
+  raw: ['7916166810', 'amherst', 'Beautiful Town House On Denrose Drive ! Denrose Town Houses', '2/19', '2br', '900ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-denrose/7916166810.html', 'https://www.craigslist.org/images/d/7916166810/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917059386.html
+  raw: ['7917059386', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/23', '1br', '650ft', '2', '$1,255', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917059386.html', 'https://www.craigslist.org/images/d/7917059386/empty.png']
+
+- Missing price
+  title: Desperately need help
+  url: https://buffalo.craigslist.org/sha/d/desperately-need-help/7920700095.html
+  raw: ['7920700095', 'Desperately need help', 'Jamestown', 'Desperately need help', '3/12', 'hide', 'https://buffalo.craigslist.org/sha/d/desperately-need-help/7920700095.html', 'https://www.craigslist.org/images/d/7920700095/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-north/7916144519.html
+  raw: ['7916144519', 'amherst', 'Beautiful Town House On North Forest Road at Bowdoin Square', '2/19', '2br', '1380ft', '2', '$1,740', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-north/7916144519.html', 'https://www.craigslist.org/images/d/7916144519/empty.png']
+
+- Missing price
+  title: Roommate Wanted
+  url: https://akroncanton.craigslist.org/sha/d/roommate-wanted/7918925157.html
+  raw: ['7918925157', 'Roommate Wanted', 'Canton', 'Roommate Wanted', '3/3', 'hide', 'https://akroncanton.craigslist.org/sha/d/roommate-wanted/7918925157.html', 'https://www.craigslist.org/images/d/7918925157/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-fitness/7920136014.html
+  raw: ['7920136014', 'Amherst', 'Laundry Facilities, Fitness Center, Pet Friendly', '3/9', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-fitness/7920136014.html', 'https://www.craigslist.org/images/d/7920136014/empty.png']
+
+- Missing price
+  title: LOOKING FOR SMALL AFFORDABLE SPACE TO RENT, HAVE SSI
+  url: https://allentown.craigslist.org/sha/d/looking-for-small-affordable-space-to/7920442175.html
+  raw: ['7920442175', 'LOOKING FOR SMALL AFFORDABLE SPACE TO RENT, HAVE SSI', 'Lansford', 'LOOKING FOR SMALL AFFORDABLE SPACE TO RENT, HAVE SSI', '3/16', 'hide', 'https://allentown.craigslist.org/sha/d/looking-for-small-affordable-space-to/7920442175.html', 'https://www.craigslist.org/images/d/7920442175/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-north/7917710989.html
+  raw: ['7917710989', 'Amherst', 'Beautiful Town House On North Forest Road at Bowdoin Square', '2/26', '2br', '1380ft', '2', '$1,740', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-north/7917710989.html', 'https://www.craigslist.org/images/d/7917710989/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-central-air-apply-now/7920777104.html
+  raw: ['7920777104', 'Amherst', 'Central Air, Apply Now', '3/12', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-central-air-apply-now/7920777104.html', 'https://www.craigslist.org/images/d/7920777104/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7916142306.html
+  raw: ['7916142306', 'Amherst', 'Beautiful Apartment Near North Forest Rd Sturbridge Village Apartments', '2/19', '2br', '970ft', '2', '$1,610', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7916142306.html', 'https://www.craigslist.org/images/d/7916142306/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7917278307.html
+  raw: ['7917278307', 'Amherst', 'Beautiful Landscape, Close to shopping, banks and businesses', '2/24', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7917278307.html', 'https://www.craigslist.org/images/d/7917278307/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7920322434.html
+  raw: ['7920322434', 'Amherst', 'Beautiful Landscape, Close to shopping, banks and businesses', '3/10', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7920322434.html', 'https://www.craigslist.org/images/d/7920322434/empty.png']
+
+- Title too short
+  title: Kenmore
+  url: https://buffalo.craigslist.org/apa/d/buffalo-sunny-clean-and-beautiful/7916141881.html
+  raw: ['7916141881', 'Kenmore', 'Sunny, clean and Beautiful, bright upper', '3/5', '1br', '900ft', '2', '$1,100', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-sunny-clean-and-beautiful/7916141881.html', 'https://www.craigslist.org/images/d/7916141881/empty.png']
+
+- Title too short
+  title: N Ton.
+  url: https://buffalo.craigslist.org/apa/d/tonawanda-bed-updated-includes/7912830025.html
+  raw: ['7912830025', 'N Ton.', '2 Bed., Updated, Includes Everything  $1195', '3/7', '2br', '$1,195', 'hide', 'https://buffalo.craigslist.org/apa/d/tonawanda-bed-updated-includes/7912830025.html', 'https://www.craigslist.org/images/d/7912830025/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-luxury-bed-apt-with-amenities/7912811622.html
+  raw: ['7912811622', 'Amherst', 'Luxury 2-Bed Apt With Amenities / Muir Lake Apartments', '2/3', '2br', '$1,855', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-luxury-bed-apt-with-amenities/7912811622.html', 'https://www.craigslist.org/images/d/7912811622/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-denrose/7916390429.html
+  raw: ['7916390429', 'Amherst', 'Beautiful Town House On Denrose Drive ! Denrose Town Houses', '2/20', '2br', '900ft', '2', '$1,585', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-denrose/7916390429.html', 'https://www.craigslist.org/images/d/7916390429/empty.png']
+
+- Missing price
+  title: Looking for apt share
+  url: https://baltimore.craigslist.org/sha/d/looking-for-apt-share/7916928119.html
+  raw: ['7916928119', 'Looking for apt share', 'Lebanon', 'Looking for apt share', '2/22', 'hide', 'https://baltimore.craigslist.org/sha/d/looking-for-apt-share/7916928119.html', 'https://www.craigslist.org/images/d/7916928119/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-rent-1100-plus-200-utilities/7916559579.html
+  raw: ['7916559579', 'Buffalo', 'Rent $1100 plus $200 utilities/month', '2/20', '3br', '1400ft', '2', '$1,300', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-rent-1100-plus-200-utilities/7916559579.html', 'https://www.craigslist.org/images/d/7916559579/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-fitness-center/7920355209.html
+  raw: ['7920355209', 'Amherst', 'Laundry on Site, Fitness Center', '3/10', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-fitness-center/7920355209.html', 'https://www.craigslist.org/images/d/7920355209/empty.png']
+
+- Title too short
+  title: Hey
+  url: https://buffalo.craigslist.org/roo/d/buffalo-hey/7913260898.html
+  raw: ['7913260898', 'Hey', 'Hey', '2/5', '2br', '$500', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-hey/7913260898.html', 'https://www.craigslist.org/images/d/7913260898/empty.png']
+
+- Title too short
+  title: Lockport
+  url: https://buffalo.craigslist.org/apa/d/lockport-lockport-br/7916235857.html
+  raw: ['7916235857', 'Lockport', 'Lockport 1 BR', '3/10', '1br', '440ft', '2', '$725', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/lockport-lockport-br/7916235857.html', 'https://www.craigslist.org/images/d/7916235857/empty.png']
+
+- Title too short
+  title: lewiston
+  url: https://buffalo.craigslist.org/apa/d/stella-niagara-village-of-lewiston/7920226511.html
+  raw: ['7920226511', 'lewiston', 'Village of Lewiston', '3/9', '3br', '1200ft', '2', '$2,500', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/stella-niagara-village-of-lewiston/7920226511.html', 'https://www.craigslist.org/images/d/7920226511/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917056088.html
+  raw: ['7917056088', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/23', '2br', '850ft', '2', '$1,390', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917056088.html', 'https://www.craigslist.org/images/d/7917056088/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7918803767.html
+  raw: ['7918803767', 'Amherst', 'Beautiful Landscape, Close to shopping, banks and businesses', '3/3', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7918803767.html', 'https://www.craigslist.org/images/d/7918803767/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-behind-near/7915774438.html
+  raw: ['7915774438', 'Amherst', 'Beautiful Apartment behind Near Niagara Falls Blvd Fountain View West', '2/17', '2br', '900ft', '2', '$1,340', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-behind-near/7915774438.html', 'https://www.craigslist.org/images/d/7915774438/empty.png']
+
+- Missing price
+  title: Looking for Room to Rent
+  url: https://buffalo.craigslist.org/sha/d/looking-for-room-to-rent/7915946012.html
+  raw: ['7915946012', 'Looking for Room to Rent', 'West Seneca/Cheektowaga', 'Looking for Room to Rent', '2/18', 'hide', 'https://buffalo.craigslist.org/sha/d/looking-for-room-to-rent/7915946012.html', 'https://www.craigslist.org/images/d/7915946012/empty.png']
+
+- Price too low ($9)
+  title: 🛑 9920sq Elma building for sale
+  url: https://buffalo.craigslist.org/reo/d/spring-brook-9920sq-elma-building-for/7921934140.html
+  raw: ['7921934140', '🛑 9920sq Elma building for sale', 'Elma', '🛑 9920sq Elma building for sale', '3/18', '9920ft', '2', '$9', 'pic', 'hide', 'https://buffalo.craigslist.org/reo/d/spring-brook-9920sq-elma-building-for/7921934140.html', 'https://www.craigslist.org/images/d/7921934140/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7916165888.html
+  raw: ['7916165888', 'amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/19', '2br', '850ft', '2', '$1,390', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7916165888.html', 'https://www.craigslist.org/images/d/7916165888/empty.png']
+
+- Price too low ($250)
+  title: Investor Special: Turnkey Mixed-Use $250K (Under Contract)
+  url: https://buffalo.craigslist.org/reb/d/niagara-falls-investor-special-turnkey/7916370572.html
+  raw: ['7916370572', 'Investor Special: Turnkey Mixed-Use $250K (Under Contract)', '7224 Buffalo ave Niagara falls', 'Investor Special: Turnkey Mixed-Use $250K (Under Contract)', '2/20', '4br', '3510ft', '2', '$250,000', 'hide', 'https://buffalo.craigslist.org/reb/d/niagara-falls-investor-special-turnkey/7916370572.html', 'https://www.craigslist.org/images/d/7916370572/empty.png']
+
+- Missing price
+  title: Workshop Wanted
+  url: https://pittsburgh.craigslist.org/sha/d/workshop-wanted/7916099814.html
+  raw: ['7916099814', 'Workshop Wanted', 'Pittsburgh', 'Workshop Wanted', '3/12', 'hide', 'https://pittsburgh.craigslist.org/sha/d/workshop-wanted/7916099814.html', 'https://www.craigslist.org/images/d/7916099814/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917926243.html
+  raw: ['7917926243', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/27', '1br', '700ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917926243.html', 'https://www.craigslist.org/images/d/7917926243/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7915974143.html
+  raw: ['7915974143', 'Amherst', 'All Utilities Included, Stylish Features, Call for Details', '2/18', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-included-stylish/7915974143.html', 'https://www.craigslist.org/images/d/7915974143/empty.png']
+
+- Missing price
+  title: Share house with female
+  url: https://buffalo.craigslist.org/roo/d/niagara-falls-share-house-with-female/7920672947.html
+  raw: ['7920672947', 'Share house with female', 'N falls/ n tonawanda', 'Share house with female', '3/17', '2br', 'hide', 'https://buffalo.craigslist.org/roo/d/niagara-falls-share-house-with-female/7920672947.html', 'https://www.craigslist.org/images/d/7920672947/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-forest/7917924457.html
+  raw: ['7917924457', 'Amherst', 'Beautiful Apartment on N Forest Rd Sturbridge Village Apartments', '2/27', '3br', '1274ft', '2', '$2,040', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-forest/7917924457.html', 'https://www.craigslist.org/images/d/7917924457/empty.png']
+
+- Missing price
+  title: Room or studio needed
+  url: https://poconos.craigslist.org/sha/d/room-or-studio-needed/7918972955.html
+  raw: ['7918972955', 'Room or studio needed', 'Room or studio needed', '3/18', 'hide', 'https://poconos.craigslist.org/sha/d/room-or-studio-needed/7918972955.html', 'https://www.craigslist.org/images/d/7918972955/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-verizon-fios-ready-incredible/7917778586.html
+  raw: ['7917778586', 'Amherst', 'Verizon Fios Ready, Incredible Amenities, Perfect Location', '2/26', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-verizon-fios-ready-incredible/7917778586.html', 'https://www.craigslist.org/images/d/7917778586/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-super-level-3-bedroom-duplex/7916467456.html
+  raw: ['7916467456', 'Buffalo', 'SUPER 2 LEVEL, 2+/3 BEDROOM DUPLEX WITH 2 FULL BATHS, BASEMENT', '2/20', '3br', '1500ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-super-level-3-bedroom-duplex/7916467456.html', 'https://www.craigslist.org/images/d/7916467456/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-1br-richmond-ave/7920494989.html
+  raw: ['7920494989', 'Buffalo', 'ALL UTILITIES 1BR Richmond Ave', '3/11', '1br', '600ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-1br-richmond-ave/7920494989.html', 'https://www.craigslist.org/images/d/7920494989/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly-laundry-facility/7915711678.html
+  raw: ['7915711678', 'Amherst', 'Pet Friendly, Laundry Facility', '2/17', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pet-friendly-laundry-facility/7915711678.html', 'https://www.craigslist.org/images/d/7915711678/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-forest/7917052758.html
+  raw: ['7917052758', 'Amherst', 'Beautiful Apartment on N Forest Rd Sturbridge Village Apartments', '2/23', '3br', '1274ft', '2', '$2,040', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-forest/7917052758.html', 'https://www.craigslist.org/images/d/7917052758/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917269234.html
+  raw: ['7917269234', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/24', '2br', '850ft', '2', '$1,390', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917269234.html', 'https://www.craigslist.org/images/d/7917269234/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-bedroom-for-rent/7920268359.html
+  raw: ['7920268359', 'Buffalo', '4 Bedroom for rent', '3/10', '4br', '$1,700', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-bedroom-for-rent/7920268359.html', 'https://www.craigslist.org/images/d/7920268359/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-behind-near/7916392586.html
+  raw: ['7916392586', 'Amherst', 'Beautiful Apartment behind Near Niagara Falls Blvd Fountain View', '2/20', '2br', '900ft', '2', '$1,340', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-behind-near/7916392586.html', 'https://www.craigslist.org/images/d/7916392586/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7916391445.html
+  raw: ['7916391445', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/20', '2br', '850ft', '2', '$1,390', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7916391445.html', 'https://www.craigslist.org/images/d/7916391445/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-playground-incredible-amenities/7920097194.html
+  raw: ['7920097194', 'Amherst', 'Playground, Incredible Amenities, Stylish Features', '3/9', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-playground-incredible-amenities/7920097194.html', 'https://www.craigslist.org/images/d/7920097194/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-patio-or-balcony-call-for/7920929395.html
+  raw: ['7920929395', 'Amherst', 'Patio or Balcony, Call for Details, Convenient Location', '3/13', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-patio-or-balcony-call-for/7920929395.html', 'https://www.craigslist.org/images/d/7920929395/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-fitness-center/7918840434.html
+  raw: ['7918840434', 'Amherst', 'Laundry on Site, Fitness Center', '3/3', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-fitness-center/7918840434.html', 'https://www.craigslist.org/images/d/7918840434/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-luxurious-apartment-on-north/7912803219.html
+  raw: ['7912803219', 'Amherst', 'Luxurious Apartment on North Forest Rd / Muir Lake Apartment', '2/3', '3br', '$2,600', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-luxurious-apartment-on-north/7912803219.html', 'https://www.craigslist.org/images/d/7912803219/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-verizon-fios-ready-incredible/7914763520.html
+  raw: ['7914763520', 'Amherst', 'Verizon Fios Ready, Incredible Amenities, Perfect Location', '2/12', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-verizon-fios-ready-incredible/7914763520.html', 'https://www.craigslist.org/images/d/7914763520/empty.png']
+
+- Missing price
+  title: Room or studio needed asap
+  url: https://syracuse.craigslist.org/sha/d/room-or-studio-needed-asap/7918238481.html
+  raw: ['7918238481', 'Room or studio needed asap', 'Auburn', 'Room or studio needed asap', '2/28', 'hide', 'https://syracuse.craigslist.org/sha/d/room-or-studio-needed-asap/7918238481.html', 'https://www.craigslist.org/images/d/7918238481/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7912794697.html
+  raw: ['7912794697', 'Amherst', 'Beautiful Landscape, Close to shopping, banks and businesses', '2/3', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-landscape-close-to/7912794697.html', 'https://www.craigslist.org/images/d/7912794697/empty.png']
+
+- Missing price
+  title: ISO room within the next month
+  url: https://cleveland.craigslist.org/sha/d/iso-room-within-the-next-month/7916354627.html
+  raw: ['7916354627', 'ISO room within the next month', 'Cleveland', 'ISO room within the next month', '2/20', 'hide', 'https://cleveland.craigslist.org/sha/d/iso-room-within-the-next-month/7916354627.html', 'https://www.craigslist.org/images/d/7916354627/empty.png']
+
+- Title too short
+  title: Tonawanda
+  url: https://buffalo.craigslist.org/apa/d/buffalo-br-townhouse-with-garage-for/7914498674.html
+  raw: ['7914498674', 'Tonawanda', '$1,295/2br-Townhouse with Garage for Rent in Tonawanda/Chatsworth', '2/11', '2br', '$1,295', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-br-townhouse-with-garage-for/7914498674.html', 'https://www.craigslist.org/images/d/7914498674/empty.png']
+
+- Missing price
+  title: Need a place for a couple and our dog
+  url: https://elmira.craigslist.org/sha/d/need-place-for-couple-and-our-dog/7921941877.html
+  raw: ['7921941877', 'Need a place for a couple and our dog', 'Horseheads', 'Need a place for a couple and our dog', '3/18', 'hide', 'https://elmira.craigslist.org/sha/d/need-place-for-couple-and-our-dog/7921941877.html', 'https://www.craigslist.org/images/d/7921941877/empty.png']
+
+- Missing price
+  title: Looking for Room
+  url: https://buffalo.craigslist.org/sha/d/looking-for-room/7917812927.html
+  raw: ['7917812927', 'Looking for Room', 'Buffalo, Lancaster', 'Looking for Room', '3/19', 'pic', 'hide', 'https://buffalo.craigslist.org/sha/d/looking-for-room/7917812927.html', 'https://www.craigslist.org/images/d/7917812927/empty.png']
+
+- Missing price
+  title: Working Professional Needs Room To Rent
+  url: https://detroit.craigslist.org/wyn/sha/d/working-professional-needs-room-to-rent/7913932036.html
+  raw: ['7913932036', 'Working Professional Needs Room To Rent', 'Dearborn Heights', 'Working Professional Needs Room To Rent', '2/8', 'hide', 'https://detroit.craigslist.org/wyn/sha/d/working-professional-needs-room-to-rent/7913932036.html', 'https://www.craigslist.org/images/d/7913932036/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917268293.html
+  raw: ['7917268293', 'Amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/24', '1br', '700ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7917268293.html', 'https://www.craigslist.org/images/d/7917268293/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-updated-senior-apartment-for/7912794817.html
+  raw: ['7912794817', 'Amherst', 'Updated Senior Apartment for Rent / Meyer Pointe Senior Apartments', '2/3', '1br', '$1,565', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-updated-senior-apartment-for/7912794817.html', 'https://www.craigslist.org/images/d/7912794817/empty.png']
+
+- Price too low ($175)
+  title: BUS ROUTE - SOUTH BUFFALO - BORDERS BOTANICAL GARDENS - BUS ROUTE
+  url: https://buffalo.craigslist.org/roo/d/buffalo-bus-route-south-buffalo-borders/7916166502.html
+  raw: ['7916166502', 'BUS ROUTE - SOUTH BUFFALO - BORDERS BOTANICAL GARDENS - BUS ROUTE', 'BOTANICAL GARDENS, SOUTH PARK GOLF COURSE', 'BUS ROUTE - SOUTH BUFFALO - BORDERS BOTANICAL GARDENS - BUS ROUTE', '3/19', '3br', '1240ft', '2', '$175', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-bus-route-south-buffalo-borders/7916166502.html', 'https://www.craigslist.org/images/d/7916166502/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-bedroom-bath-apt/7916468025.html
+  raw: ['7916468025', 'Buffalo', '1 bedroom 1 bath apt.', '2/20', '1br', '700ft', '2', '$1,000', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-bedroom-bath-apt/7916468025.html', 'https://www.craigslist.org/images/d/7916468025/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7918820412.html
+  raw: ['7918820412', 'Amherst', 'Beautiful Apartment Near North Forest Rd Sturbridge Village', '3/3', '2br', '970ft', '2', '$1,610', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7918820412.html', 'https://www.craigslist.org/images/d/7918820412/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-fitness/7917082183.html
+  raw: ['7917082183', 'Amherst', 'Laundry Facilities, Fitness Center', '2/23', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-fitness/7917082183.html', 'https://www.craigslist.org/images/d/7917082183/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916394662.html
+  raw: ['7916394662', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/20', '1br', '650ft', '2', '$1,255', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916394662.html', 'https://www.craigslist.org/images/d/7916394662/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-behind-near/7917272084.html
+  raw: ['7917272084', 'Amherst', 'Beautiful Apartment behind Near Niagara Falls Blvd Fountain View', '2/24', '2br', '900ft', '2', '$1,340', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-behind-near/7917272084.html', 'https://www.craigslist.org/images/d/7917272084/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-playground-incredible-amenities/7915699959.html
+  raw: ['7915699959', 'Amherst', 'Playground, Incredible Amenities, Stylish Features', '2/17', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-playground-incredible-amenities/7915699959.html', 'https://www.craigslist.org/images/d/7915699959/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917304444.html
+  raw: ['7917304444', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet', '2/24', '2br', '1055ft', '2', '$1,495', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917304444.html', 'https://www.craigslist.org/images/d/7917304444/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-playground-incredible-amenities/7917047043.html
+  raw: ['7917047043', 'Amherst', 'Playground, Incredible Amenities, Stylish Features', '2/23', '2br', '950ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-playground-incredible-amenities/7917047043.html', 'https://www.craigslist.org/images/d/7917047043/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pets-welcome-incredible/7920048898.html
+  raw: ['7920048898', 'Amherst', 'Pets Welcome, Incredible Amenities', '3/9', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pets-welcome-incredible/7920048898.html', 'https://www.craigslist.org/images/d/7920048898/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-leasing-now/7917901186.html
+  raw: ['7917901186', 'Amherst', 'Laundry on Site, Leasing Now, Call for Details', '2/27', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-leasing-now/7917901186.html', 'https://www.craigslist.org/images/d/7917901186/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-ub-students-welcome/7916506663.html
+  raw: ['7916506663', 'Amherst', 'UB students welcome', '2/20', '3br', '1800ft', '2', '$1,800', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-ub-students-welcome/7916506663.html', 'https://www.craigslist.org/images/d/7916506663/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-pets-welcome-incredible/7914016164.html
+  raw: ['7914016164', 'Amherst', 'Pets Welcome, Incredible Amenities', '2/9', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-pets-welcome-incredible/7914016164.html', 'https://www.craigslist.org/images/d/7914016164/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7916165261.html
+  raw: ['7916165261', 'amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/19', '1br', '700ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7916165261.html', 'https://www.craigslist.org/images/d/7916165261/empty.png']
+
+- Missing price
+  title: 224 Niagara St, Buffalo, NY
+  url: https://buffalo.craigslist.org/apa/d/buffalo-large-closets-plank-flooring-bd/7919113782.html
+  raw: ['7919113782', '224 Niagara St, Buffalo, NY', 'Large Closets, Plank Flooring, 2/bd', '3/4', '2br', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-large-closets-plank-flooring-bd/7919113782.html', 'https://www.craigslist.org/images/d/7919113782/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7917701429.html
+  raw: ['7917701429', 'Amherst', 'Beautiful Apartment Near North Forest Rd Sturbridge Village', '2/26', '2br', '970ft', '2', '$1,610', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near-north/7917701429.html', 'https://www.craigslist.org/images/d/7917701429/empty.png']
+
+- Unrealistic sqft (75)
+  title: Kenmore room in 2 bedroom apartment
+  url: https://buffalo.craigslist.org/roo/d/buffalo-kenmore-room-in-bedroom/7913492115.html
+  raw: ['7913492115', 'Kenmore room in 2 bedroom apartment', 'Kenmore', 'Kenmore room in 2 bedroom apartment', '2/6', '1br', '75ft', '2', '$400', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-kenmore-room-in-bedroom/7913492115.html', 'https://www.craigslist.org/images/d/7913492115/empty.png']
+
+- Missing price
+  title: Looking for Roommate
+  url: https://williamsport.craigslist.org/sha/d/looking-for-roommate/7912863169.html
+  raw: ['7912863169', 'Looking for Roommate', 'Williamsport', 'Looking for Roommate', '2/3', 'hide', 'https://williamsport.craigslist.org/sha/d/looking-for-roommate/7912863169.html', 'https://www.craigslist.org/images/d/7912863169/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-north/7917482896.html
+  raw: ['7917482896', 'Amherst', 'Beautiful Town House On North Forest Road at Bowdoin Square', '2/25', '2br', '1380ft', '2', '$1,740', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-town-house-on-north/7917482896.html', 'https://www.craigslist.org/images/d/7917482896/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities/7914100220.html
+  raw: ['7914100220', 'Amherst', 'Laundry Facilities', '2/9', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities/7914100220.html', 'https://www.craigslist.org/images/d/7914100220/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-elegant-kitchen-allentown/7917307598.html
+  raw: ['7917307598', 'Buffalo', 'Elegant Kitchen! Allentown, Elmwood Village, downtown', '3/12', '1br', '1000ft', '2', '$1,450', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-elegant-kitchen-allentown/7917307598.html', 'https://www.craigslist.org/images/d/7917307598/empty.png']
+
+- Unrealistic sqft (33000)
+  title: 5.35 acre building lot
+  url: https://buffalo.craigslist.org/reo/d/alden-535-acre-building-lot/7915803019.html
+  raw: ['7915803019', '5.35 acre building lot', 'Alden', '5.35 acre building lot', '3/9', '233000ft', '2', '$109,995', 'pic', 'hide', 'https://buffalo.craigslist.org/reo/d/alden-535-acre-building-lot/7915803019.html', 'https://www.craigslist.org/images/d/7915803019/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-perfect/7916147769.html
+  raw: ['7916147769', 'Amherst', 'Laundry Facilities, Perfect Location', '2/19', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-facilities-perfect/7916147769.html', 'https://www.craigslist.org/images/d/7916147769/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-maple-rd/7917455428.html
+  raw: ['7917455428', 'Amherst', 'Beautiful Apartment On Maple Rd Sturbridge Village Apartments', '2/25', '2br', '930ft', '2', '$1,535', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-maple-rd/7917455428.html', 'https://www.craigslist.org/images/d/7917455428/empty.png']
+
+- Wanted ad (not a listing)
+  title: ROOM WANTED $500
+  url: https://flint.craigslist.org/sha/d/room-wanted-500/7918408890.html
+  raw: ['7918408890', 'ROOM WANTED $500', 'Flint', 'ROOM WANTED $500', '3/1', 'hide', 'https://flint.craigslist.org/sha/d/room-wanted-500/7918408890.html', 'https://www.craigslist.org/images/d/7918408890/empty.png']
+
+- Price too low ($1)
+  title: Lockport
+  url: https://buffalo.craigslist.org/apa/d/lockport-large-bedroom/7916015261.html
+  raw: ['7916015261', 'Lockport', 'Large 2 bedroom', '3/10', '2br', '800ft', '2', '$1', 'hide', 'https://buffalo.craigslist.org/apa/d/lockport-large-bedroom/7916015261.html', 'https://www.craigslist.org/images/d/7916015261/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-room-for-rent/7914011183.html
+  raw: ['7914011183', 'Amherst', 'Room for rent!', '2/9', '$2,010', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-room-for-rent/7914011183.html', 'https://www.craigslist.org/images/d/7914011183/empty.png']
+
+- Missing price
+  title: Me and my lady looking for room to rent
+  url: https://buffalo.craigslist.org/sha/d/me-and-my-lady-looking-for-room-to-rent/7919643035.html
+  raw: ['7919643035', 'Me and my lady looking for room to rent', 'Buffalo', 'Me and my lady looking for room to rent', '3/7', 'hide', 'https://buffalo.craigslist.org/sha/d/me-and-my-lady-looking-for-room-to-rent/7919643035.html', 'https://www.craigslist.org/images/d/7919643035/empty.png']
+
+- Missing price
+  title: Lockport
+  url: https://buffalo.craigslist.org/apa/d/lockport-large-bedroom/7915084230.html
+  raw: ['7915084230', 'Lockport', 'Large 2 bedroom', '3/10', '2br', 'hide', 'https://buffalo.craigslist.org/apa/d/lockport-large-bedroom/7915084230.html', 'https://www.craigslist.org/images/d/7915084230/empty.png']
+
+- Title too short
+  title: Angola
+  url: https://buffalo.craigslist.org/apa/d/angola-bedroom-lower-apt/7920793479.html
+  raw: ['7920793479', 'Angola', '2 Bedroom Lower Apt.', '3/12', '2br', '$980', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/angola-bedroom-lower-apt/7920793479.html', 'https://www.craigslist.org/images/d/7920793479/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-central-air-apply-now/7919262193.html
+  raw: ['7919262193', 'Amherst', 'Central Air, Apply Now', '3/5', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-central-air-apply-now/7919262193.html', 'https://www.craigslist.org/images/d/7919262193/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-linwood-avenue-third-floor/7917675684.html
+  raw: ['7917675684', 'Buffalo', 'Linwood Avenue Third Floor', '2/26', '2br', '1982ft', '2', '$2,150', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-linwood-avenue-third-floor/7917675684.html', 'https://www.craigslist.org/images/d/7917675684/empty.png']
+
+- Missing price
+  title: 224 Niagara St, Buffalo, NY
+  url: https://buffalo.craigslist.org/apa/d/buffalo-bd-large-closets-in-buffalo-ny/7920071916.html
+  raw: ['7920071916', '224 Niagara St, Buffalo, NY', '3 BD, Large Closets, in Buffalo NY', '3/9', '3br', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-bd-large-closets-in-buffalo-ny/7920071916.html', 'https://www.craigslist.org/images/d/7920071916/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917515497.html
+  raw: ['7917515497', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet', '2/25', '2br', '1055ft', '2', '$1,495', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7917515497.html', 'https://www.craigslist.org/images/d/7917515497/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916395290.html
+  raw: ['7916395290', 'Amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/20', '2br', '881ft', '2', '$1,430', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916395290.html', 'https://www.craigslist.org/images/d/7916395290/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-call-for-details/7919430772.html
+  raw: ['7919430772', 'Amherst', 'Laundry on Site, Call for Details', '3/6', '1br', '700ft', '2', '$1,136', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site-call-for-details/7919430772.html', 'https://www.craigslist.org/images/d/7919430772/empty.png']
+
+- Title too short
+  title: Buffalo
+  url: https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-1br-delaware-ave/7920494917.html
+  raw: ['7920494917', 'Buffalo', 'ALL UTILITIES 1BR Delaware Ave', '3/11', '1br', '700ft', '2', '$1,100', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-all-utilities-1br-delaware-ave/7920494917.html', 'https://www.craigslist.org/images/d/7920494917/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916168373.html
+  raw: ['7916168373', 'amherst', 'Beautiful Apartment Located between Niagara Falls Blvd & Sweet Home', '2/19', '1br', '650ft', '2', '$1,255', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-located/7916168373.html', 'https://www.craigslist.org/images/d/7916168373/empty.png']
+
+- Missing price
+  title: Rooms for rent
+  url: https://buffalo.craigslist.org/sha/d/rooms-for-rent/7918898660.html
+  raw: ['7918898660', 'Rooms for rent', 'East Aurora', 'Rooms for rent', '3/3', 'hide', 'https://buffalo.craigslist.org/sha/d/rooms-for-rent/7918898660.html', 'https://www.craigslist.org/images/d/7918898660/empty.png']
+
+- Missing price
+  title: Gay male seeks roomate
+  url: https://cleveland.craigslist.org/sha/d/gay-male-seeks-roomate/7918123865.html
+  raw: ['7918123865', 'Gay male seeks roomate', 'Lorain County', 'Gay male seeks roomate', '3/18', 'hide', 'https://cleveland.craigslist.org/sha/d/gay-male-seeks-roomate/7918123865.html', 'https://www.craigslist.org/images/d/7918123865/empty.png']
+
+- Missing price
+  title: 47 yr old female iso Room asap
+  url: https://pittsburgh.craigslist.org/sha/d/47-yr-old-female-iso-room-asap/7914638211.html
+  raw: ['7914638211', '47 yr old female iso Room asap', 'Natrona Heights', '47 yr old female iso Room asap', '2/12', 'hide', 'https://pittsburgh.craigslist.org/sha/d/47-yr-old-female-iso-room-asap/7914638211.html', 'https://www.craigslist.org/images/d/7914638211/empty.png']
+
+- Missing price
+  title: LOOKING FOR ROOM TO RENT
+  url: https://youngstown.craigslist.org/sha/d/looking-for-room-to-rent/7915249959.html
+  raw: ['7915249959', 'LOOKING FOR ROOM TO RENT', 'Warren', 'LOOKING FOR ROOM TO RENT', '2/14', 'pic', 'hide', 'https://youngstown.craigslist.org/sha/d/looking-for-room-to-rent/7915249959.html', 'https://www.craigslist.org/images/d/7915249959/empty.png']
+
+- Title too short
+  title: amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7916145820.html
+  raw: ['7916145820', 'amherst', 'Beautiful Apartment near Tonawanda Creek! W Summerset Apartments', '2/19', '1br', '700ft', '2', '$1,200', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-near/7916145820.html', 'https://www.craigslist.org/images/d/7916145820/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-rooms-for-rent/7917709065.html
+  raw: ['7917709065', 'Amherst', 'Rooms for rent', '2/26', '$2,010', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-rooms-for-rent/7917709065.html', 'https://www.craigslist.org/images/d/7917709065/empty.png']
+
+- Price too low ($1)
+  title: Land Wanted
+  url: https://buffalo.craigslist.org/reo/d/buffalo-land-wanted/7918356329.html
+  raw: ['7918356329', 'Land Wanted', 'Rural', 'Land Wanted', '3/15', '$1', 'hide', 'https://buffalo.craigslist.org/reo/d/buffalo-land-wanted/7918356329.html', 'https://www.craigslist.org/images/d/7918356329/empty.png']
+
+- Missing price
+  title: Needing a room to rent cheap
+  url: https://annarbor.craigslist.org/sha/d/needing-room-to-rent-cheap/7913836346.html
+  raw: ['7913836346', 'Needing a room to rent cheap', 'Ypsilanti', 'Needing a room to rent cheap', '2/8', 'hide', 'https://annarbor.craigslist.org/sha/d/needing-room-to-rent-cheap/7913836346.html', 'https://www.craigslist.org/images/d/7913836346/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-maple-rd/7918821448.html
+  raw: ['7918821448', 'Amherst', 'Beautiful Apartment On Maple Rd Sturbridge Village Apartments', '3/3', '2br', '930ft', '2', '$1,535', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-beautiful-apartment-on-maple-rd/7918821448.html', 'https://www.craigslist.org/images/d/7918821448/empty.png']
+
+- Title too short
+  title: 14150
+  url: https://buffalo.craigslist.org/apa/d/buffalo-br-townhouse-with-garage-for/7912754588.html
+  raw: ['7912754588', '14150', '$1,285/ 2br- Townhouse With Garage for Rent in Tonawanda/Chatsworth', '2/3', '2br', '$1,285', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-br-townhouse-with-garage-for/7912754588.html', 'https://www.craigslist.org/images/d/7912754588/empty.png']
+
+- Price too low ($250)
+  title: 62+ Income Based Apartments-Senior Affordable Housing in Buffalo, NY
+  url: https://buffalo.craigslist.org/apa/d/fort-erie-62-income-based-apartments/7922060396.html
+  raw: ['7922060396', '62+ Income Based Apartments-Senior Affordable Housing in Buffalo, NY', 'Buffalo', '62+ Income Based Apartments-Senior Affordable Housing in Buffalo, NY', '3/18', '1br', '578ft', '2', '$250', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/fort-erie-62-income-based-apartments/7922060396.html', 'https://www.craigslist.org/images/d/7922060396/empty.png']
+
+- Title too short
+  title: Depew
+  url: https://buffalo.craigslist.org/apa/d/depew-bedroom-and-studio-apartments/7917246209.html
+  raw: ['7917246209', 'Depew', '1 bedroom and studio apartments available! Rents start $1020.00', '2/24', '288ft', '2', '$1,020', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/depew-bedroom-and-studio-apartments/7917246209.html', 'https://www.craigslist.org/images/d/7917246209/empty.png']
+
+- Title too short
+  title: Amherst
+  url: https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site/7912830702.html
+  raw: ['7912830702', 'Amherst', 'Laundry on Site', '2/3', '2br', '850ft', '2', '$1,363', 'pic', 'hide', 'https://buffalo.craigslist.org/apa/d/buffalo-laundry-on-site/7912830702.html', 'https://www.craigslist.org/images/d/7912830702/empty.png']
+
+- Missing price
+  title: Looking For Room For Rent
+  url: https://cleveland.craigslist.org/sha/d/looking-for-room-for-rent/7916572499.html
+  raw: ['7916572499', 'Looking For Room For Rent', 'Cleveland', 'Looking For Room For Rent', '2/21', 'hide', 'https://cleveland.craigslist.org/sha/d/looking-for-room-for-rent/7916572499.html', 'https://www.craigslist.org/images/d/7916572499/empty.png']
+
