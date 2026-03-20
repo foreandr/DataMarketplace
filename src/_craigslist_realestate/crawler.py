@@ -59,13 +59,6 @@ class CraigslistRealestateCrawler:
         repo_root = Path(__file__).resolve().parents[2]
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        _banner([
-            "PUSHING TO GITHUB",
-            f"  Time : {now}",
-            f"  Rows : {self._total_rows:,}",
-            f"  Cities done : {self._cities_done}",
-        ], color=MG)
-
         db_rel = f"src/{self.name}/database.sqlite"
         try:
             subprocess.run(["git", "add", db_rel], cwd=repo_root, check=True)
@@ -77,16 +70,8 @@ class CraigslistRealestateCrawler:
             )
             subprocess.run(["git", "push"], cwd=repo_root, check=True)
 
-            _banner([
-                "PUSH SUCCESSFUL",
-                f"  {now}",
-            ], color=GR)
-
         except subprocess.CalledProcessError as e:
-            _banner([
-                "PUSH FAILED",
-                f"  {e}",
-            ], color=RD)
+            pass
 
         self._last_push = time.time()
 
@@ -97,11 +82,6 @@ class CraigslistRealestateCrawler:
     # ── Main run ──────────────────────────────────────────────────────────────
 
     def run(self) -> None:
-        _banner([
-            "CRAIGSLIST REALESTATE CRAWLER STARTING",
-            f"  Push interval : every {PUSH_INTERVAL // 60} minutes",
-        ], color=CY)
-
         browser = instance.Browser(
             driver_choice="selenium",
             headless=True,
@@ -115,40 +95,26 @@ class CraigslistRealestateCrawler:
 
         for i, location in enumerate(cities, 1):
             city = location["city"]
-            pct  = f"{i}/{total_cities}"
-            print(f"{BL}{BD}[{pct}]{R} {YL}{city}{R} | {location['state']}, {location['country']}")
-
             try:
                 total_data = self._process_city(browser, city)
                 jsonifier  = CraigslistRealestateJsonify(self.name)
                 clean_data = jsonifier.run_analysis(total_data, location=location, print_samples=False)
-                n = len(clean_data or [])
-                m = len(total_data or [])
-                pct = (n / m * 100) if m else 0.0
-                _banner([
-                    "PARSE RATE",
-                    f"  Kept  : {n}",
-                    f"  Total : {m}",
-                    f"  Rate  : {pct:.1f}%",
-                ], color=CY)
                 inserted   = self._store_clean_data(clean_data)
                 self._total_rows  += inserted
                 self._cities_done += 1
-                print(f"  {GR}+{inserted} rows{R}  |  total {WH}{self._total_rows:,}{R}")
             except Exception as e:
-                print(f"  {RD}CITY FAILED:{R} {city}")
-                continue
+                pass
+
+            pct = f"{i}/{total_cities}"
+            db_total = self._db_total_rows()
+            print(f"[{pct}] {self.name} | {city}, {location['state']}, {location['country']} | rows={db_total}")
 
             self._maybe_push()
 
         browser.close_browser()
         self._push_to_github()   # final push when done
 
-        _banner([
-            "CRAWL COMPLETE",
-            f"  Total rows : {self._total_rows:,}",
-            f"  Cities     : {self._cities_done}/{total_cities}",
-        ], color=GR)
+        # done
 
     # ── Scraping ──────────────────────────────────────────────────────────────
 
@@ -182,7 +148,6 @@ class CraigslistRealestateCrawler:
             current_y = browser.WEBDRIVER.execute_script("return window.pageYOffset;")
 
             if current_y == last_y:
-                print(f"  {CY}Bottom reached{R} at {current_y}px after {scroll_count} scrolls.")
                 break
 
             last_y   = current_y
@@ -195,8 +160,6 @@ class CraigslistRealestateCrawler:
             total_data.extend(all_data)
             total_data = [list(x) for x in set(tuple(x) for x in total_data)]
 
-            if scroll_count % 10 == 0:
-                print(f"  {YL}scroll {scroll_count}{R} | items so far: {len(total_data)}")
         return total_data
 
     # ── Storage ──────────────────────────────────────────────────────────────
@@ -249,6 +212,17 @@ class CraigslistRealestateCrawler:
 
     def _db_path(self) -> Path:
         return Path(__file__).resolve().parents[2] / "src" / self.name / "database.sqlite"
+
+    def _db_total_rows(self) -> int:
+        db_path = self._db_path()
+        if not db_path.exists():
+            return 0
+        conn = sqlite3.connect(str(db_path))
+        try:
+            row = conn.execute("SELECT COUNT(*) FROM items;").fetchone()
+            return int(row[0]) if row else 0
+        finally:
+            conn.close()
 
 
 def dedup_database(db_path: Path | None = None) -> int:
