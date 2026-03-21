@@ -96,6 +96,7 @@ class CraigslistJobsCrawler:
                 clean_data = jsonifier.run_analysis(total_data, location=location, print_samples=True)
 
                 '''
+                
                 _banner([
                     f"  PARSED RECORDS FOR: {city}",
                     f"  Raw rows   : {len(total_data)}",
@@ -103,7 +104,9 @@ class CraigslistJobsCrawler:
                     f"  Skipped    : {jsonifier.skipped_count}",
                 ], color=CY)
                 '''
+                
                 '''
+                
                 for idx, rec in enumerate(clean_data, 1):
                     print(
                         f"{YL}[{idx}/{len(clean_data)}]{R} "
