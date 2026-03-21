@@ -1,1 +1,3 @@
 look for keywrods in the text foir thing like apt, apartment, condo, for housing type
+
+NEED AUTOMATED TOOLING FOR INSTALLATION AND USE OF GIT LFS

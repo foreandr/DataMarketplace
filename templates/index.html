@@ -30,5 +30,21 @@
       <span class="badge badge-green">● Live</span>
     </div>
   </a>
+  <a class="card" href="{{ url_for('quick_query', crawler_name='_craigslist_jobs') }}">
+    <h3>Craigslist Jobs</h3>
+    <p>Craigslist job postings with title, pay, posted date, and location.</p>
+    <div class="card-footer">
+      <span class="card-link">View docs →</span>
+      <span class="badge badge-green">● Live</span>
+    </div>
+  </a>
+  <a class="card" href="{{ url_for('quick_query', crawler_name='_canadian_jobbank') }}">
+    <h3>Canadian Jobbank</h3>
+    <p>Job postings from the Government of Canada Job Bank.</p>
+    <div class="card-footer">
+      <span class="card-link">View docs →</span>
+      <span class="badge badge-green">● Live</span>
+    </div>
+  </a>
 </div>
 {% endblock %}

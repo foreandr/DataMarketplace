@@ -1059,35 +1059,27 @@ def delete_crawler(source_name: str) -> None:
 
 if __name__ == "__main__":
     # ── CONFIG ───────────────────────────────────────────────────────────────────
-    SOURCE_NAME = "craigslist_realestate"
-    SHORT_DESC  = "Craigslist real estate listings with price, beds, baths, and location."
+    SOURCE_NAME = "canadian_jobbank"
+    SHORT_DESC  = "Job postings from the Government of Canada Job Bank."
     LONG_DESC   = """\
-Real estate listings scraped from Craigslist across US & Canadian cities. Records \
-include pricing, bedrooms, bathrooms, square footage when available, listing URL, \
-image, and geo-location data tagged at crawl time. Bedrooms and square footage can \
-be missing for some listings."""
-    # Only id and crawled_at are always included automatically.
-    # Every other field you want must be listed here — including title, city,
-    # state, country if relevant (e.g. classified ads). For something like stock
-    # tickers those location fields wouldn't apply, so don't add them.
-    # Valid keys: name, type ("TEXT"|"INTEGER"|"REAL"), indexed, unique,
-    #             location, primary, default_sql, description
+Job listings scraped from the Canadian Job Bank. Records include job title, 
+company name, location (city/province), posted date, and salary. 
+All salary data is normalized to an hourly rate. Includes tags for 
+application types (Direct Apply, LMIA requested, etc.)."""
+
     EXTRA_FIELDS: list[dict] = [
-        {"name": "title",        "type": "TEXT",                                       "description": "Listing headline"},
-        {"name": "price",        "type": "INTEGER", "indexed": True,                   "description": "Asking price in USD or CAD"},
-        {"name": "bedrooms",     "type": "INTEGER", "indexed": True,                   "description": "Number of bedrooms (nullable)"},
-        {"name": "bathrooms",    "type": "REAL",    "indexed": True,                   "description": "Number of bathrooms (nullable)"},
-        {"name": "square_feet",  "type": "INTEGER",                                    "description": "Interior size in square feet (nullable)"},
-        {"name": "housing_type", "type": "TEXT",    "indexed": True,                   "description": "Apartment, house, condo, etc."},
-        {"name": "location",     "type": "TEXT",                                       "description": "Neighborhood or area label"},
-        {"name": "posted_date",  "type": "TEXT",    "indexed": True,                   "description": "Posting date as shown on Craigslist"},
-        {"name": "url",          "type": "TEXT",    "unique": True,  "indexed": True,  "description": "Direct link to listing"},
-        {"name": "image_url",    "type": "TEXT",                                       "description": "Primary listing image"},
-        {"name": "city",         "type": "TEXT",    "indexed": True, "location": True, "description": "City where listing was crawled"},
-        {"name": "state",        "type": "TEXT",    "indexed": True, "location": True, "description": "State or province"},
-        {"name": "country",      "type": "TEXT",    "indexed": True, "location": True, "description": "Country of origin"},
+        {"name": "title",           "type": "TEXT",                                      "description": "Job title (e.g., Software developer)"},
+        {"name": "company",         "type": "TEXT",                                      "description": "Hiring company name (e.g., SpaceBridge Inc.)"},
+        {"name": "location_raw",    "type": "TEXT",                                      "description": "City and Province as shown on listing"},
+        {"name": "posted_date",     "type": "TEXT",   "indexed": True,                   "description": "Date the job was posted"},
+        {"name": "pay",             "type": "REAL",   "indexed": True,                   "description": "Normalized hourly pay rate (converted from annual if necessary)"},
+        {"name": "is_lmia",         "type": "INTEGER","indexed": True,                   "description": "Boolean: 1 if LMIA requested, else 0"},
+        {"name": "is_direct_apply", "type": "INTEGER",                                   "description": "Boolean: 1 if Direct Apply is enabled, else 0"},
+        {"name": "url",             "type": "TEXT",   "unique": True, "indexed": True,   "description": "URL to the job posting"},
+        {"name": "city",            "type": "TEXT",   "indexed": True, "location": True, "description": "Parsed city"},
+        {"name": "state",           "type": "TEXT",   "indexed": True, "location": True, "description": "Province code (e.g., ON, QC, BC)"},
+        {"name": "country",         "type": "TEXT",   "indexed": True, "location": True, "description": "Country (Canada)"},
     ]
     # ─────────────────────────────────────────────────────────────────────────────
 
     main(SOURCE_NAME, EXTRA_FIELDS, SHORT_DESC, LONG_DESC)
-    # delete_crawler(SOURCE_NAME)
