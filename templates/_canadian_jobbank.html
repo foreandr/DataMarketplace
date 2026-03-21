@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- ── HERO ──────────────────────────────────────────────── -->
+<div class="collection-hero">
+  <div class="collection-eyebrow">
+    <span class="eyebrow-dot"></span>
+    Collection · Live
+  </div>
+  <div class="collection-title">_canadian_jobbank</div>
+  <p class="collection-desc">
+    Job listings scraped from the Canadian Job Bank. Records include job title, 
+company name, location (city/province), posted date, and salary. 
+All salary data is normalized to an hourly rate. Includes tags for 
+application types (Direct Apply, LMIA requested, etc.).
+  </p>
+  <div class="collection-meta">
+    <span class="badge badge-green">● Live</span>
+    <span class="badge badge-blue">SQLite</span>
+    <span class="badge badge-purple">geo-tagged</span>
+    <span class="badge badge-muted">REST · POST /search</span>
+  </div>
+</div>
+
+<!-- ── SCHEMA ────────────────────────────────────────────── -->
+<div class="section-label">Schema</div>
+<table class="schema-table">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Constraints</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="field-name">id</span></td>
+      <td><span class="field-type">TEXT</span></td>
+      <td class="field-desc">Unique listing identifier</td>
+      <td><div class="field-tags"><span class="ftag ftag-pk">PK</span></div></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">title</span></td>
+      <td><span class="field-type">TEXT</span></td>
+      <td class="field-desc">Job title (e.g., Software developer)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">company</span></td>
+      <td><span class="field-type">TEXT</span></td>
+      <td class="field-desc">Hiring company name (e.g., SpaceBridge Inc.)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">location_raw</span></td>
+      <td><span class="field-type">TEXT</span></td>
+      <td class="field-desc">City and Province as shown on listing</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">posted_date</span></td>
+      <td><span class="field-type">TEXT</span></td>
+      <td class="field-desc">Date the job was posted</td>
+      <td><div class="field-tags"><span class="ftag ftag-idx">indexed</span></div></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">pay</span></td>
+      <td><span class="field-type">REAL</span></td>
+      <td class="field-desc">Normalized hourly pay rate (converted from annual if necessary)</td>
+      <td><div class="field-tags"><span class="ftag ftag-idx">indexed</span></div></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">is_lmia</span></td>
+      <td><span class="field-type">INTEGER</span></td>
+      <td class="field-desc">Boolean: 1 if LMIA requested, else 0</td>
+      <td><div class="field-tags"><span class="ftag ftag-idx">indexed</span></div></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">is_direct_apply</span></td>
+      <td><span class="field-type">INTEGER</span></td>
+      <td class="field-desc">Boolean: 1 if Direct Apply is enabled, else 0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">url</span></td>
+      <td><span class="field-type">TEXT</span></td>
+      <td class="field-desc">URL to the job posting</td>
+      <td><div class="field-tags"><span class="ftag ftag-uniq">unique</span><span class="ftag ftag-idx">indexed</span></div></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">city</span></td>
+      <td><span class="field-type">TEXT</span></td>
+      <td class="field-desc">Parsed city</td>
+      <td><div class="field-tags"><span class="ftag ftag-loc">location</span><span class="ftag ftag-idx">indexed</span></div></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">state</span></td>
+      <td><span class="field-type">TEXT</span></td>
+      <td class="field-desc">Province code (e.g., ON, QC, BC)</td>
+      <td><div class="field-tags"><span class="ftag ftag-loc">location</span><span class="ftag ftag-idx">indexed</span></div></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">country</span></td>
+      <td><span class="field-type">TEXT</span></td>
+      <td class="field-desc">Country (Canada)</td>
+      <td><div class="field-tags"><span class="ftag ftag-loc">location</span><span class="ftag ftag-idx">indexed</span></div></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">crawled_at</span></td>
+      <td><span class="field-type">TEXT</span></td>
+      <td class="field-desc">Timestamp when row was ingested</td>
+      <td><div class="field-tags"><span class="ftag ftag-idx">indexed</span></div></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ── FILTER OPERATORS ───────────────────────────────────── -->
+<div class="section-label">Filter Operators</div>
+<table class="schema-table" style="margin-bottom:44px">
+  <thead>
+    <tr>
+      <th>Operator</th>
+      <th>Meaning</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="field-name">$gte</span></td>
+      <td class="field-desc">Greater than or equal to</td>
+      <td><span class="field-type">{"is_lmia": {"$gte": 0}}</span></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">$lte</span></td>
+      <td class="field-desc">Less than or equal to</td>
+      <td><span class="field-type">{"is_lmia": {"$lte": 100}}</span></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">$gt</span></td>
+      <td class="field-desc">Strictly greater than</td>
+      <td><span class="field-type">{"is_lmia": {"$gt": 0}}</span></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">$lt</span></td>
+      <td class="field-desc">Strictly less than</td>
+      <td><span class="field-type">{"is_lmia": {"$lt": 100}}</span></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">$eq</span></td>
+      <td class="field-desc">Exact match (shorthand: pass the value directly)</td>
+      <td><span class="field-type">{"title": "example"}</span></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">$ne</span></td>
+      <td class="field-desc">Not equal to</td>
+      <td><span class="field-type">{"title": {"$ne": "example"}}</span></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">$like</span></td>
+      <td class="field-desc">SQL LIKE pattern match — use % as wildcard</td>
+      <td><span class="field-type">{"title": {"$like": "%keyword%"}}</span></td>
+    </tr>
+    <tr>
+      <td><span class="field-name">$in</span></td>
+      <td class="field-desc">Value must be in the provided list</td>
+      <td><span class="field-type">{"city": {"$in": ["a", "b"]}}</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ── CODE EXAMPLE ──────────────────────────────────────── -->
+<div class="section-label">Example Request</div>
+<div class="code-block">
+  <div class="code-header">
+    <div class="code-traffic">
+      <span class="code-dot code-dot-r"></span>
+      <span class="code-dot code-dot-y"></span>
+      <span class="code-dot code-dot-g"></span>
+      <span class="code-label">Python · requests</span>
+    </div>
+    <button class="code-copy" id="copySample">Copy</button>
+  </div>
+  <pre class="code-body" id="sampleCode"><span class="ck">import</span> requests
+
+<span class="cc"># Replace these with the credentials provided by your API platform</span>
+<span class="cc"># (e.g. RapidAPI, your own deployment, etc.)</span>
+API_BASE_URL <span class="cop">=</span> <span class="cs">"https://&lt;your-api-host&gt;"</span>
+API_KEY      <span class="cop">=</span> <span class="cs">"&lt;your-api-key&gt;"</span>
+
+url <span class="cop">=</span> <span class="cs">f"<span class="cop">{</span>API_BASE_URL<span class="cop">}</span>/v1/collections/_canadian_jobbank/search"</span>
+
+headers <span class="cop">=</span> {
+    <span class="ckey">"Content-Type"</span><span class="cop">:</span>  <span class="cs">"application/json"</span>,
+    <span class="ckey">"X-Api-Key"</span><span class="cop">:</span>     API_KEY,  <span class="cc"># header name may vary by platform</span>
+}
+
+<span class="cc"># Structure the POST body however you need — all fields are optional.</span>
+<span class="cc"># Use &quot;filter&quot; to narrow results, &quot;order_by&quot; to sort, &quot;page_number&quot; to paginate.</span>
+payload <span class="cop">=</span> {
+    <span class="ckey">"select"</span><span class="cop">:</span>      [<span class="cs">"*"</span>],
+    <span class="ckey">"filter"</span><span class="cop">:</span>      {
+        <span class="ckey">"country"</span><span class="cop">:</span> <span class="cs">"United States"</span>,
+        <span class="ckey">"is_lmia"</span><span class="cop">:</span> {<span class="cs">"$gte"</span><span class="cop">:</span> <span class="cn">0</span>, <span class="cs">"$lte"</span><span class="cop">:</span> <span class="cn">100</span>},
+        <span class="ckey">"is_direct_apply"</span><span class="cop">:</span> {<span class="cs">"$gte"</span><span class="cop">:</span> <span class="cn">0</span>},
+        <span class="ckey">"title"</span><span class="cop">:</span> {<span class="cs">"$like"</span><span class="cop">:</span> <span class="cs">"%keyword%"</span>},
+        <span class="ckey">"state"</span><span class="cop">:</span> {<span class="cs">"$in"</span><span class="cop">:</span> [<span class="cs">"Texas"</span>, <span class="cs">"California"</span>]},
+    },
+    <span class="ckey">"order_by"</span><span class="cop">:</span>    [{<span class="cs">"field"</span><span class="cop">:</span> <span class="cs">"posted_date"</span>, <span class="cs">"direction"</span><span class="cop">:</span> <span class="cs">"asc"</span>}],
+    <span class="ckey">"page_number"</span><span class="cop">:</span> <span class="cn">1</span>,
+}
+
+resp <span class="cop">=</span> requests.<span class="cf">post</span>(url, json<span class="cop">=</span>payload, headers<span class="cop">=</span>headers)
+<span class="cf">print</span>(resp.status_code)
+<span class="cf">print</span>(resp.<span class="cf">json</span>())</pre>
+</div>
+
+<!-- ── LIVE QUERY TOOL ────────────────────────────────────── -->
+<div class="section-label">Live Query</div>
+<div class="query-card">
+  <div class="query-card-header">
+    <span class="query-card-title">POST /v1/collections/_canadian_jobbank/search</span>
+    <span class="badge badge-blue">Demo · 5 rows max</span>
+  </div>
+  <div class="query-card-body">
+    <div class="tool-row">
+      <button id="runQuery">&#9654; Run Query</button>
+      <button id="clearQuery" class="secondary">Clear</button>
+    </div>
+    <div id="status" class="status">Idle</div>
+    <div id="result" class="result">// Results will appear here</div>
+  </div>
+</div>
+
+<script>
+  window.quickQueryConfig = {
+    collection: '_canadian_jobbank',
+    filter: {},
+    order_by: [],
+  };
+
+  document.getElementById('copySample').addEventListener('click', function () {
+    const raw = document.getElementById('sampleCode').innerText;
+    navigator.clipboard.writeText(raw).then(() => {
+      this.textContent = '✓ Copied';
+      setTimeout(() => (this.textContent = 'Copy'), 1600);
+    });
+  });
+</script>
+{% endblock %}

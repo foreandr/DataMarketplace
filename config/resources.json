@@ -7,6 +7,14 @@
     "_craigslist_realestate": {
       "db_path": "src/_craigslist_realestate/database.sqlite",
       "schema": "_craigslist_realestate"
+    },
+    "_craigslist_jobs": {
+      "db_path": "src/_craigslist_jobs/database.sqlite",
+      "schema": "_craigslist_jobs"
+    },
+    "_canadian_jobbank": {
+      "db_path": "src/_canadian_jobbank/database.sqlite",
+      "schema": "_canadian_jobbank"
     }
   }
 }
