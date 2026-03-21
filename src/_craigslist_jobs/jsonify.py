@@ -195,7 +195,7 @@ class CraigslistJobsJsonify:
             "title":       title,
             "location":    location_str,
             "pay":         self._parse_pay_numeric(pay_str),
-            "description": employer_str,  # employer name
+            "company":     employer_str,
             "posted_date": self._parse_date(date_str),
             "url":         url,
             "image_url":   image,
