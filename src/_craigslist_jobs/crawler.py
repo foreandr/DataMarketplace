@@ -95,25 +95,27 @@ class CraigslistJobsCrawler:
                 jsonifier  = CraigslistJobsJsonify(self.name)
                 clean_data = jsonifier.run_analysis(total_data, location=location, print_samples=True)
 
+                '''
                 _banner([
                     f"  PARSED RECORDS FOR: {city}",
                     f"  Raw rows   : {len(total_data)}",
                     f"  Parsed OK  : {jsonifier.processed_count}",
                     f"  Skipped    : {jsonifier.skipped_count}",
                 ], color=CY)
-
+                '''
+                '''
                 for idx, rec in enumerate(clean_data, 1):
                     print(
                         f"{YL}[{idx}/{len(clean_data)}]{R} "
                         f"{BD}{rec.get('title', '???')}{R}\n"
                         f"  location   : {rec.get('location')}\n"
                         f"  pay        : ${rec.get('pay')}/hr\n"
-                        f"  description: {rec.get('description')}\n"
+                        f"  company    : {rec.get('company')}\n"
                         f"  posted_date: {rec.get('posted_date')}\n"
                         f"  url        : {rec.get('url')}\n"
                     )
-
-                input(f"{BD}------- press ENTER to store {len(clean_data)} records and continue ------- {R}")
+                '''
+                # input(f"{BD}------- press ENTER to store {len(clean_data)} records and continue ------- {R}")
 
                 inserted   = self._store_clean_data(clean_data)
                 self._total_rows  += inserted

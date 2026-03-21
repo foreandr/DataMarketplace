@@ -47,7 +47,7 @@ SCHEMA = Schema(
         Field("title", "TEXT"),
         Field("location", "TEXT"),
         Field("pay", "REAL", indexed=True),
-        Field("description", "TEXT"),
+        Field("company", "TEXT"),
         Field("posted_date", "TEXT", indexed=True),
         Field("url", "TEXT", unique=True, indexed=True),
         Field("image_url", "TEXT"),
