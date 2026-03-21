@@ -12,7 +12,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 SRC_DIR = ROOT_DIR / "src"
 
 # ---- Runtime settings ----
-RAM_CAP_PERCENT = 95.0
+RAM_CAP_PERCENT = 97.0
 RUN_MINUTES = 15
 CHECK_INTERVAL_SEC = 5
 
