@@ -51,6 +51,8 @@ SCHEMA = Schema(
         Field("pay", "REAL", indexed=True),
         Field("is_lmia", "INTEGER", indexed=True),
         Field("is_direct_apply", "INTEGER"),
+        Field("work_mode", "TEXT", indexed=True),
+        Field("source", "TEXT", indexed=True),
         Field("url", "TEXT", unique=True, indexed=True),
         Field("city", "TEXT", indexed=True),
         Field("state", "TEXT", indexed=True),

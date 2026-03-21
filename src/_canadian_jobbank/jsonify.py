@@ -22,30 +22,34 @@ RESET = "\033[0m"
 BOLD  = "\033[1m"
 CY    = "\033[96m"
 
-BASE_URL    = "https://www.jobbank.gc.ca"
-MAX_HOURLY  = 120.0   # cap — anything over this is annual/salary, skip it
+BASE_URL   = "https://www.jobbank.gc.ca"
+MAX_HOURLY = 120.0
+
+# ── known noise tokens to skip entirely ───────────────────────────────────────
+_SKIP_TOKENS = {
+    'Location', 'Job number:', 'Your favourites', 'Sign in',
+    'Sign up for a Plus account', 'Posted on Job Bank', 'Job Bank',
+    'This job was posted directly by the employer on Job Bank.',
+    'New', 'On site', 'On-site', 'Remote', 'Hybrid',
+    'CareerBeacon', 'Jobillico', 'indeed.com', 'Direct Apply',
+    'LMIA approved',
+}
 
 # ── regex ──────────────────────────────────────────────────────────────────────
-_URL_PAT    = re.compile(r'/jobsearch/jobposting/(\d+)', re.IGNORECASE)
-_FULL_URL   = re.compile(r'https?://.*jobbank.*jobposting/\d+', re.IGNORECASE)
-_PAY_PAT    = re.compile(
-    r'\$[\d,]+(?:\.\d+)?\s*(?:to|-)\s*\$[\d,]+(?:\.\d+)?\s*(?:hourly|weekly|annually|biweekly|monthly)?'
-    r'|\$[\d,]+(?:\.\d+)?\s*(?:hourly|per\s+hour|/hr|/h)',
+_URL_PAT  = re.compile(r'/jobsearch/jobposting/(\d+)', re.IGNORECASE)
+_DATE_PAT = re.compile(
+    r'(?:january|february|march|april|may|june|july|august|september|october|november|december)'
+    r'\s+\d{1,2},?\s+\d{4}',
     re.IGNORECASE,
 )
-_DATE_PAT   = re.compile(
-    r'(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+\d{1,2},?\s+\d{4}'
-    r'|\d{4}-\d{2}-\d{2}'
-    r'|\d{1,2}/\d{1,2}/\d{2,4}',
-    re.IGNORECASE,
-)
-_MONTH_MAP  = {
-    'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6,
-    'jul': 7, 'aug': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12,
+_MONTH_MAP = {
+    'january': 1, 'february': 2, 'march': 3, 'april': 4,
+    'may': 5, 'june': 6, 'july': 7, 'august': 8,
+    'september': 9, 'october': 10, 'november': 11, 'december': 12,
 }
-# Canadian province abbreviations
-_PROVINCES  = {
-    'AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT',
+_PROVINCES = {
+    'AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU',
+    'ON', 'PE', 'QC', 'SK', 'YT',
 }
 
 
@@ -58,49 +62,62 @@ class CanadianJobbankJsonify:
         self.skipped_data:  List[dict] = []
         self.success_data:  List[dict] = []
 
-    # ── field parsers ──────────────────────────────────────────────────────────
+    # ── field extractors ──────────────────────────────────────────────────────
 
     def _extract_url_and_id(self, item: list) -> tuple[str | None, str | None]:
-        """Return (full_url, job_id) from a raw row."""
         for tok in item:
             if not isinstance(tok, str):
                 continue
-            # Already a full URL
-            if _FULL_URL.search(tok):
-                m = _URL_PAT.search(tok)
-                return tok.split('?')[0], (m.group(1) if m else None)
-            # Relative path only
             m = _URL_PAT.search(tok)
             if m:
-                path = m.group(0)
-                return f"{BASE_URL}{path}", m.group(1)
+                job_id = m.group(1)
+                full   = f"{BASE_URL}/jobsearch/jobposting/{job_id}"
+                return full, job_id
         return None, None
 
-    def _parse_pay(self, item: list) -> float | None:
-        """Extract hourly rate. Returns None if not hourly or not parseable."""
-        for tok in item:
-            if not isinstance(tok, str):
-                continue
-            m = _PAY_PAT.search(tok)
-            if not m:
-                continue
-            pay_str = m.group(0)
-            is_hourly = bool(re.search(r'hourly|per\s+hour|/hr|/h', pay_str, re.IGNORECASE))
-            is_annual = bool(re.search(r'annual|yearly|year', pay_str, re.IGNORECASE))
-            is_weekly = bool(re.search(r'weekly|biweekly', pay_str, re.IGNORECASE))
-            # If no unit at all, treat as hourly (most common on Job Bank)
-            if is_annual or is_weekly:
-                return None   # skip non-hourly
+    def _extract_location(self, item: list) -> tuple[str | None, str | None, str | None]:
+        """Return (location_raw, city, province) using the 'Location' anchor."""
+        try:
+            idx = item.index('Location')
+            raw = item[idx + 1].strip() if idx + 1 < len(item) else None
+        except ValueError:
+            raw = None
 
-            nums = [float(n.replace(',', '')) for n in re.findall(r'[\d,]+(?:\.\d+)?', pay_str)]
+        if not raw:
+            return None, None, None
+
+        # 'Toronto (ON)'  or  'London, ON'
+        m = re.match(r'^(.+?)\s*[\(,]\s*([A-Z]{2})\s*\)?$', raw)
+        if m:
+            city = m.group(1).strip()
+            prov = m.group(2).upper()
+            if prov in _PROVINCES:
+                return raw, city, prov
+        return raw, None, None
+
+    def _extract_pay(self, item: list) -> float | None:
+        """Find the 'Salary\\n...' token and parse an hourly rate from it."""
+        for tok in item:
+            if not isinstance(tok, str) or not tok.startswith('Salary'):
+                continue
+            # e.g. "Salary\n\t\t\t\t\t\t$36.00 hourly"
+            #   or "Salary\n\t\t\t\t\t\t$43.75 to $103.37 hourly"
+            #   or "Salary\n\t\t\t\t\t\t$85,000.00 to $95,000.00 annually"
+            is_annual  = bool(re.search(r'annual|yearly|year', tok, re.IGNORECASE))
+            is_weekly  = bool(re.search(r'weekly|biweekly', tok, re.IGNORECASE))
+            if is_annual or is_weekly:
+                return None
+
+            nums = [float(n.replace(',', ''))
+                    for n in re.findall(r'[\d,]+(?:\.\d+)?', tok)
+                    if n.replace(',', '')]
             if not nums:
                 return None
-            # Range → average
-            val = round(sum(nums) / len(nums), 2) if len(nums) >= 2 else nums[0]
+            val = round(sum(nums) / len(nums), 2)
             return val if val <= MAX_HOURLY else None
         return None
 
-    def _parse_date(self, item: list) -> str:
+    def _extract_date(self, item: list) -> str:
         now = datetime.now()
         for tok in item:
             if not isinstance(tok, str):
@@ -108,97 +125,99 @@ class CanadianJobbankJsonify:
             m = _DATE_PAT.search(tok)
             if not m:
                 continue
-            ds = m.group(0).strip()
+            ds = m.group(0)
+            parts = ds.replace(',', '').split()
             try:
-                # "March 15, 2026" or "Mar 15 2026"
-                month_word = re.match(r'([a-z]+)', ds, re.IGNORECASE)
-                if month_word:
-                    nums = re.findall(r'\d+', ds)
-                    if len(nums) >= 2:
-                        month = _MONTH_MAP.get(month_word.group(1)[:3].lower(), 1)
-                        day   = int(nums[0]) if int(nums[0]) <= 31 else int(nums[1])
-                        year  = int(nums[-1]) if int(nums[-1]) > 100 else now.year
-                        return datetime(year, month, day).strftime("%Y-%m-%d %H:%M:%S")
-                # ISO or slash formats
-                for fmt in ("%Y-%m-%d", "%m/%d/%Y", "%d/%m/%Y"):
-                    try:
-                        return datetime.strptime(ds[:10], fmt).strftime("%Y-%m-%d %H:%M:%S")
-                    except ValueError:
-                        pass
+                month = _MONTH_MAP[parts[0].lower()]
+                day   = int(parts[1])
+                year  = int(parts[2])
+                return datetime(year, month, day).strftime("%Y-%m-%d %H:%M:%S")
             except Exception:
                 pass
         return now.strftime("%Y-%m-%d %H:%M:%S")
 
-    def _parse_location(self, item: list) -> tuple[str | None, str | None, str | None]:
-        """Return (location_raw, city, province)."""
-        for tok in item:
-            if not isinstance(tok, str):
-                continue
-            tok = tok.strip()
-            # Skip things that look like job titles, pay strings, or URLs
-            if _PAY_PAT.search(tok) or '/' in tok or len(tok) > 60:
-                continue
-            # Look for "City, AB" or "City, Ontario" pattern
-            m = re.search(r'^(.+?),\s*([A-Z]{2})\s*$', tok)
-            if m:
-                city = m.group(1).strip()
-                prov = m.group(2).upper()
-                if prov in _PROVINCES:
-                    return tok, city, prov
-            # Lone province code
-            if tok.upper() in _PROVINCES:
-                return tok, None, tok.upper()
-        return None, None, None
-
-    def _parse_flags(self, item: list) -> tuple[int, int]:
-        """Return (is_lmia, is_direct_apply)."""
+    def _extract_flags(self, item: list) -> tuple[int, int]:
         joined = " ".join(str(x) for x in item).lower()
-        is_lmia         = 1 if "lmia" in joined else 0
-        is_direct_apply = 1 if "apply directly" in joined or "direct apply" in joined else 0
+        is_lmia         = 1 if 'lmia' in joined else 0
+        is_direct_apply = 1 if 'direct apply' in joined else 0
         return is_lmia, is_direct_apply
 
-    def _parse_title_and_company(self, item: list, url: str | None) -> tuple[str | None, str | None]:
-        """
-        Title and company on Job Bank rows are plain text tokens.
-        Heuristic: company names tend to be shorter and appear after the title.
-        We skip tokens already consumed as pay/date/location/url.
-        """
-        candidates = []
+    def _extract_work_mode(self, item: list) -> str | None:
         for tok in item:
             if not isinstance(tok, str):
                 continue
-            tok = tok.strip()
-            if not tok:
-                continue
-            if _URL_PAT.search(tok) or _FULL_URL.search(tok):
-                continue
-            if _PAY_PAT.search(tok):
-                continue
-            if _DATE_PAT.search(tok):
-                continue
-            # Skip pure province codes
-            if tok.upper() in _PROVINCES:
-                continue
-            # Skip tokens that look like "City, AB"
-            if re.match(r'^.+,\s*[A-Z]{2}$', tok):
-                continue
-            # Skip LMIA / apply badges
-            if re.search(r'lmia|apply directly|direct apply|job bank|jobbank', tok, re.IGNORECASE):
-                continue
-            candidates.append(tok)
+            t = tok.strip().lower()
+            if t in ('on site', 'on-site', 'onsite'):
+                return 'on_site'
+            if t == 'remote':
+                return 'remote'
+            if t == 'hybrid':
+                return 'hybrid'
+        return None
 
-        if not candidates:
+    def _extract_source(self, item: list) -> str | None:
+        _known = {
+            'careerbeacon':   'CareerBeacon',
+            'jobillico':      'Jobillico',
+            'indeed.com':     'indeed.com',
+            'job bank':       'Job Bank',
+            'saskjobs':       'SaskJobs',
+            'québec emploi':  'Quebec Emploi',
+            'quebec emploi':  'Quebec Emploi',
+            'workinbc':       'WorkInBC',
+            'alborsa':        'Alborsa',
+        }
+        for tok in item:
+            if not isinstance(tok, str):
+                continue
+            key = tok.strip().lower()
+            if key in _known:
+                return _known[key]
+        return None
+
+    def _extract_title_and_company(self, item: list) -> tuple[str | None, str | None]:
+        """
+        Structure is always:
+          [badges...] TITLE  DATE  COMPANY  'Location'  ...
+
+        So: find the date index, title is the last real token before it,
+        company is the first real token after it (before 'Location').
+        """
+        date_idx = next(
+            (i for i, tok in enumerate(item)
+             if isinstance(tok, str) and _DATE_PAT.search(tok)),
+            None,
+        )
+        if date_idx is None:
             return None, None
-        if len(candidates) == 1:
-            return candidates[0], None
 
-        # Title is usually the longest; company is typically shorter
-        by_len  = sorted(candidates, key=len, reverse=True)
-        title   = by_len[0]
-        company = by_len[1] if len(by_len) > 1 else None
+        # Title: scan backwards from date, skip noise
+        title = None
+        for tok in reversed(item[:date_idx]):
+            if not isinstance(tok, str):
+                continue
+            t = tok.strip()
+            if t in _SKIP_TOKENS or not t:
+                continue
+            title = t
+            break
+
+        # Company: scan forwards from date, stop at 'Location'
+        company = None
+        for tok in item[date_idx + 1:]:
+            if not isinstance(tok, str):
+                continue
+            t = tok.strip()
+            if t == 'Location':
+                break
+            if t in _SKIP_TOKENS or not t:
+                continue
+            company = t
+            break
+
         return title, company
 
-    # ── main API ───────────────────────────────────────────────────────────────
+    # ── main API ──────────────────────────────────────────────────────────────
 
     def to_json(self, data: Any) -> List[dict]:
         self.processed_count = 0
@@ -210,6 +229,7 @@ class CanadianJobbankJsonify:
             return []
 
         for item in data:
+          try:
             if not isinstance(item, list):
                 self.skipped_count += 1
                 self.skipped_data.append({"reason": "Not a list", "raw": str(item)})
@@ -221,45 +241,47 @@ class CanadianJobbankJsonify:
                 self.skipped_data.append({"reason": "No job URL found", "raw": item})
                 continue
 
-            pay = self._parse_pay(item)
+            pay = self._extract_pay(item)
             if pay is None:
                 self.skipped_count += 1
                 self.skipped_data.append({"reason": "No hourly pay found", "raw": item})
                 continue
 
-            title, company            = self._parse_title_and_company(item, url)
-            location_raw, city, prov  = self._parse_location(item)
-            is_lmia, is_direct_apply  = self._parse_flags(item)
-
+            title, company = self._extract_title_and_company(item)
             if not title or len(title.strip()) < 3:
                 self.skipped_count += 1
-                self.skipped_data.append({"reason": "Title too short/missing", "raw": item})
+                self.skipped_data.append({"reason": "Title missing/too short", "raw": item})
                 continue
 
+            location_raw, city, prov = self._extract_location(item)
+            is_lmia, is_direct_apply = self._extract_flags(item)
+
             record = {
-                "id":             job_id,
-                "title":          title,
-                "company":        company,
-                "location_raw":   location_raw,
-                "posted_date":    self._parse_date(item),
-                "pay":            pay,
-                "is_lmia":        is_lmia,
+                "id":              job_id,
+                "title":           title,
+                "company":         company,
+                "location_raw":    location_raw,
+                "posted_date":     self._extract_date(item),
+                "pay":             pay,
+                "is_lmia":         is_lmia,
                 "is_direct_apply": is_direct_apply,
-                "url":            url,
-                "city":           city,
-                "state":          prov,
-                "country":        "Canada",
+                "work_mode":       self._extract_work_mode(item),
+                "source":          self._extract_source(item),
+                "url":             url,
+                "city":            city,
+                "state":           prov,
+                "country":         "Canada",
             }
             self.success_data.append({k: record.get(k) for k in SCHEMA.field_names()})
             self.processed_count += 1
 
+          except Exception as e:
+            self.skipped_count += 1
+            self.skipped_data.append({"reason": f"Unexpected error: {e}", "raw": item})
+
         return self.success_data
 
-    def run_analysis(
-        self,
-        data: Any,
-        print_samples: bool = False,
-    ) -> List[dict]:
+    def run_analysis(self, data: Any, print_samples: bool = False) -> List[dict]:
         results = self.to_json(data)
 
         if not print_samples:
@@ -288,18 +310,3 @@ class CanadianJobbankJsonify:
             f"{'='*40}{RESET}"
         )
         return results
-
-
-if __name__ == "__main__":
-    # Run against demo data if available
-    try:
-        from _canadian_jobbank.demo_data import DEMO_DATA
-    except ModuleNotFoundError:
-        import sys
-        from pathlib import Path
-        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-        from _canadian_jobbank.demo_data import DEMO_DATA
-
-    j = CanadianJobbankJsonify(debug=True)
-    results = j.run_analysis(DEMO_DATA, print_samples=True)
-    print(f"\n{CY}Total records returned: {len(results)}{RESET}")

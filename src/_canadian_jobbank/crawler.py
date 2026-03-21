@@ -8,7 +8,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, List
-
+import random
 from hyperSel import instance, parser
 
 try:
@@ -153,6 +153,7 @@ DEFAULT_KEYWORDS = [
     "optimization", "maintenance", "support", "troubleshooting", "resolution",
     "escalation", "incident", "problem", "change", "release"
 ]
+random.shuffle(DEFAULT_KEYWORDS)
 
 def _banner(lines: list[str], color: str = CY) -> None:
     width  = max(len(l) for l in lines) + 6
@@ -208,6 +209,11 @@ class CanadianJobbankCrawler:
         for i, keyword in enumerate(keywords, 1):
             try:
                 total_data = self._process_keyword(browser, keyword)
+                for j in total_data:
+                    print(len(j), j)
+                    print("-")
+
+
 
                 jsonifier  = CanadianJobbankJsonify(self.name)
                 clean_data = jsonifier.run_analysis(total_data, print_samples=True)
@@ -228,11 +234,13 @@ class CanadianJobbankCrawler:
                         f"  pay        : ${rec.get('pay')}/hr\n"
                         f"  lmia       : {rec.get('is_lmia')}\n"
                         f"  direct     : {rec.get('is_direct_apply')}\n"
+                        f"  work_mode  : {rec.get('work_mode')}\n"
+                        f"  source     : {rec.get('source')}\n"
                         f"  posted_date: {rec.get('posted_date')}\n"
                         f"  url        : {rec.get('url')}\n"
                     )
 
-                input(f"{BD}------- press ENTER to store {len(clean_data)} records and continue ------- {R}")
+                #input(f"{BD}------- press ENTER to store {len(clean_data)} records and continue ------- {R}")
 
                 inserted = self._store_clean_data(clean_data)
                 self._total_rows   += inserted
