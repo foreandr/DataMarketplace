@@ -200,7 +200,7 @@ class CanadianJobbankCrawler:
 
         browser = instance.Browser(
             driver_choice='selenium',
-            headless=False,
+            headless=True,
             zoom_level=100,
         )
         browser.init_browser()

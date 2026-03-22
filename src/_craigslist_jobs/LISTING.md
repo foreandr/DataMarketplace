@@ -125,12 +125,6 @@ Data
     "*"
   ],
   "filter": {
-    "state": {
-      "$in": [
-        "TX",
-        "CA"
-      ]
-    }
   },
   "order_by": [
     {
