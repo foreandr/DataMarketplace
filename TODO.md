@@ -1,197 +1,224 @@
-# DataMarketplace — Crawler Roadmap
+DataMarketplace — Crawler Roadmap
+===================================
+Legend: [ ] not started  [~] in progress  [x] done  [!] cant be crawled
 
-> Legend: `[ ]` not started · `[~]` in progress · `[x]` done · `[!]` blocked/needs research
+===========================================================================
+INFRASTRUCTURE
+===========================================================================
 
----
+[ ] Git LFS — automated install & usage tooling
+[ ] Housing type keyword detection on existing real estate crawlers
+    keywords: apt, apartment, condo, townhouse, studio, bachelor,
+              loft, duplex, triplex, basement, semi-detached
+    action:   tag a housing_type field on every listing row
 
-## ⚙️ Infrastructure
+===========================================================================
+REAL ESTATE & RENTALS
+===========================================================================
 
-| # | Task | Notes |
-|---|------|-------|
-| 1 | `[ ]` **Git LFS** — automated install & usage tooling | Needed before large DB/binary assets |
-| 2 | `[ ]` **Housing type keyword detection** | Scan listing text for: `apt`, `apartment`, `condo`, `townhouse`, `studio`, `bachelor`, `loft`, `duplex`, `triplex` → tag `housing_type` field |
+[~] _craigslist_realestate     running
+[ ] _redfin                    US listings, prices, estimates
+[ ] _realtor_ca                Canadian MLS listings
+[ ] _rentals_ca                Canadian rentals
+[ ] _zumper                    US + CA rent
+[ ] _padmapper                 aggregator, pulls from many sources
+[ ] _kijiji_realestate         CA classifieds — real estate section
+[ ] _loopnet                   commercial real estate
 
----
+[!] Zillow                     blocked, dont bother
+[!] Facebook Marketplace       login required, blocked
 
-## 🏠 Real Estate & Rentals
+===========================================================================
+AUTOMOTIVE
+===========================================================================
 
-| # | Source | Notes |
-|---|--------|-------|
-| 1 | `[~]` Craigslist Real Estate | Running |
-| 2 | `[ ]` **Redfin** | Zillow is blocked — prioritize this |
-| 3 | `[ ]` Realtor.ca | Canadian listings |
-| 4 | `[ ]` Rentals.ca | Canadian rentals |
-| 5 | `[ ]` Zumper | US/CA rent |
-| 6 | `[ ]` PadMapper | Aggregator |
-| 7 | `[ ]` Kijiji Real Estate | CA classifieds |
+[~] _craigslist_cars           running
+[ ] _bringatrailer             auction results + active listings
+[ ] _edmunds                   pricing, reviews, specs
+[ ] _cargurus                  US listings + price history
+[ ] _autotrader_us             US listings
+[ ] _autotrader_ca             CA listings (different site)
+[ ] _cars_com                  US listings
+[ ] _carfax_listings           used car listings
+[ ] _kijiji_autos              CA classifieds — autos section
+[ ] _caranddriver              reviews + specs
+[ ] _motortrend                reviews
 
----
+===========================================================================
+EBAY  (one crawler per category)
+===========================================================================
 
-## 🚗 Automotive
+[ ] _ebay_electronics          phones, laptops, tablets, audio
+[ ] _ebay_motors               cars, trucks, parts & accessories
+[ ] _ebay_fashion              clothing, shoes, accessories
+[ ] _ebay_home_garden          furniture, tools, appliances
+[ ] _ebay_sporting_goods       fitness, outdoor, bikes
+[ ] _ebay_collectibles         coins, trading cards, antiques
+[ ] _ebay_toys_hobbies         lego, diecast, games
+[ ] _ebay_musical_instruments  guitars, synths, studio gear
+[ ] _ebay_industrial           business equipment, parts
 
-| # | Source | Notes |
-|---|--------|-------|
-| 1 | `[~]` Craigslist Cars | Running |
-| 2 | `[ ]` **Bring a Trailer** | Auction data |
-| 3 | `[ ]` **Edmunds** | Pricing & reviews |
-| 4 | `[ ]` CarGurus | |
-| 5 | `[ ]` AutoTrader | US & CA |
-| 6 | `[ ]` Cars.com | |
-| 7 | `[ ]` CarFax listings | |
-| 8 | `[ ]` Kijiji Autos | CA |
+===========================================================================
+KIJIJI  (one crawler per category)
+===========================================================================
 
----
+[ ] _kijiji_electronics        phones, laptops, etc.
+[ ] _kijiji_furniture          sofas, beds, desks
+[ ] _kijiji_appliances         washers, fridges, etc.
+[ ] _kijiji_tools              power tools, hand tools
+[ ] _kijiji_sporting_goods     bikes, skis, weights
+[ ] _kijiji_toys_games         kids stuff, board games
+[ ] _kijiji_clothing           apparel, shoes
+[ ] _kijiji_pets               animals, supplies
+[ ] _kijiji_services           local services
+[ ] _kijiji_free               free stuff section
+    note: kijiji_realestate and kijiji_autos listed in their own sections above
 
-## 🛒 E-Commerce & Price Comparison
+===========================================================================
+AMAZON  (one crawler per category — check for CF first)
+===========================================================================
 
-| # | Source | Notes |
-|---|--------|-------|
-| 1 | `[ ]` **eBay** | By category |
-| 2 | `[ ]` **Kijiji** | General categories |
-| 3 | `[ ]` **Canada Computers** | Tech/PC parts |
-| 4 | `[ ]` Best Buy | Check for CF |
-| 5 | `[ ]` Walmart | Check for CF |
-| 6 | `[ ]` Amazon | Check for CF |
-| 7 | `[ ]` Target | Check for CF |
-| 8 | `[ ]` Newegg | PC parts, no CF |
+[ ] _amazon_electronics        phones, laptops, audio
+[ ] _amazon_home_kitchen       appliances, cookware, decor
+[ ] _amazon_books              bestsellers, new releases
+[ ] _amazon_clothing           apparel, shoes
+[ ] _amazon_sports_outdoors    fitness, camping, bikes
+[ ] _amazon_toys_games         kids, board games, puzzles
+    warning: heavy bot protection — may need alt approach
 
-> ⚠️ Flag anything behind Cloudflare — skip or use alt method
+===========================================================================
+OTHER E-COMMERCE
+===========================================================================
 
----
+[ ] _canada_computers          PC parts, peripherals, laptops
+[ ] _newegg                    PC parts — no CF
+[ ] _bestbuy_ca                electronics — check CF
+[ ] _bestbuy_us                electronics — check CF
+[ ] _walmart_ca                general — check CF
+[ ] _walmart_us                general — check CF
+[ ] _target                    general — check CF
+[ ] _costco                    bulk / warehouse deals
+[ ] _aliexpress                global marketplace
 
-## 💼 Jobs & Career
+[!] Amazon main search         CF / bot detection heavy
 
-| # | Source | Notes |
-|---|--------|-------|
-| 1 | `[~]` Craigslist Jobs | Running |
-| 2 | `[~]` Canadian Job Bank | Running |
-| 3 | `[ ]` Indeed | |
-| 4 | `[ ]` LinkedIn Jobs | |
-| 5 | `[ ]` Glassdoor | Reviews + salary benchmarks |
-| 6 | `[ ]` SimplyHired | |
-| 7 | `[ ]` Workopolis | CA |
+===========================================================================
+JOBS & CAREER
+===========================================================================
 
----
+[~] _craigslist_jobs           running
+[~] _canadian_jobbank          running
+[ ] _indeed                    large job board
+[ ] _glassdoor                 reviews + salary benchmarks
+[ ] _simplyhired               job aggregator
+[ ] _workopolis                CA job board
+[ ] _monster                   job board
+[ ] _weworkremotely            remote jobs
+[ ] _remoteok                  remote jobs
 
-## 📈 Finance, Crypto & Markets
+[!] LinkedIn                   impossible — bot detection + legal risk
 
-| # | Source | Notes |
-|---|--------|-------|
-| 1 | `[ ]` **Forex rates** | Live + historical |
-| 2 | `[ ]` **Finance ticker data** | Stocks, ETFs |
-| 3 | `[ ]` **SEC filings** | EDGAR |
-| 4 | `[ ]` **Currency & Crypto** | Historical tick data (backtest-ready) |
-| 5 | `[ ]` Binance | |
-| 6 | `[ ]` Coinbase | |
-| 7 | `[ ]` LLM Cost Tracker | Token pricing across providers |
-| 8 | `[ ]` Crunchbase | Funding rounds, exec info |
-| 9 | `[ ]` Sports betting odds | Covers, DraftKings, etc. |
-| 10 | `[ ]` Alcohol arbitrage | Price spread across retailers |
-| 11 | `[ ]` Cannabis price data | Dispensary/legal market |
+===========================================================================
+FINANCE, CRYPTO & MARKETS
+===========================================================================
 
----
+[ ] _forex_rates               live + historical exchange rates
+[ ] _stock_tickers             equities, ETFs — Yahoo Finance / others
+[ ] _sec_edgar                 SEC filings, 10-K, 8-K, etc.
+[ ] _crypto_historical         tick-level OHLCV data for backtesting
+[ ] _binance                   spot prices, order book snapshots
+[ ] _coinbase                  prices, trading pairs
+[ ] _crunchbase                funding rounds, exec info, valuation
+[ ] _llm_cost_tracker          token pricing across OpenAI, Anthropic, etc.
+[ ] _sports_betting            odds from DraftKings, Covers, etc.
+[ ] _alcohol_arb               price spread across LCBO, SAQ, BC Liquor, etc.
+[ ] _cannabis_prices           legal dispensary pricing by province/state
 
-## 🎮 Gaming & Entertainment
+===========================================================================
+GAMING & ENTERTAINMENT
+===========================================================================
 
-| # | Source | Notes |
-|---|--------|-------|
-| 1 | `[ ]` **Steam** | Prices, reviews, tags |
-| 2 | `[ ]` **IMDB** | Movies, ratings, cast |
-| 3 | `[ ]` **IGDB** (International Game DB) | Game metadata |
-| 4 | `[ ]` Fortnite leaderboards | |
-| 5 | `[ ]` League of Legends leaderboards | |
-| 6 | `[ ]` RuneScape leaderboards | Hiscores API |
-| 7 | `[ ]` Apex Legends leaderboards | |
-| 8 | `[ ]` Music databases | Discogs, MusicBrainz, etc. |
+[ ] _steam                     game prices, reviews, tags, player counts
+[ ] _imdb                      movies, shows, ratings, cast
+[ ] _igdb                      game metadata — has a free API
+[ ] _newgrounds                games, art, scores
+[ ] _leaderboard_fortnite      competitive rankings
+[ ] _leaderboard_lol           League of Legends ranked ladder
+[ ] _leaderboard_runescape     Hiscores — has a public API
+[ ] _leaderboard_apex          Apex Legends ranked
+[ ] _discogs                   music releases, vinyl market prices
+[ ] _musicbrainz               open music metadata DB — has API
 
----
+===========================================================================
+ADULT CONTENT
+===========================================================================
 
-## 📺 Media & Content
+[ ] _xvideos
+[ ] _pornhub
+[ ] _xhamster
+[ ] _xnxx
+[ ] _redtube
+[ ] _youporn
+[ ] _spankbang
+[ ] _eporner
+[ ] _hqporner
+[ ] _tnaflix
+[ ] _motherless
+    note: all generally scrapeable — metadata only (title, tags, views, duration)
+    skip: daftsex, pornflip, pornzog, veporn — low quality / low traffic
 
-| # | Source | Notes |
-|---|--------|-------|
-| 1 | `[ ]` **YouTube data** | Channel stats, video metadata |
-| 2 | `[ ]` **YouTube transcripts** | `youtube-transcript-api` |
-| 3 | `[ ]` News aggregation | RSS feeds + scrapers |
-| 4 | `[ ]` Social media | Reddit confirmed; others TBD |
-| 5 | `[ ]` Wine & spirits data | Vivino, LCBO, etc. |
+===========================================================================
+MEDIA & CONTENT
+===========================================================================
 
----
+[ ] _youtube_data              channel stats, video metadata, view counts
+[ ] _youtube_transcripts       transcript extraction via youtube-transcript-api
+[ ] _news_aggregator           RSS feeds — BBC, Reuters, AP, CBC, Globe, etc.
+[ ] _reddit                    subreddit posts + comments (public JSON API)
+[ ] _wine_data                 Vivino ratings, LCBO wine listings
+[ ] _spirits_data              whisky/rum/gin databases
 
-## 🧭 Travel & Logistics
+===========================================================================
+TRAVEL & LOGISTICS
+===========================================================================
 
-| # | Source | Notes |
-|---|--------|-------|
-| 1 | `[ ]` **Flight data** | Fares, schedules |
-| 2 | `[ ]` Shipping rates | UPS, FedEx, Canada Post |
-| 3 | `[ ]` Weather | OpenMeteo (free, no CF) |
-| 4 | `[ ]` Holidays DB | Public holidays by country |
+[ ] _flight_data               fares + schedules — Google Flights / others
+[ ] _shipping_rates            UPS, FedEx, Canada Post rate calculators
+[ ] _weather                   OpenMeteo — free, no CF, excellent API
+[ ] _holidays_db               public holidays by country/province
 
----
+===========================================================================
+B2B & INTELLIGENCE
+===========================================================================
 
-## 🏢 B2B & Business Intelligence
+[ ] _b2b_lead_enrichment       email → company size, revenue, tech stack
+[ ] _global_sanctions          OFAC, UN, EU consolidated lists
+[ ] _dns_lookup                domain → registrar, A/MX/NS records, WHOIS
 
-| # | Source | Notes |
-|---|--------|-------|
-| 1 | `[ ]` **B2B Lead Enrichment** | `name@company.com` → size, revenue, tech stack |
-| 2 | `[ ]` **Global Sanctions** | OFAC, UN, EU lists |
-| 3 | `[ ]` DNS lookup | Domain → registrar, IP, MX, etc. |
+===========================================================================
+UTILITIES / TOOL APIs  (not crawls — compute endpoints)
+===========================================================================
 
----
+[ ] _ocr                       image → text
+[ ] _qr_code_gen               text/URL → QR PNG
+[ ] _doc_converter             HTML→MD, PDF→text, DOCX→MD, etc.
+[ ] _duckduckgo_search         SERP scrape — no API key needed
 
-## 🔧 Utilities & Tools (non-crawl APIs)
+===========================================================================
+LIFESTYLE & MISC
+===========================================================================
 
-| # | Tool | Notes |
-|---|------|-------|
-| 1 | `[ ]` **OCR** | Image → text arbitrage |
-| 2 | `[ ]` **QR code generator** | URL/text → QR PNG |
-| 3 | `[ ]` **Document conversion** | HTML → MD, PDF → text, etc. |
-| 4 | `[ ]` **DuckDuckGo search** | Scrape SERP results |
+[ ] _recipes                   AllRecipes, Food Network, etc.
+[ ] _weed_sites                dispensary menus — Leafly, Weedmaps
+[ ] _wine_spirits              (see Media section above — merge TBD)
 
----
+===========================================================================
+BLOCKED / IMPOSSIBLE — DO NOT ATTEMPT
+===========================================================================
 
-## 🍽️ Lifestyle & Misc
-
-| # | Source | Notes |
-|---|--------|-------|
-| 1 | `[ ]` Recipes | AllRecipes, etc. |
-
-xvideos.com
-pornhub.com
-xhamster.com
-xnxx.com
-redtube.com
-youporn.com
-tube8.com
-eporner.com
-spankbang.com
-hqporner.com
-daftsex.com
-thumbzilla.com
-porntrex.com
-veporn.net
-pornflip.com
-pornzog.com
-hclips.com
-dinotube.com
-youjizz.com
-tnaflix.com
-xfreehd.com
-porn300.com
-porn00.org
-porn7.net
-pornwhite.com
-tubepornclassic.com
-fuq.com
-gotporn.com
-analdin.com
-pornhd.com
-ixxx.com
-sexu.com
-motherless.com
-
-
-    newgrounds
-
-    alcohol arb
-    weed sites
+[!] LinkedIn                   ceases & desist territory, heavy bot detection
+[!] Zillow                     fully blocked
+[!] Facebook / Marketplace     login wall + CF
+[!] Instagram                  login wall
+[!] Twitter / X                API paywalled, scraping blocked
+[!] Google Maps / Places       ToS, bot detection
