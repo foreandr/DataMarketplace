@@ -164,19 +164,11 @@ def _make_filter_lines(extra_fields: list[dict]) -> list[str]:
         kw = "keyword"
         lines.append(_kv(n, _like(f"%{kw}%")))
 
-    # State/province as $in
-    state_f = next(
-        (f for f in loc_fields if f is not country_f
-         and any(k in f["name"] for k in ("state", "province", "region"))),
-        None,
-    )
     city_f = next(
         (f for f in loc_fields if f is not country_f and "city" in f["name"]),
         None,
     )
-    if state_f:
-        lines.append(_kv(state_f["name"], _in("Texas", "California")))
-    elif city_f:
+    if city_f:
         lines.append(_kv(city_f["name"], _in("New York", "Los Angeles")))
 
     if not lines:
@@ -276,7 +268,6 @@ def _write_jsonify_stub(module_name: str, class_name: str) -> None:
         "        # TODO: convert scraped rows into dicts.\n"
         "        # Stamp each record with location data if provided:\n"
         "        loc_city    = (location or {}).get('city', '')\n"
-        "        loc_state   = (location or {}).get('state', '')\n"
         "        loc_country = (location or {}).get('country', '')\n"
         "        return data if isinstance(data, list) else []\n\n"
         "    def run_analysis(\n"
@@ -338,8 +329,6 @@ def _build_example_body(extra_fields: list[dict]) -> dict:
     """Build a realistic example POST body from extra_fields."""
     int_fields = [f for f in extra_fields if f["type"] == "INTEGER"]
     loc_fields = [f for f in extra_fields if f.get("location")]
-    state_f = next((f for f in loc_fields if any(k in f["name"] for k in ("state", "province", "region"))), None)
-
     filter_ex: dict = {}
     for i, f in enumerate(int_fields[:3]):
         nl = f["name"].lower()
@@ -357,9 +346,6 @@ def _build_example_body(extra_fields: list[dict]) -> dict:
                 filter_ex[f["name"]] = {"$gte": 2010}
             else:
                 filter_ex[f["name"]] = {"$gte": 0}
-
-    if state_f:
-        filter_ex[state_f["name"]] = {"$in": ["TX", "CA"]}
 
     idx_f = next((f for f in extra_fields if f.get("indexed")), extra_fields[0] if extra_fields else None)
     order_field = idx_f["name"] if idx_f else "id"
@@ -892,8 +878,6 @@ def _insert_example_row(module_name: str, extra_fields: list[dict]) -> None:
             row[name] = "https://example.com/synthetic"
         elif "country" in nl:
             row[name] = "United States"
-        elif any(k in nl for k in ("state", "province", "region")):
-            row[name] = "EX"
         elif "city" in nl:
             row[name] = "Example City"
         elif f.get("location"):
@@ -1077,7 +1061,6 @@ application types (Direct Apply, LMIA requested, etc.)."""
         {"name": "is_direct_apply", "type": "INTEGER",                                   "description": "Boolean: 1 if Direct Apply is enabled, else 0"},
         {"name": "url",             "type": "TEXT",   "unique": True, "indexed": True,   "description": "URL to the job posting"},
         {"name": "city",            "type": "TEXT",   "indexed": True, "location": True, "description": "Parsed city"},
-        {"name": "state",           "type": "TEXT",   "indexed": True, "location": True, "description": "Province code (e.g., ON, QC, BC)"},
         {"name": "country",         "type": "TEXT",   "indexed": True, "location": True, "description": "Country (Canada)"},
     ]
     # ─────────────────────────────────────────────────────────────────────────────
