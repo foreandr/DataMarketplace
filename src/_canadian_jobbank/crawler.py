@@ -200,7 +200,7 @@ class CanadianJobbankCrawler:
 
         browser = instance.Browser(
             driver_choice='selenium',
-            headless=False,
+            headless=True,
             zoom_level=100,
         )
         browser.init_browser()
@@ -209,22 +209,27 @@ class CanadianJobbankCrawler:
         for i, keyword in enumerate(keywords, 1):
             try:
                 total_data = self._process_keyword(browser, keyword)
+
+                '''
                 for j in total_data:
                     print(len(j), j)
                     print("-")
-
+                '''
 
 
                 jsonifier  = CanadianJobbankJsonify(self.name)
                 clean_data = jsonifier.run_analysis(total_data, print_samples=True)
-
+                
+                '''
                 _banner([
                     f"  PARSED RECORDS FOR: {keyword.upper()}",
                     f"  Raw rows   : {len(total_data)}",
                     f"  Parsed OK  : {jsonifier.processed_count}",
                     f"  Skipped    : {jsonifier.skipped_count}",
                 ], color=CY)
+                '''
 
+                '''
                 for idx, rec in enumerate(clean_data, 1):
                     print(
                         f"{YL}[{idx}/{len(clean_data)}]{R} "
@@ -239,7 +244,7 @@ class CanadianJobbankCrawler:
                         f"  posted_date: {rec.get('posted_date')}\n"
                         f"  url        : {rec.get('url')}\n"
                     )
-
+                '''
                 #input(f"{BD}------- press ENTER to store {len(clean_data)} records and continue ------- {R}")
 
                 inserted = self._store_clean_data(clean_data)
@@ -299,7 +304,8 @@ class CanadianJobbankCrawler:
 
     def _store_clean_data(self, clean_data: Any) -> int:
         db_path = self._db_path()
-        conn    = sqlite3.connect(str(db_path))
+        conn    = sqlite3.connect(str(db_path), timeout=30)
+        conn.execute("PRAGMA journal_mode=WAL;")
         conn.execute(SCHEMA.create_table_sql())
         for stmt in SCHEMA.create_indexes_sql():
             conn.execute(stmt)
@@ -338,7 +344,8 @@ class CanadianJobbankCrawler:
         db_path = self._db_path()
         if not db_path.exists():
             return 0
-        conn = sqlite3.connect(str(db_path))
+        conn = sqlite3.connect(str(db_path), timeout=30)
+        conn.execute("PRAGMA journal_mode=WAL;")
         try:
             row = conn.execute("SELECT COUNT(*) FROM items;").fetchone()
             return int(row[0]) if row else 0
@@ -354,7 +361,8 @@ def dedup_database(db_path: Path | None = None) -> int:
     if not db_path.exists():
         print(f"  {RD}DB not found:{R} {db_path}")
         return 0
-    conn   = sqlite3.connect(str(db_path))
+    conn   = sqlite3.connect(str(db_path), timeout=30)
+    conn.execute("PRAGMA journal_mode=WAL;")
     before = conn.execute("SELECT COUNT(*) FROM items;").fetchone()[0]
     conn.execute("""
         DELETE FROM items

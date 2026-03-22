@@ -289,24 +289,25 @@ class CanadianJobbankJsonify:
 
         if self.success_data:
             num = min(8, len(self.success_data))
-            print(f"\n{BOLD}--- SUCCESS DATA ({num} RANDOM SAMPLES) ---{RESET}")
-            for rec in random.sample(self.success_data, num):
-                print(f"{GREEN}{json.dumps(rec, indent=2, ensure_ascii=True)}{RESET}")
+            #print(f"\n{BOLD}--- SUCCESS DATA ({num} RANDOM SAMPLES) ---{RESET}")
+            #for rec in random.sample(self.success_data, num):
+            #    print(f"{GREEN}{json.dumps(rec, indent=2, ensure_ascii=True)}{RESET}")
 
         if self.skipped_data:
             num_fail = min(8, len(self.skipped_data))
-            print(f"\n{BOLD}--- FAILED DATA ({num_fail} RANDOM SAMPLES) ---{RESET}")
-            for fail in random.sample(self.skipped_data, num_fail):
-                print(f"{RED}REASON: {fail['reason']}{RESET}")
-                print(f"{RED}DATA  : {str(fail.get('raw', ''))[:300]}{RESET}\n")
+            #print(f"\n{BOLD}--- FAILED DATA ({num_fail} RANDOM SAMPLES) ---{RESET}")
+            #for fail in random.sample(self.skipped_data, num_fail):
+            #    print(f"{RED}REASON: {fail['reason']}{RESET}")
+            #    print(f"{RED}DATA  : {str(fail.get('raw', ''))[:300]}{RESET}\n")
 
         total = self.processed_count + self.skipped_count
         rate  = (self.processed_count / total * 100) if total > 0 else 0
-        print(
-            f"\n{BOLD}{'='*40}\nANALYSIS COMPLETE\n"
-            f"Items Processed: {GREEN}{self.processed_count}{RESET}\n"
-            f"Items Skipped:   {RED}{self.skipped_count}{RESET}\n"
-            f"Success Rate:    {BOLD}{rate:.1f}%{RESET}\n"
-            f"{'='*40}{RESET}"
-        )
+        
+        #print(
+        #    f"\n{BOLD}{'='*40}\nANALYSIS COMPLETE\n"
+        #    f"Items Processed: {GREEN}{self.processed_count}{RESET}\n"
+        #    f"Items Skipped:   {RED}{self.skipped_count}{RESET}\n"
+        #    f"Success Rate:    {BOLD}{rate:.1f}%{RESET}\n"
+        #    f"{'='*40}{RESET}"
+        #)
         return results

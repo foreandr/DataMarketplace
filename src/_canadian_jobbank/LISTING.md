@@ -128,19 +128,9 @@ Data
     "*"
   ],
   "filter": {
-    "is_lmia": {
-      "$gte": 0,
-      "$lte": 100
-    },
     "is_direct_apply": {
       "$gte": 0
     },
-    "state": {
-      "$in": [
-        "TX",
-        "CA"
-      ]
-    }
   },
   "order_by": [
     {
