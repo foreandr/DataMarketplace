@@ -57,17 +57,11 @@ NOTE: Leave Rapid-free-plans-hard-limit as-is (RapidAPI system object, do not to
 
 --------------------------------------------------------------------------------
 PRO
---------------------------------------------------------------------------------
-Plan Modal:
-  - Plan Type:          Monthly Subscription
-  - Subscription Price: $9.99
-  - Recommended Plan:   CHECK THIS (shows "Recommended" badge on marketplace)
-
-PRO / Requests Object (click + to add):
-  - Quota Type:  Monthly
-  - Quota Limit: 3,000
-  - Limit Type:  Soft Limit
-  - Overage:     $0.01 per request
+Subscription Price: $9.99
+Quota Type:  Monthly
+Quota Limit: 3,000
+Limit Type:  Soft Limit
+Overage:     $0.01 per request
 
 --------------------------------------------------------------------------------
 ULTRA
@@ -75,7 +69,6 @@ ULTRA
 Plan Modal:
   - Plan Type:          Monthly Subscription
   - Subscription Price: $29.99
-  - Recommended Plan:   unchecked
 
 ULTRA / Requests Object (click + to add):
   - Quota Type:  Monthly
