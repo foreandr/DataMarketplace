@@ -304,7 +304,8 @@ class CanadianJobbankCrawler:
 
     def _store_clean_data(self, clean_data: Any) -> int:
         db_path = self._db_path()
-        conn    = sqlite3.connect(str(db_path))
+        conn    = sqlite3.connect(str(db_path), timeout=30)
+        conn.execute("PRAGMA journal_mode=WAL;")
         conn.execute(SCHEMA.create_table_sql())
         for stmt in SCHEMA.create_indexes_sql():
             conn.execute(stmt)
@@ -343,7 +344,8 @@ class CanadianJobbankCrawler:
         db_path = self._db_path()
         if not db_path.exists():
             return 0
-        conn = sqlite3.connect(str(db_path))
+        conn = sqlite3.connect(str(db_path), timeout=30)
+        conn.execute("PRAGMA journal_mode=WAL;")
         try:
             row = conn.execute("SELECT COUNT(*) FROM items;").fetchone()
             return int(row[0]) if row else 0
@@ -359,7 +361,8 @@ def dedup_database(db_path: Path | None = None) -> int:
     if not db_path.exists():
         print(f"  {RD}DB not found:{R} {db_path}")
         return 0
-    conn   = sqlite3.connect(str(db_path))
+    conn   = sqlite3.connect(str(db_path), timeout=30)
+    conn.execute("PRAGMA journal_mode=WAL;")
     before = conn.execute("SELECT COUNT(*) FROM items;").fetchone()[0]
     conn.execute("""
         DELETE FROM items

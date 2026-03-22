@@ -3,3 +3,61 @@ look for keywrods in the text foir thing like apt, apartment, condo, for housing
 NEED AUTOMATED TOOLING FOR INSTALLATION AND USE OF GIT LFS
 
 TOCRAWL:
+    ebay cateogires
+    kijiji categories
+    brinatrailer
+    edmunds
+    all the basic car sites
+    steam
+    imdb
+    international game db
+
+    music dbs?
+
+    canada computers
+    best buy? walmart, NOTHIGN with cloudflare
+    NEWS 
+    duckduckgo search?
+    social media where possible
+    forex
+    weather
+    flying related
+    more job postings
+    OCR arb
+    finance ticker data, SEC filings
+    youtube data
+    sports betting
+    QR code gen
+    GLOBAL SANCTIONS 
+    recipies?
+    shipping rates, UPS fedex etc
+    HOLIDAYS db
+    leaderbords of games
+        - fortnite, league runescape apex etc
+    dns LOOKUP
+    DOCUMENT conversion, (html to MD or whatever)
+    youtube transcript extraction
+    wine & sprits data? 
+    general ecommerce, walamrt, amazon, target, ETC, price comparison
+
+    '''
+    B2B Lead Enrichment: Taking an email like name@company.com and returning the company’s size, revenue, and tech stack.
+    '''
+    '''
+    Currency & Crypto Rates: Not just current rates, but historical tick data for backtesting trading bots.
+    '''
+
+    CHECK REDFIN RedfIN real estate, zillor is cooked, try other rent sites
+
+    Crunchbase Data: Funding rounds and executive info.
+
+    Glassdoor Reviews: Company sentiment and salary benchmarks.
+    # LLM Cost Trackers
+    Binance/Coinbase
+
+    PORN SITES are EASY
+
+    newgrounds
+
+    alcohol arb
+    weed sites
