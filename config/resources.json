@@ -15,6 +15,10 @@
     "_canadian_jobbank": {
       "db_path": "src/_canadian_jobbank/database.sqlite",
       "schema": "_canadian_jobbank"
+    },
+    "_indeed_jobs": {
+      "db_path": "src/_indeed_jobs/database.sqlite",
+      "schema": "_indeed_jobs"
     }
   }
 }
