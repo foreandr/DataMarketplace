@@ -172,7 +172,8 @@ class CraigslistJobsCrawler:
 
     def _store_clean_data(self, clean_data: Any) -> int:
         db_path = self._db_path()
-        conn    = sqlite3.connect(str(db_path))
+        conn    = sqlite3.connect(str(db_path), timeout=30)
+        conn.execute("PRAGMA journal_mode=WAL;")
         conn.execute(SCHEMA.create_table_sql())
         for stmt in SCHEMA.create_indexes_sql():
             conn.execute(stmt)

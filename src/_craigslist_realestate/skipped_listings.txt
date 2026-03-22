@@ -212018,3 +212018,212 @@
   url: https://allentown.craigslist.org/apa/d/hidden-valley-bed-fully-applianced/7920493526.html
   raw: ['7920493526', '1 Bed, Fully Applianced Kitchen, Somerset PA', '145 W Race St, Somerset, PA', '1 Bed, Fully Applianced Kitchen, Somerset PA', '3/11', '1br', '670ft', '2', 'pic', 'hide', 'https://allentown.craigslist.org/apa/d/hidden-valley-bed-fully-applianced/7920493526.html', 'https://www.craigslist.org/images/d/7920493526/empty.png']
 
+
+=== SKIPPED @ 2026-03-22 16:39:21 ===
+- Missing price
+  title: Discounted Properties in Western NY
+  url: https://buffalo.craigslist.org/reo/d/buffalo-discounted-properties-in/7917394750.html
+  raw: ['7917394750', 'Discounted Properties in Western NY', 'Discounted Properties in Western NY', '3/21', 'hide', 'https://buffalo.craigslist.org/reo/d/buffalo-discounted-properties-in/7917394750.html', 'https://www.craigslist.org/images/d/7917394750/empty.png']
+
+- Missing price
+  title: Room or studio needed asap
+  url: https://syracuse.craigslist.org/sha/d/room-or-studio-needed-asap/7918238481.html
+  raw: ['7918238481', 'Room or studio needed asap', 'Auburn', 'Room or studio needed asap', '2/28', 'hide', 'https://syracuse.craigslist.org/sha/d/room-or-studio-needed-asap/7918238481.html', 'https://www.craigslist.org/images/d/7918238481/empty.png']
+
+- Missing price
+  title: search a wider area
+  url: None
+  raw: ['Zero local results found. Here are some from nearby (sorted by distance)', 'search a wider area']
+
+- Missing price
+  title: Pier House Towns at Lakeview Village In Mississauga
+  url: https://toronto.craigslist.org/mss/reb/d/mississauga-pier-house-towns-at/7920602566.html
+  raw: ['7920602566', 'Pier House Towns at Lakeview Village In Mississauga', 'mississauga', 'Pier House Towns at Lakeview Village In Mississauga', '3/19', '3br', 'pic', 'hide', 'https://toronto.craigslist.org/mss/reb/d/mississauga-pier-house-towns-at/7920602566.html', 'https://www.craigslist.org/images/d/7920602566/empty.png']
+
+- Missing price
+  title: Looking for a parking spot
+  url: https://toronto.craigslist.org/tor/sha/d/looking-for-parking-spot/7914653532.html
+  raw: ['7914653532', 'Looking for a parking spot', 'North York', 'Looking for a parking spot', '5h ago', 'pic', 'hide', 'https://toronto.craigslist.org/tor/sha/d/looking-for-parking-spot/7914653532.html', 'https://www.craigslist.org/images/d/7914653532/empty.png']
+
+- Missing price
+  title: Apartment or room to rent
+  url: https://buffalo.craigslist.org/sha/d/apartment-or-room-to-rent/7922656611.html
+  raw: ['7922656611', 'Apartment or room to rent', 'Buffalo', 'Apartment or room to rent', '3/21', 'pic', 'hide', 'https://buffalo.craigslist.org/sha/d/apartment-or-room-to-rent/7922656611.html', 'https://www.craigslist.org/images/d/7922656611/empty.png']
+
+- Missing price
+  title: House For Rent
+  url: https://rochester.craigslist.org/sha/d/house-for-rent/7919371760.html
+  raw: ['7919371760', 'House For Rent', 'Richester Ny', 'House For Rent', '3/5', 'hide', 'https://rochester.craigslist.org/sha/d/house-for-rent/7919371760.html', 'https://www.craigslist.org/images/d/7919371760/empty.png']
+
+- Missing price
+  title: Rommate in Webster Needed
+  url: https://rochester.craigslist.org/sha/d/rommate-in-webster-needed/7918480502.html
+  raw: ['7918480502', 'Rommate in Webster Needed', 'Webster', 'Rommate in Webster Needed', '3/1', 'hide', 'https://rochester.craigslist.org/sha/d/rommate-in-webster-needed/7918480502.html', 'https://www.craigslist.org/images/d/7918480502/empty.png']
+
+- Missing price
+  title: Rehoming
+  url: https://buffalo.craigslist.org/sha/d/rehoming/7922215469.html
+  raw: ['7922215469', 'Rehoming', 'Buffalo', 'Rehoming', '3/19', 'pic', 'hide', 'https://buffalo.craigslist.org/sha/d/rehoming/7922215469.html', 'https://www.craigslist.org/images/d/7922215469/empty.png']
+
+- Missing price
+  title: Two Armchairs for Sale
+  url: https://toronto.craigslist.org/tor/sha/d/two-armchairs-for-sale/7915749408.html
+  raw: ['7915749408', 'Two Armchairs for Sale', 'North York', 'Two Armchairs for Sale', '5h ago', 'pic', 'hide', 'https://toronto.craigslist.org/tor/sha/d/two-armchairs-for-sale/7915749408.html', 'https://www.craigslist.org/images/d/7915749408/empty.png']
+
+- Missing price
+  title: Need a place for a couple and our dog
+  url: https://elmira.craigslist.org/sha/d/need-place-for-couple-and-our-dog/7921941877.html
+  raw: ['7921941877', 'Need a place for a couple and our dog', 'Horseheads', 'Need a place for a couple and our dog', '3/18', 'hide', 'https://elmira.craigslist.org/sha/d/need-place-for-couple-and-our-dog/7921941877.html', 'https://www.craigslist.org/images/d/7921941877/empty.png']
+
+- Missing price
+  title: SWM looking for female who wants to share House
+  url: https://buffalo.craigslist.org/roo/d/north-tonawanda-swm-looking-for-female/7920672902.html
+  raw: ['7920672902', 'SWM looking for female who wants to share House', 'N falls/ n tonawanda', 'SWM looking for female who wants to share House', '3/17', '2br', 'hide', 'https://buffalo.craigslist.org/roo/d/north-tonawanda-swm-looking-for-female/7920672902.html', 'https://www.craigslist.org/images/d/7920672902/empty.png']
+
+- Title too short
+  title: Hey
+  url: https://buffalo.craigslist.org/roo/d/buffalo-hey/7913260898.html
+  raw: ['7913260898', 'Hey', 'Hey', '2/5', '2br', '$500', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-hey/7913260898.html', 'https://www.craigslist.org/images/d/7913260898/empty.png']
+
+- Missing price
+  title: Young male looking for short/long term
+  url: https://toronto.craigslist.org/yrk/sha/d/young-male-looking-for-short-long-term/7919893536.html
+  raw: ['7919893536', 'Young male looking for short/long term', 'Scarborough', 'Young male looking for short/long term', '1h ago', 'hide', 'https://toronto.craigslist.org/yrk/sha/d/young-male-looking-for-short-long-term/7919893536.html', 'https://www.craigslist.org/images/d/7919893536/empty.png']
+
+- Missing price
+  title: Room for rent needed
+  url: https://toronto.craigslist.org/tor/sha/d/room-for-rent-needed/7914190359.html
+  raw: ['7914190359', 'Room for rent needed', 'Toronto', 'Room for rent needed', '2/10', 'hide', 'https://toronto.craigslist.org/tor/sha/d/room-for-rent-needed/7914190359.html', 'https://www.craigslist.org/images/d/7914190359/empty.png']
+
+- Unrealistic sqft (75)
+  title: Kenmore room in 2 bedroom apartment
+  url: https://buffalo.craigslist.org/roo/d/buffalo-kenmore-room-in-bedroom/7913492115.html
+  raw: ['7913492115', 'Kenmore room in 2 bedroom apartment', 'Kenmore', 'Kenmore room in 2 bedroom apartment', '2/6', '1br', '75ft', '2', '$400', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-kenmore-room-in-bedroom/7913492115.html', 'https://www.craigslist.org/images/d/7913492115/empty.png']
+
+- Missing price
+  title: Will clean and cook for a room
+  url: https://londonon.craigslist.org/sha/d/will-clean-and-cook-for-room/7922116794.html
+  raw: ['7922116794', 'Will clean and cook for a room', 'London ontario', 'Will clean and cook for a room', '3/18', 'hide', 'https://londonon.craigslist.org/sha/d/will-clean-and-cook-for-room/7922116794.html', 'https://www.craigslist.org/images/d/7922116794/empty.png']
+
+- Price too low ($1)
+  title: Land Wanted
+  url: https://buffalo.craigslist.org/reo/d/buffalo-land-wanted/7918356329.html
+  raw: ['7918356329', 'Land Wanted', 'Rural', 'Land Wanted', '2h ago', '$1', 'hide', 'https://buffalo.craigslist.org/reo/d/buffalo-land-wanted/7918356329.html', 'https://www.craigslist.org/images/d/7918356329/empty.png']
+
+- Wanted ad (not a listing)
+  title: Young Male Video Gamer Wanted
+  url: https://buffalo.craigslist.org/roo/d/buffalo-young-male-video-gamer-wanted/7916771341.html
+  raw: ['7916771341', 'Young Male Video Gamer Wanted', 'BabCock & Seneca', 'Young Male Video Gamer Wanted', '3/20', '4br', '$450', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-young-male-video-gamer-wanted/7916771341.html', 'https://www.craigslist.org/images/d/7916771341/empty.png']
+
+- Missing price
+  title: Investor Looking For Property Locators / Bird Dogs
+  url: https://buffalo.craigslist.org/reo/d/buffalo-investor-looking-for-property/7919649443.html
+  raw: ['7919649443', 'Investor Looking For Property Locators / Bird Dogs', 'Buffalo', 'Investor Looking For Property Locators / Bird Dogs', '3/7', 'hide', 'https://buffalo.craigslist.org/reo/d/buffalo-investor-looking-for-property/7919649443.html', 'https://www.craigslist.org/images/d/7919649443/empty.png']
+
+- Missing price
+  title: Long or short term
+  url: https://hamilton.craigslist.org/roo/d/burlington-long-or-short-term/7916054253.html
+  raw: ['7916054253', 'Long or short term', 'Burl', 'Long or short term', '2/18', 'hide', 'https://hamilton.craigslist.org/roo/d/burlington-long-or-short-term/7916054253.html', 'https://www.craigslist.org/images/d/7916054253/empty.png']
+
+- Price too low ($1)
+  title: Wanted- Lakeside Crescent Home in Lancaster
+  url: https://buffalo.craigslist.org/reo/d/lancaster-wanted-lakeside-crescent-home/7915272694.html
+  raw: ['7915272694', 'Wanted- Lakeside Crescent Home in Lancaster', 'Lancaster', 'Wanted- Lakeside Crescent Home in Lancaster', '3/19', '$1', 'hide', 'https://buffalo.craigslist.org/reo/d/lancaster-wanted-lakeside-crescent-home/7915272694.html', 'https://www.craigslist.org/images/d/7915272694/empty.png']
+
+- Price too low ($45)
+  title: MARRIOTT BONVOY
+  url: https://buffalo.craigslist.org/roo/d/buffalo-marriott-bonvoy/7916253750.html
+  raw: ['7916253750', 'MARRIOTT BONVOY', 'Any', 'MARRIOTT BONVOY', '2/19', '1br', '1200ft', '2', '$45', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-marriott-bonvoy/7916253750.html', 'https://www.craigslist.org/images/d/7916253750/empty.png']
+
+- Price too low ($45)
+  title: MARRIOTT BONVOY
+  url: https://buffalo.craigslist.org/roo/d/buffalo-marriott-bonvoy/7916173865.html
+  raw: ['7916173865', 'MARRIOTT BONVOY', 'Any', 'MARRIOTT BONVOY', '2/19', '1br', '1200ft', '2', '$45', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-marriott-bonvoy/7916173865.html', 'https://www.craigslist.org/images/d/7916173865/empty.png']
+
+- Unrealistic sqft (23958)
+  title: .55 Acre Wooded Lot for Sale
+  url: https://buffalo.craigslist.org/reo/d/buffalo-55-acre-wooded-lot-for-sale/7920639346.html
+  raw: ['7920639346', '.55 Acre Wooded Lot for Sale', 'Amherst', '.55 Acre Wooded Lot for Sale', '3/20', '23958ft', '2', '$55,000', 'pic', 'hide', 'https://buffalo.craigslist.org/reo/d/buffalo-55-acre-wooded-lot-for-sale/7920639346.html', 'https://www.craigslist.org/images/d/7920639346/empty.png']
+
+- Missing price
+  title: Share house with female
+  url: https://buffalo.craigslist.org/roo/d/niagara-falls-share-house-with-female/7920672947.html
+  raw: ['7920672947', 'Share house with female', 'N falls/ n tonawanda', 'Share house with female', '3/17', '2br', 'hide', 'https://buffalo.craigslist.org/roo/d/niagara-falls-share-house-with-female/7920672947.html', 'https://www.craigslist.org/images/d/7920672947/empty.png']
+
+- Unrealistic sqft (50)
+  title: Exceptional 50ft by 400 ft deep building lot
+  url: https://toronto.craigslist.org/mss/reb/d/mississauga-exceptional-50ft-by-400-ft/7921146982.html
+  raw: ['7921146982', 'Exceptional 50ft by 400 ft deep building lot', '1168 Mona Road', 'Exceptional 50ft by 400 ft deep building lot', '3/21', '$1,797,777', 'hide', 'https://toronto.craigslist.org/mss/reb/d/mississauga-exceptional-50ft-by-400-ft/7921146982.html', 'https://www.craigslist.org/images/d/7921146982/empty.png']
+
+- Missing price
+  title: Iso room to rent
+  url: https://rochester.craigslist.org/sha/d/iso-room-to-rent/7913904649.html
+  raw: ['7913904649', 'Iso room to rent', 'Albion', 'Iso room to rent', '3/19', 'pic', 'hide', 'https://rochester.craigslist.org/sha/d/iso-room-to-rent/7913904649.html', 'https://www.craigslist.org/images/d/7913904649/empty.png']
+
+- Price too low ($250)
+  title: Own your home The Rebecca Residences just as little as $250 per week
+  url: https://toronto.craigslist.org/oak/reb/d/waterdown-own-your-home-the-rebecca/7920734116.html
+  raw: ['7920734116', 'Own your home The Rebecca Residences just as little as $250 per week', 'oakville-milton', 'Own your home The Rebecca Residences just as little as $250 per week', '3/19', '1br', 'pic', 'hide', 'https://toronto.craigslist.org/oak/reb/d/waterdown-own-your-home-the-rebecca/7920734116.html', 'https://www.craigslist.org/images/d/7920734116/empty.png']
+
+- Missing price
+  title: Room Available
+  url: https://buffalo.craigslist.org/roo/d/depew-room-available/7918344631.html
+  raw: ['7918344631', 'Room Available', 'Depew', 'Room Available', '3/15', '3br', '1800ft', '2', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/depew-room-available/7918344631.html', 'https://www.craigslist.org/images/d/7918344631/empty.png']
+
+- Price too low ($175)
+  title: BUS ROUTE - SOUTH BUFFALO - BORDERS BOTANICAL GARDENS - BUS ROUTE
+  url: https://buffalo.craigslist.org/roo/d/buffalo-bus-route-south-buffalo-borders/7916166502.html
+  raw: ['7916166502', 'BUS ROUTE - SOUTH BUFFALO - BORDERS BOTANICAL GARDENS - BUS ROUTE', 'BOTANICAL GARDENS, SOUTH PARK GOLF COURSE', 'BUS ROUTE - SOUTH BUFFALO - BORDERS BOTANICAL GARDENS - BUS ROUTE', '3/19', '3br', '1240ft', '2', '$175', 'pic', 'hide', 'https://buffalo.craigslist.org/roo/d/buffalo-bus-route-south-buffalo-borders/7916166502.html', 'https://www.craigslist.org/images/d/7916166502/empty.png']
+
+- Price too low ($250)
+  title: Investor Special: Turnkey Mixed-Use $250K (Under Contract)
+  url: https://buffalo.craigslist.org/reb/d/niagara-falls-investor-special-turnkey/7916370572.html
+  raw: ['7916370572', 'Investor Special: Turnkey Mixed-Use $250K (Under Contract)', '7224 Buffalo ave Niagara falls', 'Investor Special: Turnkey Mixed-Use $250K (Under Contract)', '2/20', '4br', '3510ft', '2', '$250,000', 'hide', 'https://buffalo.craigslist.org/reb/d/niagara-falls-investor-special-turnkey/7916370572.html', 'https://www.craigslist.org/images/d/7916370572/empty.png']
+
+- Missing price
+  title: LOOKING FOR ROOM TO RENT
+  url: https://youngstown.craigslist.org/sha/d/looking-for-room-to-rent/7915249959.html
+  raw: ['7915249959', 'LOOKING FOR ROOM TO RENT', 'Warren', 'LOOKING FOR ROOM TO RENT', '2/14', 'pic', 'hide', 'https://youngstown.craigslist.org/sha/d/looking-for-room-to-rent/7915249959.html', 'https://www.craigslist.org/images/d/7915249959/empty.png']
+
+
+=== SKIPPED @ 2026-03-22 16:40:43 ===
+- Missing price
+  title: search a wider area
+  url: None
+  raw: ['Zero local results found. Here are some from nearby (sorted by distance)', 'search a wider area']
+
+- Missing price
+  title: Room
+  url: https://liverpool.craigslist.org/roo/d/liverpool-room/7919697556.html
+  raw: ['7919697556', 'Room', 'Room', '3/7', '3br', '£80', 'hide', 'https://liverpool.craigslist.org/roo/d/liverpool-room/7919697556.html', 'https://www.craigslist.org/images/d/7919697556/empty.png']
+
+- Missing price
+  title: Fully Furnished Studio Apartment for Rent
+  url: https://leeds.craigslist.org/roo/d/wakefield-fully-furnished-studio/7916164393.html
+  raw: ['7916164393', 'Fully Furnished Studio Apartment for Rent', 'Wakefield', 'Fully Furnished Studio Apartment for Rent', '3/17', '1br', '£595', 'pic', 'hide', 'https://leeds.craigslist.org/roo/d/wakefield-fully-furnished-studio/7916164393.html', 'https://www.craigslist.org/images/d/7916164393/empty.png']
+
+- Missing price
+  title: Room to let in Oldham
+  url: https://manchester.craigslist.org/roo/d/royton-north-ward-room-to-let-in-oldham/7919414942.html
+  raw: ['7919414942', 'Room to let in Oldham', 'Room to let in Oldham', '3/20', '£80', 'hide', 'https://manchester.craigslist.org/roo/d/royton-north-ward-room-to-let-in-oldham/7919414942.html', 'https://www.craigslist.org/images/d/7919414942/empty.png']
+
+- Missing price
+  title: Loft double room
+  url: https://leeds.craigslist.org/roo/d/ripon-loft-double-room/7922279428.html
+  raw: ['7922279428', 'Loft double room', 'Ripon north Yorkshire', 'Loft double room', '3/19', '4br', '25ft', '2', '£110', 'pic', 'hide', 'https://leeds.craigslist.org/roo/d/ripon-loft-double-room/7922279428.html', 'https://www.craigslist.org/images/d/7922279428/empty.png']
+
+- Missing price
+  title: EN SUITE ROOMS BALBY DONACASTER
+  url: https://leeds.craigslist.org/roo/d/doncaster-en-suite-rooms-balby/7916160399.html
+  raw: ['7916160399', 'EN SUITE ROOMS BALBY DONACASTER', 'Doncaster', 'EN SUITE ROOMS BALBY DONACASTER', '3/17', '3br', '£495', 'pic', 'hide', 'https://leeds.craigslist.org/roo/d/doncaster-en-suite-rooms-balby/7916160399.html', 'https://www.craigslist.org/images/d/7916160399/empty.png']
+
+- Missing price
+  title: Double room - M40
+  url: https://manchester.craigslist.org/roo/d/manchester-double-room-m40/7919860718.html
+  raw: ['7919860718', 'Double room - M40', 'Double room - M40', '3/21', '£500', 'pic', 'hide', 'https://manchester.craigslist.org/roo/d/manchester-double-room-m40/7919860718.html', 'https://www.craigslist.org/images/d/7919860718/empty.png']
+
+- Missing price
+  title: Large Double Room Available For Free
+  url: https://eastmids.craigslist.org/roo/d/scunthorpe-large-double-room-available/7921375408.html
+  raw: ['7921375408', 'Large Double Room Available For Free', 'Scunthorpe', 'Large Double Room Available For Free', '3/15', '3br', 'hide', 'https://eastmids.craigslist.org/roo/d/scunthorpe-large-double-room-available/7921375408.html', 'https://www.craigslist.org/images/d/7921375408/empty.png']
+
