@@ -1,6 +1,7 @@
 """Global crawler runner – launches all crawlers in parallel, keeps them running forever."""
 from __future__ import annotations
 
+import collections
 import ctypes
 import os
 import subprocess
@@ -12,14 +13,21 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 SRC_DIR = ROOT_DIR / "src"
 
 # ---- Runtime settings ----
-RAM_CAP_PERCENT    = 97.0
+RAM_CAP_PERCENT    = 90.0
 STAGGER_SECONDS    = 15 * 60  # wait between launching successive crawlers
 CHECK_INTERVAL_SEC = 5
 
-# ---- Crash-backoff settings ----
+# ---- Per-module crash-backoff settings ----
 FAST_CRASH_SEC = 60    # a process that dies within this many seconds is a "fast crash"
 BACKOFF_AFTER  = 3     # consecutive fast crashes before backing off
 BACKOFF_SEC    = 300   # 5-minute cooling-off period after repeated fast crashes
+
+# ---- System-wide cooldown settings ----
+COOLDOWN_TRIGGER_CRASHES = 4     # if this many crashes happen across all modules …
+COOLDOWN_WINDOW_SEC      = 120   # … within this many seconds → trigger cooldown
+CRITICAL_RAM_PERCENT     = 95.0  # also trigger cooldown if RAM hits this level
+COOLDOWN_DURATION_SEC    = 300   # minimum cooldown length (5 min)
+COOLDOWN_RAM_RESUME      = 75.0  # don't resume until RAM drops back below this
 
 
 class MEMORYSTATUSEX(ctypes.Structure):
@@ -116,6 +124,45 @@ def _wait_for_ram(context: str) -> None:
         time.sleep(CHECK_INTERVAL_SEC)
 
 
+def _kill_all(procs: dict[str, subprocess.Popen]) -> None:
+    """Terminate every running crawler process."""
+    for module, proc in list(procs.items()):
+        if proc.poll() is None:
+            print(f"[COOLDOWN] killing {module} (pid={proc.pid})")
+            proc.terminate()
+            try:
+                proc.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+    procs.clear()
+
+
+def _do_cooldown(procs: dict[str, subprocess.Popen]) -> None:
+    """Kill everything, wait for RAM to recover, then return so crawlers restart."""
+    print("=" * 60)
+    print(f"[COOLDOWN] System stress detected — killing all crawlers.")
+    print(f"[COOLDOWN] Will resume when RAM < {COOLDOWN_RAM_RESUME:.0f}% "
+          f"(min wait: {COOLDOWN_DURATION_SEC}s)")
+    print("=" * 60)
+    _kill_all(procs)
+
+    deadline = time.time() + COOLDOWN_DURATION_SEC
+    # Wait at least the minimum duration
+    while time.time() < deadline:
+        ram = _ram_usage_percent()
+        print(f"[COOLDOWN] RAM={ram:.1f}% | cooling off… "
+              f"({int(deadline - time.time())}s remaining)")
+        time.sleep(15)
+
+    # Then keep waiting until RAM actually drops
+    while _ram_usage_percent() >= COOLDOWN_RAM_RESUME:
+        ram = _ram_usage_percent()
+        print(f"[COOLDOWN] RAM={ram:.1f}% still above {COOLDOWN_RAM_RESUME:.0f}% — waiting…")
+        time.sleep(15)
+
+    print(f"[COOLDOWN] RAM recovered ({_ram_usage_percent():.1f}%) — restarting crawlers.")
+
+
 def main() -> None:
     _ensure_lfs_active()
     crawlers = _discover_crawlers()
@@ -123,12 +170,42 @@ def main() -> None:
     start_times:  dict[str, float]            = {}
     fast_crashes: dict[str, int]              = {}
 
+    # Sliding window of recent crash timestamps (across all modules)
+    recent_crash_times: collections.deque[float] = collections.deque()
+
+    def _check_system_stress() -> bool:
+        """Return True if a system-wide cooldown should be triggered."""
+        now = time.time()
+        # Drop timestamps outside the window
+        while recent_crash_times and now - recent_crash_times[0] > COOLDOWN_WINDOW_SEC:
+            recent_crash_times.popleft()
+        if len(recent_crash_times) >= COOLDOWN_TRIGGER_CRASHES:
+            print(f"[COOLDOWN] {len(recent_crash_times)} crashes in {COOLDOWN_WINDOW_SEC}s window")
+            return True
+        if _ram_usage_percent() >= CRITICAL_RAM_PERCENT:
+            print(f"[COOLDOWN] RAM={_ram_usage_percent():.1f}% >= critical {CRITICAL_RAM_PERCENT:.0f}%")
+            return True
+        return False
+
     def spawn_tracked(module: str) -> subprocess.Popen:
         start_times[module] = time.time()
         fast_crashes.setdefault(module, 0)
         return _spawn(module)
 
     def restart(module: str) -> None:
+        recent_crash_times.append(time.time())
+
+        if _check_system_stress():
+            _do_cooldown(procs)
+            # After cooldown, restart everything staggered
+            recent_crash_times.clear()
+            for m in crawlers:
+                fast_crashes[m] = 0
+                _wait_for_ram(f"post-cooldown start {m}")
+                procs[m] = spawn_tracked(m)
+                time.sleep(30)  # brief stagger between restarts
+            return
+
         elapsed = time.time() - start_times.get(module, 0)
         if elapsed < FAST_CRASH_SEC:
             fast_crashes[module] = fast_crashes.get(module, 0) + 1
