@@ -73,9 +73,37 @@ class CraigslistJobsCrawler:
         if time.time() - self._last_push >= PUSH_INTERVAL:
             self._push_to_github()
 
+    # ── DB integrity ───────────────────────────────────────────────────────────
+
+    def _ensure_db_valid(self) -> None:
+        """Detect and recover a corrupt DB file (e.g. an LFS pointer on disk)."""
+        db_path = self._db_path()
+        if not db_path.exists():
+            return
+        with open(db_path, "rb") as fh:
+            header = fh.read(16)
+        if header == b"SQLite format 3\x00":
+            return  # file is fine
+        print(f"[WARN] {self.name}: database.sqlite is not a valid SQLite file "
+              f"(header={header[:30]})")
+        if header.startswith(b"version https://git-lfs"):
+            print(f"[WARN] {self.name}: LFS pointer found on disk – running git lfs pull...")
+            repo_root = Path(__file__).resolve().parents[2]
+            subprocess.run(
+                ["git", "lfs", "pull", "--include",
+                 f"src/{self.name}/database.sqlite"],
+                cwd=repo_root,
+            )
+            with open(db_path, "rb") as fh:
+                header = fh.read(16)
+        if header != b"SQLite format 3\x00":
+            print(f"[WARN] {self.name}: recovery failed – deleting corrupt DB to start fresh")
+            db_path.unlink()
+
     # ── Main run ───────────────────────────────────────────────────────────────
 
     def run(self) -> None:
+        self._ensure_db_valid()
         browser = instance.Browser(
             driver_choice='selenium',
             headless=True,
