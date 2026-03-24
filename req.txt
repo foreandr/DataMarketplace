@@ -10,6 +10,14 @@ gunicorn
 pytest
 python-telegram-bot
 
+flask
+python-dotenv
+requests
+Pillow
+
+
 
 # Custom (your GitHub: foreandr)1
 hyperSel
+
+
