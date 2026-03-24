@@ -110,7 +110,7 @@ def _ensure_lfs_hooked() -> None:
     if _lfs_hooked():
         _skip("already registered")
         return
-    _run(["git", "lfs", "install"])
+    _run(["git", "lfs", "install", "--local"])
     _ok("hooks registered")
 
 
