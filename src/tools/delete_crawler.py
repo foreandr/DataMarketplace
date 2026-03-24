@@ -105,7 +105,7 @@ if __name__ == "__main__":
     # =========================
     # CONFIG (edit these)
     # =========================
-    SOURCE_NAME = "_craigslist_cars2"
+    SOURCE_NAME = "_indeed_jobs"
     # =========================
 
     main(SOURCE_NAME)
