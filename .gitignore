@@ -36,4 +36,4 @@ src/crawlers/logs
 logs/test/*.json
 
 # Claude Code internals
-.claude/
+.claude/src/reverse_engineer/.env
