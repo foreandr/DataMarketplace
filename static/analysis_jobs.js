@@ -220,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('srcWorkbc')?.checked) sources.push('workbc');
     if (document.getElementById('srcSaskjobs')?.checked) sources.push('saskjobs');
     if (document.getElementById('srcEluta')?.checked) sources.push('eluta');
+    if (document.getElementById('srcCharityVillage')?.checked) sources.push('charityvillage');
 
     const where = buildWhere();
     if (workMode) {

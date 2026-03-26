@@ -31,6 +31,14 @@
     "_eluta_jobs": {
       "db_path": "src/_eluta_jobs/database.sqlite",
       "schema": "_eluta_jobs"
+    },
+    "_charityvillage_jobs": {
+      "db_path": "src/_charityvillage_jobs/database.sqlite",
+      "schema": "_charityvillage_jobs"
+    },
+    "_goodwork_jobs": {
+      "db_path": "src/_goodwork_jobs/database.sqlite",
+      "schema": "_goodwork_jobs"
     }
   }
 }

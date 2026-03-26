@@ -1249,20 +1249,19 @@ def delete_crawler(source_name: str) -> None:
 
 if __name__ == "__main__":
     # ── CONFIG ───────────────────────────────────────────────────────────────────
-    SOURCE_NAME = "eluta_jobs"
-    SHORT_DESC  = "Job postings scraped from Eluta."
+    SOURCE_NAME = "goodwork_jobs"
+    SHORT_DESC  = "Job postings scraped from GoodWork."
     LONG_DESC   = (
-        "Eluta listings scraped from the Eluta results page. Records include "
-        "job title, company, location, remote/work mode, posting age, and summary text."
+        "GoodWork listings scraped from the results page. Records include "
+        "job title, organization, location, work mode, and job type."
     )
     EXTRA_FIELDS: list[dict] = [
-        {"name": "title",           "type": "TEXT",                                       "description": "Job title (Eluta listing)"},
-        {"name": "company",         "type": "TEXT",                                       "description": "Hiring company name"},
-        {"name": "location_raw",    "type": "TEXT",                                       "description": "Location as shown on Eluta (e.g., London ON - Work Remotely)"},
-        {"name": "work_mode",       "type": "TEXT",    "indexed": True,                   "description": "Work mode (Remote/Hybrid/On-site) if shown"},
-        {"name": "summary",         "type": "TEXT",                                       "description": "Listing summary snippet"},
-        {"name": "posted_relative", "type": "TEXT",    "indexed": True,                   "description": "Relative posted time (e.g., 9 minutes ago)"},
-        {"name": "url",             "type": "TEXT",    "unique": True, "indexed": True,   "description": "URL to the Eluta job posting"},
+        {"name": "title",         "type": "TEXT",                                       "description": "Job title (GoodWork listing)"},
+        {"name": "company",       "type": "TEXT",                                       "description": "Organization name"},
+        {"name": "location_raw",  "type": "TEXT",                                       "description": "Location as shown (e.g., Toronto ON, remote, anywhere in Canada)"},
+        {"name": "work_mode",     "type": "TEXT",    "indexed": True,                   "description": "Work mode (Remote, Hybrid, On-site) if present"},
+        {"name": "job_type",      "type": "TEXT",    "indexed": True,                   "description": "Job type (e.g., full-time, contract)"},
+        {"name": "url",           "type": "TEXT",    "unique": True, "indexed": True,   "description": "URL to the GoodWork job posting"},
         {"name": "city",          "type": "TEXT",    "indexed": True, "location": True, "description": "Parsed city"},
         {"name": "province",      "type": "TEXT",    "indexed": True, "location": True, "description": "Province or state code (e.g., ON, BC)"},
         {"name": "country",       "type": "TEXT",    "indexed": True, "location": True, "description": "Country"},

@@ -86,5 +86,21 @@
       <span class="badge badge-green">● Live</span>
     </div>
   </a>
+  <a class="card" href="{{ url_for('quick_query', crawler_name='_charityvillage_jobs') }}">
+    <h3>Charityvillage Jobs</h3>
+    <p>Job postings scraped from CharityVillage.</p>
+    <div class="card-footer">
+      <span class="card-link">View docs →</span>
+      <span class="badge badge-green">● Live</span>
+    </div>
+  </a>
+  <a class="card" href="{{ url_for('quick_query', crawler_name='_goodwork_jobs') }}">
+    <h3>Goodwork Jobs</h3>
+    <p>Job postings scraped from GoodWork.</p>
+    <div class="card-footer">
+      <span class="card-link">View docs →</span>
+      <span class="badge badge-green">● Live</span>
+    </div>
+  </a>
 </div>
 {% endblock %}
