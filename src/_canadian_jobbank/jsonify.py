@@ -255,6 +255,17 @@ class CanadianJobbankJsonify:
 
             location_raw, city, prov = self._extract_location(item)
             is_lmia, is_direct_apply = self._extract_flags(item)
+            work_mode = self._extract_work_mode(item)
+
+            if not is_direct_apply:
+                self.skipped_count += 1
+                self.skipped_data.append({"reason": "Not direct apply", "raw": item})
+                continue
+
+            if work_mode != "remote":
+                self.skipped_count += 1
+                self.skipped_data.append({"reason": "Not remote", "raw": item})
+                continue
 
             record = {
                 "id":              job_id,
@@ -265,7 +276,7 @@ class CanadianJobbankJsonify:
                 "pay":             pay,
                 "is_lmia":         is_lmia,
                 "is_direct_apply": is_direct_apply,
-                "work_mode":       self._extract_work_mode(item),
+                "work_mode":       work_mode,
                 "source":          self._extract_source(item),
                 "url":             url,
                 "city":            city,

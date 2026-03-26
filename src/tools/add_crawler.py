@@ -1249,29 +1249,22 @@ def delete_crawler(source_name: str) -> None:
 
 if __name__ == "__main__":
     # ── CONFIG ───────────────────────────────────────────────────────────────────
-    SOURCE_NAME = "indeed_jobs"
-    SHORT_DESC  = "Job postings scraped from Indeed.com."
+    SOURCE_NAME = "eluta_jobs"
+    SHORT_DESC  = "Job postings scraped from Eluta."
     LONG_DESC   = (
-        "Job listings scraped from Indeed. Records include job title, company name, "
-        "location, raw pay string, normalized min/max hourly rate, employment type, "
-        "schedule tags, benefits, and whether Easy Apply is available."
+        "Eluta listings scraped from the Eluta results page. Records include "
+        "job title, company, location, remote/work mode, posting age, and summary text."
     )
     EXTRA_FIELDS: list[dict] = [
-        {"name": "title",         "type": "TEXT",                                       "description": "Job title (e.g., Software Developer)"},
-        {"name": "company",       "type": "TEXT",                                       "description": "Hiring company name"},
-        {"name": "location_raw",  "type": "TEXT",                                       "description": "Location as shown on listing (e.g., North York, ON M2N 6P4)"},
-        {"name": "pay_raw",       "type": "TEXT",                                       "description": "Pay string as shown (e.g., $24-$26 an hour)"},
-        {"name": "pay_min",       "type": "REAL",    "indexed": True,                   "description": "Minimum pay normalized to hourly rate"},
-        {"name": "pay_max",       "type": "REAL",    "indexed": True,                   "description": "Maximum pay normalized to hourly rate"},
-        {"name": "pay_period",    "type": "TEXT",                                       "description": "Pay period: hour, day, week, month, year"},
-        {"name": "job_type",      "type": "TEXT",    "indexed": True,                   "description": "Employment type: Full-time, Part-time, Contract, etc."},
-        {"name": "schedule",      "type": "TEXT",                                       "description": "Schedule tags (e.g., Weekends as needed, Flexible schedule)"},
-        {"name": "benefits",      "type": "TEXT",                                       "description": "Comma-separated benefits (e.g., Vision care, Dental care)"},
-        {"name": "is_easy_apply", "type": "INTEGER", "indexed": True,                   "description": "1 if Easy Apply is available, else 0"},
-        {"name": "posted_date",   "type": "TEXT",    "indexed": True,                   "description": "Date posted or relative string (e.g., 2 days ago)"},
-        {"name": "url",           "type": "TEXT",    "unique": True, "indexed": True,   "description": "URL to the job posting"},
+        {"name": "title",           "type": "TEXT",                                       "description": "Job title (Eluta listing)"},
+        {"name": "company",         "type": "TEXT",                                       "description": "Hiring company name"},
+        {"name": "location_raw",    "type": "TEXT",                                       "description": "Location as shown on Eluta (e.g., London ON - Work Remotely)"},
+        {"name": "work_mode",       "type": "TEXT",    "indexed": True,                   "description": "Work mode (Remote/Hybrid/On-site) if shown"},
+        {"name": "summary",         "type": "TEXT",                                       "description": "Listing summary snippet"},
+        {"name": "posted_relative", "type": "TEXT",    "indexed": True,                   "description": "Relative posted time (e.g., 9 minutes ago)"},
+        {"name": "url",             "type": "TEXT",    "unique": True, "indexed": True,   "description": "URL to the Eluta job posting"},
         {"name": "city",          "type": "TEXT",    "indexed": True, "location": True, "description": "Parsed city"},
-        {"name": "province",      "type": "TEXT",    "indexed": True, "location": True, "description": "Province or state code (e.g., ON, BC, NY)"},
+        {"name": "province",      "type": "TEXT",    "indexed": True, "location": True, "description": "Province or state code (e.g., ON, BC)"},
         {"name": "country",       "type": "TEXT",    "indexed": True, "location": True, "description": "Country"},
     ]
     # ─────────────────────────────────────────────────────────────────────────────
