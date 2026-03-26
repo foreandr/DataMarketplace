@@ -433,7 +433,7 @@ def quick_query(crawler_name: str):
 @app.get("/analysis/jobs")
 def analysis_jobs():
     field_sets: list[set[str]] = []
-    for mod in ("_craigslist_jobs", "_canadian_jobbank", "_workbc_jobs", "_saskjobs", "_eluta_jobs"):
+    for mod in ("_craigslist_jobs", "_canadian_jobbank", "_workbc_jobs", "_saskjobs", "_eluta_jobs", "_charityvillage_jobs"):
         try:
             field_sets.append(set(_load_schema(mod).field_names()))
         except ModuleNotFoundError:
@@ -743,6 +743,45 @@ def analysis_jobs_search():
                     r["collection"] = "_eluta_jobs"
                     results.append(r)
                 source_counts["eluta"] = len(rows)
+
+        if "charityvillage" in sources or "charityvillage_jobs" in sources:
+            try:
+                schema = _load_schema("_charityvillage_jobs")
+            except ModuleNotFoundError:
+                source_counts["charityvillage"] = 0
+                schema = None
+            if schema is None:
+                pass
+            elif _has_missing_fields(schema, where):
+                source_counts["charityvillage"] = 0
+            else:
+                where_sql, params = _build_jobs_where(
+                    keyword=keyword,
+                    country=country,
+                    state=state,
+                    cities=cities,
+                    text_fields=["title", "company", "location_raw"],
+                    state_field="province",
+                )
+                extra_where_sql, extra_params = _build_where(schema, where)
+                where_sql, params = _merge_where(where_sql, params, extra_where_sql, extra_params)
+                sql = (
+                    "SELECT id, title, company, location_raw AS location, posted_date, NULL AS pay, url, "
+                    "city, province AS state, country, work_mode, NULL AS is_lmia, NULL AS is_direct_apply "
+                    f"FROM items{where_sql} ORDER BY posted_date {order_dir.upper()} LIMIT ?;"
+                )
+                params = params + [per_source_limit]
+                rows = _query_rows(
+                    db_path=ROOT_DIR / "src" / "_charityvillage_jobs" / "database.sqlite",
+                    schema_name="_charityvillage_jobs",
+                    sql=sql,
+                    params=params,
+                )
+                for r in rows:
+                    r["source"] = "CharityVillage"
+                    r["collection"] = "_charityvillage_jobs"
+                    results.append(r)
+                source_counts["charityvillage"] = len(rows)
 
         results.sort(
             key=lambda r: _parse_dt(str(r.get("posted_date") or "")),
