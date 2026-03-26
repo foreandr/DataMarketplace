@@ -82,51 +82,34 @@ class CharityvillageJobsCrawler:
         browser.init_browser()
         browser.go_to_site("https://foreandr.github.io/")
 
-        # TODO: replace `items` with your actual iteration list
-        #       e.g. cities, keywords, category URLs, page numbers, etc.
-        items = []  # TODO
-        total = len(items)
+        base_url = "https://www.charityvillage.com/jobs?page=@PAGE_NO"
 
-        input("TODO: populate `items` above — press ENTER when ready (Ctrl+C to abort) ")
-        input("TODO: implement `_process_item()` and `jsonify.run_analysis()` — press ENTER when ready (Ctrl+C to abort) ")
+        while True:
+            for page_no in range(1, 176):
+                try:
+                    url = base_url.replace("@PAGE_NO", str(page_no))
+                    browser.go_to_site(url)
+                    time.sleep(3)
+                    soup = browser.return_current_soup()
+                    data = parser.main(soup)
+                    jsonifier = CharityvillageJobsJsonify(self.name)
+                    clean_data = jsonifier.run_analysis(data, print_samples=False)
+                    inserted = self._store_clean_data(clean_data)
+                    self._total_rows += inserted
+                except Exception as exc:
+                    print(f"{RD}[ERROR] page={page_no}: {exc}{R}")
 
-        for i, item in enumerate(items, 1):
-            try:
-                raw_data = self._process_item(browser, item)
-                for row in raw_data[:10]:
-                    print(row)
-                input("raw data printed above — press ENTER to jsonify (Ctrl+C to abort) ")
+                db_total = self._db_total_rows()
+                print(f"[page {page_no}/175] {self.name} | rows={db_total}")
+                self._maybe_push()
 
-                jsonifier  = CharityvillageJobsJsonify(self.name)
-                clean_data = jsonifier.run_analysis(raw_data, print_samples=False)
-                for rec in clean_data[:10]:
-                    print(rec)
-                input("clean data printed above — press ENTER to continue (Ctrl+C to abort) ")
-
-                continue  # TODO: remove this line when ready to store
-
-                inserted = self._store_clean_data(clean_data)
-                self._total_rows  += inserted
-                self._items_done  += 1
-            except Exception as e:
-                print(f"{RD}[ERROR] item={item}: {e}{R}")
-
-            db_total = self._db_total_rows()
-            print(f"[{i}/{total}] {self.name} | item={item} | rows={db_total}")
-            self._maybe_push()
+            time.sleep(2 * 60 * 60)
 
         browser.close_browser()
         self._push_to_github()
 
-    # ── Scraping — implement this ──────────────────────────────────────────────
-    def _process_item(self, browser: Any, item: Any) -> List[List[Any]]:
-        # TODO: navigate to the target URL and return raw scraped rows
-        # Example:
-        #   browser.go_to_site(f"https://example.com/search?q={item}")
-        #   soup = browser.return_current_soup()
-        #   return parser.main(soup)
-        raise NotImplementedError("_process_item not implemented")
 
+    # ── Scraping — implement this ──────────────────────────────────────────────
     # ── Storage ────────────────────────────────────────────────────────────────
     def _store_clean_data(self, clean_data: Any) -> int:
         db_path = self._db_path()
