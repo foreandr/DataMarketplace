@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="collection-hero">
+  <div class="collection-eyebrow">
+    <span class="eyebrow-dot"></span>
+    Analysis · Jobs
+  </div>
+  <div class="collection-title">Job Market Analysis</div>
+  <p class="collection-desc">
+    Combined view of Craigslist Jobs and the Canadian Job Bank. Filter by location,
+    search keywords, sort by posted date, and export results.
+  </p>
+  <div class="collection-meta">
+    <span class="badge badge-blue">Craigslist Jobs</span>
+    <span class="badge badge-green">Canadian Job Bank</span>
+    <span class="badge badge-muted">Search · Sort · Export</span>
+  </div>
+</div>
+
+<div class="analysis-panel">
+  <div class="analysis-filters">
+    <div class="filter-group">
+      <label for="kw">Keyword</label>
+      <input id="kw" type="text" placeholder="software, security, analyst..." />
+    </div>
+    <div class="filter-group">
+      <label for="country">Country</label>
+      <input id="country" type="text" value="" />
+    </div>
+    <div class="filter-group">
+      <label for="state">Province</label>
+      <input id="state" type="text" value="" />
+    </div>
+    <div class="filter-group">
+      <label for="cities">Cities (comma-separated)</label>
+      <input id="cities" type="text" value="Toronto, Oshawa, Durham, Peterborough" />
+    </div>
+    <div class="filter-group">
+      <label>Sources</label>
+      <div class="filter-inline">
+        <label class="check">
+          <input id="srcCraigslist" type="checkbox" checked />
+          Craigslist Jobs
+        </label>
+        <label class="check">
+          <input id="srcJobbank" type="checkbox" checked />
+          Canadian Job Bank
+        </label>
+        <label class="check">
+          <input id="srcWorkbc" type="checkbox" />
+          WorkBC
+        </label>
+        <label class="check">
+          <input id="srcSaskjobs" type="checkbox" />
+          SaskJobs
+        </label>
+        <label class="check">
+          <input id="srcEluta" type="checkbox" />
+          Eluta
+        </label>
+      </div>
+    </div>
+    <div class="filter-group">
+      <label for="workMode">Work Mode</label>
+      <select id="workMode">
+        <option value="" selected>Any</option>
+        <option value="Remote">Remote</option>
+        <option value="Hybrid">Hybrid</option>
+        <option value="On-site">On-site</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="orderDir">Sort by Posted Date</label>
+      <select id="orderDir">
+        <option value="desc" selected>Newest first</option>
+        <option value="asc">Oldest first</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="limit">Max rows</label>
+      <input id="limit" type="number" min="1" max="2000" value="200" />
+    </div>
+    <div class="filter-group filter-advanced">
+      <label>Advanced Filters</label>
+      <div id="advancedFilters" class="filter-rows"></div>
+      <button id="addFilter" class="secondary small">Add Filter</button>
+      <div class="filter-hint">Fields come from both schemas. If a field is missing in a source, that source will be excluded.</div>
+    </div>
+  </div>
+  <div class="analysis-actions">
+    <button id="runAnalysis">Run Analysis</button>
+    <button id="clearAnalysis" class="secondary">Clear</button>
+    <button id="exportJson" class="secondary">Export JSON</button>
+    <button id="exportCsv" class="secondary">Export CSV</button>
+  </div>
+</div>
+
+<div class="analysis-summary">
+  <div id="analysisStatus" class="status">Idle</div>
+  <div id="analysisCount" class="analysis-count">0 results</div>
+</div>
+
+<div class="analysis-table-wrap">
+  <table class="analysis-table">
+    <thead>
+      <tr>
+        <th>Posted</th>
+        <th>Title</th>
+        <th>Company</th>
+        <th>Pay</th>
+        <th>Work Mode</th>
+        <th>LMIA</th>
+        <th>Direct Apply</th>
+        <th>City</th>
+        <th>Province</th>
+        <th>Source</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody id="analysisBody">
+      <tr>
+        <td colspan="11" class="analysis-empty">Run a query to see jobs.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  window.ANALYSIS_JOB_FIELDS = {{ field_options|tojson }};
+</script>
+<script src="{{ url_for('static', filename='analysis_jobs.js') }}"></script>
+{% endblock %}

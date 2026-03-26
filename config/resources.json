@@ -19,6 +19,18 @@
     "_indeed_jobs": {
       "db_path": "src/_indeed_jobs/database.sqlite",
       "schema": "_indeed_jobs"
+    },
+    "_workbc_jobs": {
+      "db_path": "src/_workbc_jobs/database.sqlite",
+      "schema": "_workbc_jobs"
+    },
+    "_saskjobs": {
+      "db_path": "src/_saskjobs/database.sqlite",
+      "schema": "_saskjobs"
+    },
+    "_eluta_jobs": {
+      "db_path": "src/_eluta_jobs/database.sqlite",
+      "schema": "_eluta_jobs"
     }
   }
 }

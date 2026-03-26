@@ -54,5 +54,37 @@
       <span class="badge badge-green">● Live</span>
     </div>
   </a>
+  <a class="card" href="/analysis/jobs">
+    <h3>Jobs Analysis</h3>
+    <p>Unified job view across Craigslist Jobs and the Canadian Job Bank.</p>
+    <div class="card-footer">
+      <span class="card-link">Open analysis →</span>
+      <span class="badge badge-blue">● New</span>
+    </div>
+  </a>
+  <a class="card" href="{{ url_for('quick_query', crawler_name='_workbc_jobs') }}">
+    <h3>Workbc Jobs</h3>
+    <p>Job postings scraped from WorkBC.</p>
+    <div class="card-footer">
+      <span class="card-link">View docs →</span>
+      <span class="badge badge-green">● Live</span>
+    </div>
+  </a>
+  <a class="card" href="{{ url_for('quick_query', crawler_name='_saskjobs') }}">
+    <h3>Saskjobs</h3>
+    <p>Job postings scraped from SaskJobs.</p>
+    <div class="card-footer">
+      <span class="card-link">View docs →</span>
+      <span class="badge badge-green">● Live</span>
+    </div>
+  </a>
+  <a class="card" href="{{ url_for('quick_query', crawler_name='_eluta_jobs') }}">
+    <h3>Eluta Jobs</h3>
+    <p>Job postings scraped from Eluta.</p>
+    <div class="card-footer">
+      <span class="card-link">View docs →</span>
+      <span class="badge badge-green">● Live</span>
+    </div>
+  </a>
 </div>
 {% endblock %}

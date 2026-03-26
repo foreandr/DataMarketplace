@@ -94,13 +94,27 @@ def _coerce_value(field_type: str, value: Any) -> Any:
     if value is None:
         return None
     if field_type == "INTEGER":
-        if isinstance(value, bool) or not isinstance(value, int):
+        if isinstance(value, bool):
             raise TypeError("Expected INTEGER")
-        return value
+        if isinstance(value, int):
+            return value
+        if isinstance(value, str):
+            text = value.strip()
+            if text.lstrip("-").isdigit():
+                return int(text)
+        raise TypeError("Expected INTEGER")
     if field_type == "REAL":
-        if isinstance(value, bool) or not isinstance(value, (int, float)):
+        if isinstance(value, bool):
             raise TypeError("Expected REAL")
-        return float(value)
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            text = value.strip()
+            try:
+                return float(text)
+            except Exception:
+                pass
+        raise TypeError("Expected REAL")
     if not isinstance(value, str):
         raise TypeError("Expected TEXT")
     return value
@@ -145,6 +159,110 @@ def _build_order_by(schema, order_by: list[dict]) -> str:
             raise ValueError("direction must be asc or desc")
         parts.append(f"{field} {direction.upper()}")
     return " ORDER BY " + ", ".join(parts)
+
+
+def _parse_dt(value: str | None) -> datetime:
+    if not value:
+        return datetime.min
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(value, fmt)
+        except Exception:
+            continue
+    return datetime.min
+
+
+def _normalize_str_list(value: Any) -> list[str]:
+    if not value:
+        return []
+    if isinstance(value, str):
+        items = [x.strip() for x in value.split(",")]
+        return [x for x in items if x]
+    if isinstance(value, list):
+        return [str(x).strip() for x in value if str(x).strip()]
+    return []
+
+
+def _build_jobs_where(
+    keyword: str,
+    country: str,
+    state: str,
+    cities: list[str],
+    text_fields: list[str],
+    city_field: str = "city",
+    state_field: str = "state",
+    country_field: str = "country",
+) -> tuple[str, list]:
+    clauses = []
+    params: list[Any] = []
+
+    if country:
+        clauses.append(f"{country_field} = ?")
+        params.append(country)
+    if state:
+        clauses.append(f"{state_field} = ?")
+        params.append(state)
+    if cities:
+        placeholders = ", ".join(["?"] * len(cities))
+        clauses.append(f"{city_field} IN ({placeholders})")
+        params.extend(cities)
+    if keyword:
+        like = f"%{keyword.lower()}%"
+        text_clause = " OR ".join([f"LOWER({f}) LIKE ?" for f in text_fields])
+        clauses.append(f"({text_clause})")
+        params.extend([like] * len(text_fields))
+
+    if not clauses:
+        return "", []
+    return " WHERE " + " AND ".join(clauses), params
+
+
+def _merge_where(
+    where_a: str,
+    params_a: list[Any],
+    where_b: str,
+    params_b: list[Any],
+) -> tuple[str, list[Any]]:
+    clauses = []
+    if where_a:
+        clauses.append(where_a.replace(" WHERE ", "", 1))
+    if where_b:
+        clauses.append(where_b.replace(" WHERE ", "", 1))
+    if not clauses:
+        return "", []
+    return " WHERE " + " AND ".join(clauses), params_a + params_b
+
+
+def _has_missing_fields(schema, where: list[dict]) -> bool:
+    if not where:
+        return False
+    schema_fields = set(schema.field_names())
+    for w in where:
+        field = w.get("field")
+        if field and field not in schema_fields:
+            return True
+    return False
+
+
+def _query_rows(
+    db_path: Path,
+    schema_name: str,
+    sql: str,
+    params: list[Any],
+    ensure_location: bool = False,
+) -> list[dict]:
+    schema = _load_schema(schema_name)
+    conn = sqlite3.connect(str(db_path))
+    conn.execute(schema.create_table_sql())
+    for stmt in schema.create_indexes_sql():
+        conn.execute(stmt)
+    if ensure_location:
+        _ensure_location_column(conn)
+    cur = conn.execute(sql, params)
+    rows_data = cur.fetchall()
+    col_names = [d[0] for d in cur.description] if cur.description else []
+    conn.close()
+    return [dict(zip(col_names, r)) for r in rows_data]
 
 
 def _load_resources() -> dict:
@@ -312,6 +430,18 @@ def quick_query(crawler_name: str):
     return render_template(f"{crawler_name}.html")
 
 
+@app.get("/analysis/jobs")
+def analysis_jobs():
+    field_sets: list[set[str]] = []
+    for mod in ("_craigslist_jobs", "_canadian_jobbank", "_workbc_jobs", "_saskjobs", "_eluta_jobs"):
+        try:
+            field_sets.append(set(_load_schema(mod).field_names()))
+        except ModuleNotFoundError:
+            continue
+    field_options = sorted(set().union(*field_sets)) if field_sets else []
+    return render_template("analysis/jobs.html", field_options=field_options)
+
+
 @app.get("/schemas")
 def list_schemas():
     schema_files = sorted((ROOT_DIR / "src").glob("_*/schema.py"))
@@ -393,6 +523,245 @@ def search_collection(name: str):
                 },
             }
         )
+    except (KeyError, ValueError, TypeError) as exc:
+        return jsonify({"error": str(exc), "code": 400}), 400
+    except sqlite3.OperationalError as exc:
+        return jsonify({"error": str(exc), "code": 500}), 500
+    except Exception as exc:
+        return jsonify({"error": "Internal server error", "details": str(exc), "code": 500}), 500
+
+
+@app.post("/analysis/jobs/search")
+def analysis_jobs_search():
+    try:
+        payload = request.get_json(force=True) or {}
+
+        keyword = str(payload.get("keyword", "")).strip()
+        country = str(payload.get("country", "")).strip()
+        state = str(payload.get("state", "")).strip()
+        cities = _normalize_str_list(payload.get("cities"))
+        where = payload.get("where") or []
+
+        sources_raw = _normalize_str_list(payload.get("sources")) or ["craigslist", "jobbank"]
+        sources = {s.lower() for s in sources_raw}
+
+        order_dir = str(payload.get("order_dir", "desc")).lower()
+        if order_dir not in {"asc", "desc"}:
+            raise ValueError("order_dir must be 'asc' or 'desc'")
+
+        limit = int(payload.get("limit", 200))
+        offset = int(payload.get("offset", 0))
+        if limit < 1:
+            raise ValueError("limit must be >= 1")
+        if offset < 0:
+            raise ValueError("offset must be >= 0")
+        limit = min(limit, 2000)
+        per_source_limit = min(limit + offset, 5000)
+
+        results: list[dict] = []
+        source_counts: dict[str, int] = {}
+
+        if "craigslist" in sources:
+            schema = _load_schema("_craigslist_jobs")
+            if _has_missing_fields(schema, where):
+                source_counts["craigslist"] = 0
+            else:
+                where_sql, params = _build_jobs_where(
+                    keyword=keyword,
+                    country=country,
+                    state=state,
+                    cities=cities,
+                    text_fields=["title", "company", "location"],
+                )
+                extra_where_sql, extra_params = _build_where(schema, where)
+                where_sql, params = _merge_where(where_sql, params, extra_where_sql, extra_params)
+                sql = (
+                    "SELECT id, title, company, location AS location, posted_date, pay, url, "
+                    "city, state, country, NULL AS work_mode, NULL AS is_lmia, NULL AS is_direct_apply "
+                    f"FROM items{where_sql} ORDER BY posted_date {order_dir.upper()} LIMIT ?;"
+                )
+                params = params + [per_source_limit]
+                rows = _query_rows(
+                    db_path=ROOT_DIR / "src" / "_craigslist_jobs" / "database.sqlite",
+                    schema_name="_craigslist_jobs",
+                    sql=sql,
+                    params=params,
+                    ensure_location=True,
+                )
+                for r in rows:
+                    r["source"] = "Craigslist Jobs"
+                    r["collection"] = "_craigslist_jobs"
+                    results.append(r)
+                source_counts["craigslist"] = len(rows)
+
+        if "jobbank" in sources or "canadian_jobbank" in sources:
+            schema = _load_schema("_canadian_jobbank")
+            if _has_missing_fields(schema, where):
+                source_counts["jobbank"] = 0
+            else:
+                where_sql, params = _build_jobs_where(
+                    keyword=keyword,
+                    country=country,
+                    state=state,
+                    cities=cities,
+                    text_fields=["title", "company", "location_raw"],
+                )
+                extra_where_sql, extra_params = _build_where(schema, where)
+                where_sql, params = _merge_where(where_sql, params, extra_where_sql, extra_params)
+                sql = (
+                    "SELECT id, title, company, location_raw AS location, posted_date, pay, url, "
+                    "city, state, country, work_mode, is_lmia, is_direct_apply "
+                    f"FROM items{where_sql} ORDER BY posted_date {order_dir.upper()} LIMIT ?;"
+                )
+                params = params + [per_source_limit]
+                rows = _query_rows(
+                    db_path=ROOT_DIR / "src" / "_canadian_jobbank" / "database.sqlite",
+                    schema_name="_canadian_jobbank",
+                    sql=sql,
+                    params=params,
+                )
+                for r in rows:
+                    r["source"] = "Canadian Job Bank"
+                    r["collection"] = "_canadian_jobbank"
+                    results.append(r)
+                source_counts["jobbank"] = len(rows)
+
+        if "workbc" in sources or "workbc_jobs" in sources:
+            try:
+                schema = _load_schema("_workbc_jobs")
+            except ModuleNotFoundError:
+                source_counts["workbc"] = 0
+                schema = None
+            if schema is None:
+                pass
+            elif _has_missing_fields(schema, where):
+                source_counts["workbc"] = 0
+            else:
+                where_sql, params = _build_jobs_where(
+                    keyword=keyword,
+                    country=country,
+                    state=state,
+                    cities=cities,
+                    text_fields=["title", "company", "location_raw"],
+                    state_field="province",
+                )
+                extra_where_sql, extra_params = _build_where(schema, where)
+                where_sql, params = _merge_where(where_sql, params, extra_where_sql, extra_params)
+                sql = (
+                    "SELECT id, title, company, location_raw AS location, posted_date, NULL AS pay, url, "
+                    "city, province AS state, country, work_mode, NULL AS is_lmia, NULL AS is_direct_apply "
+                    f"FROM items{where_sql} ORDER BY posted_date {order_dir.upper()} LIMIT ?;"
+                )
+                params = params + [per_source_limit]
+                rows = _query_rows(
+                    db_path=ROOT_DIR / "src" / "_workbc_jobs" / "database.sqlite",
+                    schema_name="_workbc_jobs",
+                    sql=sql,
+                    params=params,
+                )
+                for r in rows:
+                    r["source"] = "WorkBC"
+                    r["collection"] = "_workbc_jobs"
+                    results.append(r)
+                source_counts["workbc"] = len(rows)
+
+        if "saskjobs" in sources:
+            try:
+                schema = _load_schema("_saskjobs")
+            except ModuleNotFoundError:
+                source_counts["saskjobs"] = 0
+                schema = None
+            if schema is None:
+                pass
+            elif _has_missing_fields(schema, where):
+                source_counts["saskjobs"] = 0
+            else:
+                where_sql, params = _build_jobs_where(
+                    keyword=keyword,
+                    country=country,
+                    state=state,
+                    cities=cities,
+                    text_fields=["title", "company", "location_raw"],
+                    state_field="province",
+                )
+                extra_where_sql, extra_params = _build_where(schema, where)
+                where_sql, params = _merge_where(where_sql, params, extra_where_sql, extra_params)
+                sql = (
+                    "SELECT id, title, company, location_raw AS location, posted_date, NULL AS pay, url, "
+                    "city, province AS state, country, NULL AS work_mode, NULL AS is_lmia, NULL AS is_direct_apply "
+                    f"FROM items{where_sql} ORDER BY posted_date {order_dir.upper()} LIMIT ?;"
+                )
+                params = params + [per_source_limit]
+                rows = _query_rows(
+                    db_path=ROOT_DIR / "src" / "_saskjobs" / "database.sqlite",
+                    schema_name="_saskjobs",
+                    sql=sql,
+                    params=params,
+                )
+                for r in rows:
+                    r["source"] = "SaskJobs"
+                    r["collection"] = "_saskjobs"
+                    results.append(r)
+                source_counts["saskjobs"] = len(rows)
+
+        if "eluta" in sources or "eluta_jobs" in sources:
+            try:
+                schema = _load_schema("_eluta_jobs")
+            except ModuleNotFoundError:
+                source_counts["eluta"] = 0
+                schema = None
+            if schema is None:
+                pass
+            elif _has_missing_fields(schema, where):
+                source_counts["eluta"] = 0
+            else:
+                where_sql, params = _build_jobs_where(
+                    keyword=keyword,
+                    country=country,
+                    state=state,
+                    cities=cities,
+                    text_fields=["title", "company", "location_raw"],
+                    state_field="province",
+                )
+                extra_where_sql, extra_params = _build_where(schema, where)
+                where_sql, params = _merge_where(where_sql, params, extra_where_sql, extra_params)
+                sql = (
+                    "SELECT id, title, company, location_raw AS location, posted_relative AS posted_date, "
+                    "NULL AS pay, url, city, province AS state, country, work_mode, "
+                    "NULL AS is_lmia, NULL AS is_direct_apply "
+                    f"FROM items{where_sql} ORDER BY posted_relative {order_dir.upper()} LIMIT ?;"
+                )
+                params = params + [per_source_limit]
+                rows = _query_rows(
+                    db_path=ROOT_DIR / "src" / "_eluta_jobs" / "database.sqlite",
+                    schema_name="_eluta_jobs",
+                    sql=sql,
+                    params=params,
+                )
+                for r in rows:
+                    r["source"] = "Eluta"
+                    r["collection"] = "_eluta_jobs"
+                    results.append(r)
+                source_counts["eluta"] = len(rows)
+
+        results.sort(
+            key=lambda r: _parse_dt(str(r.get("posted_date") or "")),
+            reverse=(order_dir == "desc"),
+        )
+
+        total = len(results)
+        page = results[offset: offset + limit]
+
+        return jsonify({
+            "data": page,
+            "metadata": {
+                "count": total,
+                "returned": len(page),
+                "limit": limit,
+                "offset": offset,
+                "sources": source_counts,
+            },
+        })
     except (KeyError, ValueError, TypeError) as exc:
         return jsonify({"error": str(exc), "code": 400}), 400
     except sqlite3.OperationalError as exc:
