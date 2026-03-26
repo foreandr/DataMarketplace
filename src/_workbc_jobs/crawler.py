@@ -76,66 +76,41 @@ class WorkbcJobsCrawler:
     def run(self) -> None:
         browser = instance.Browser(
             driver_choice="selenium",
-            headless=False,
+            headless=True,
             zoom_level=100,
         )
         browser.init_browser()
         browser.go_to_site("https://foreandr.github.io/")
 
         
-        base_url = 'https://www.workbc.ca/search-and-prepare-job/find-jobs#/job-search;sortby=1;page=@PAGE_NO;pagesize=50;'
-        
-        for i in range(1, 200):
-            url = base_url.replace("@PAGE_NO", str(i))
-            browser.go_to_site(url)
-            time.sleep(3)
-            soup_ = browser.return_current_soup()
-            results = soup_.find("div", class_="results")
-            soup = results if results is not None else soup_
-            data = parser.main(soup)
-            jsonifier = WorkbcJobsJsonify(self.name)
-            clean_data = jsonifier.run_analysis(data, print_samples=False)
-            for rec in clean_data:
-                print(rec)
-                print("--")
-            
-            input("@@")
-            continue
-            try:
-                raw_data = self._process_item(browser, item)
-                for row in raw_data[:10]:
-                    print(row)
-                input("raw data printed above — press ENTER to jsonify (Ctrl+C to abort) ")
+        base_url = (
+            "https://www.workbc.ca/search-and-prepare-job/find-jobs"
+            "#/job-search;sortby=1;page=@PAGE_NO;pagesize=50;"
+        )
 
-                jsonifier  = WorkbcJobsJsonify(self.name)
-                clean_data = jsonifier.run_analysis(raw_data, print_samples=False)
-                for rec in clean_data[:10]:
-                    print(rec)
-                input("clean data printed above — press ENTER to continue (Ctrl+C to abort) ")
+        while True:
+            for page_no in range(1, 201):
+                try:
+                    url = base_url.replace("@PAGE_NO", str(page_no))
+                    browser.go_to_site(url)
+                    time.sleep(3)
+                    soup_ = browser.return_current_soup()
+                    results = soup_.find("div", class_="results")
+                    soup = results if results is not None else soup_
+                    data = parser.main(soup)
 
-                continue  # TODO: remove this line when ready to store
+                    jsonifier = WorkbcJobsJsonify(self.name)
+                    clean_data = jsonifier.run_analysis(data, print_samples=False)
+                    inserted = self._store_clean_data(clean_data)
+                    self._total_rows += inserted
+                except Exception as exc:
+                    print(f"{RD}[ERROR] page={page_no}: {exc}{R}")
 
-                inserted = self._store_clean_data(clean_data)
-                self._total_rows  += inserted
-                self._items_done  += 1
-            except Exception as e:
-                print(f"{RD}[ERROR] item={item}: {e}{R}")
+                db_total = self._db_total_rows()
+                print(f"[page {page_no}/200] {self.name} | rows={db_total}")
+                self._maybe_push()
 
-            db_total = self._db_total_rows()
-            print(f"[{i}/{total}] {self.name} | item={item} | rows={db_total}")
-            self._maybe_push()
-
-        browser.close_browser()
-        self._push_to_github()
-
-    # ── Scraping — implement this ──────────────────────────────────────────────
-    def _process_item(self, browser: Any, item: Any) -> List[List[Any]]:
-        # TODO: navigate to the target URL and return raw scraped rows
-        # Example:
-        #   browser.go_to_site(f"https://example.com/search?q={item}")
-        #   soup = browser.return_current_soup()
-        #   return parser.main(soup)
-        raise NotImplementedError("_process_item not implemented")
+            time.sleep(2 * 60 * 60)
 
     # ── Storage ────────────────────────────────────────────────────────────────
     def _store_clean_data(self, clean_data: Any) -> int:
@@ -217,3 +192,6 @@ def dedup_database(db_path: Path | None = None) -> int:
 
 if __name__ == "__main__":
     WorkbcJobsCrawler().run()
+
+        
+
