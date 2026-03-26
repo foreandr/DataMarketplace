@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, List
 
-from hyperSel import instance, parser
+from hyperSel import instance, parser,log
 
 try:
     from _workbc_jobs.jsonify import WorkbcJobsJsonify
@@ -76,21 +76,31 @@ class WorkbcJobsCrawler:
     def run(self) -> None:
         browser = instance.Browser(
             driver_choice="selenium",
-            headless=True,
+            headless=False,
             zoom_level=100,
         )
         browser.init_browser()
         browser.go_to_site("https://foreandr.github.io/")
 
-        # TODO: replace `items` with your actual iteration list
-        #       e.g. cities, keywords, category URLs, page numbers, etc.
-        items = []  # TODO
-        total = len(items)
-
-        input("TODO: populate `items` above — press ENTER when ready (Ctrl+C to abort) ")
-        input("TODO: implement `_process_item()` and `jsonify.run_analysis()` — press ENTER when ready (Ctrl+C to abort) ")
-
-        for i, item in enumerate(items, 1):
+        
+        base_url = 'https://www.workbc.ca/search-and-prepare-job/find-jobs#/job-search;sortby=1;page=@PAGE_NO;pagesize=50;'
+        
+        for i in range(1, 200):
+            url = base_url.replace("@PAGE_NO", str(i))
+            browser.go_to_site(url)
+            time.sleep(3)
+            soup_ = browser.return_current_soup()
+            results = soup_.find("div", class_="results")
+            soup = results if results is not None else soup_
+            data = parser.main(soup)
+            jsonifier = WorkbcJobsJsonify(self.name)
+            clean_data = jsonifier.run_analysis(data, print_samples=False)
+            for rec in clean_data:
+                print(rec)
+                print("--")
+            
+            input("@@")
+            continue
             try:
                 raw_data = self._process_item(browser, item)
                 for row in raw_data[:10]:
