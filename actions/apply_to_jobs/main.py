@@ -9,12 +9,13 @@ Reapply cooldown: REAPPLY_AFTER_DAYS — fair game again after this many days.
 """
 from __future__ import annotations
 
+import re
 import sqlite3
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
-from keywords import SOFTWARE_KEYWORDS
+from keywords import SOFTWARE_KEYWORDS, PLACEMENT_KEYWORDS
 
 ROOT = Path(__file__).resolve().parents[2]
 DB   = Path(__file__).resolve().parent / "database.sqlite"
@@ -81,6 +82,44 @@ def _init_db(conn: sqlite3.Connection) -> None:
 
 def _normalize(s: str | None) -> str:
     return (s or "").strip().lower()
+
+
+# Keywords that are short enough to be substrings of unrelated words and need
+# a proper word-boundary check rather than a bare LIKE match.
+# e.g. "intern" → "internal auditor" is a false positive.
+_WORD_BOUNDARY_KEYWORDS: dict[str, re.Pattern[str]] = {
+    kw: re.compile(rf"\b{re.escape(kw)}\b", re.IGNORECASE)
+    for kw in ("intern",)
+}
+
+
+def _placement_word_boundary_ok(title: str, keywords: list[str]) -> bool:
+    """
+    For any keyword that requires a word-boundary check, confirm the title
+    actually contains that keyword as a standalone word (not as a substring
+    of a longer word like "internal" or "international").
+
+    Returns True if:
+      - none of the matched keywords are in _WORD_BOUNDARY_KEYWORDS, OR
+      - at least one of them genuinely matches as a whole word.
+    """
+    title_lower = title.lower()
+    sensitive = [kw for kw in keywords if kw.lower() in _WORD_BOUNDARY_KEYWORDS]
+    if not sensitive:
+        return True  # nothing to double-check
+
+    # Check whether a sensitive keyword is the ONLY reason this row matched.
+    non_sensitive = [kw for kw in keywords if kw.lower() not in _WORD_BOUNDARY_KEYWORDS]
+    non_sensitive_hit = any(kw.lower() in title_lower for kw in non_sensitive)
+    if non_sensitive_hit:
+        return True  # a safe keyword already matches — row is legitimate
+
+    # Only sensitive keywords matched — verify each has a true word boundary.
+    return any(
+        _WORD_BOUNDARY_KEYWORDS[kw.lower()].search(title)
+        for kw in sensitive
+        if kw.lower() in _WORD_BOUNDARY_KEYWORDS
+    )
 
 
 def already_applied(conn: sqlite3.Connection, title: str, company: str) -> bool:
@@ -160,16 +199,24 @@ def record_application(job: dict[str, Any]) -> None:
 def get_jobs(
     keywords: str | list[str],
     remote_only: bool = True,
+    cities: list[str] | None = None,
+    province: str | None = None,
 ) -> list[dict[str, Any]]:
     """
     Query all job databases for one or more keywords (OR logic, case-insensitive
-    substring match against title and company).
+    substring match against title only).
 
     Parameters
     ----------
     keywords    : a single keyword string or a list of keywords.
     remote_only : when True, sources that have a work_mode column are filtered
                   to remote roles only. Sources without work_mode are unaffected.
+                  Ignored when ``cities`` is provided.
+    cities      : optional list of city names to filter by (OR logic, substring
+                  match against the ``city`` column). When set, ``remote_only``
+                  is ignored and results are restricted to these cities.
+    province    : optional two-letter province code (e.g. "ON") applied alongside
+                  ``cities`` to avoid cross-province false positives.
 
     Jobs already applied to (within cooldown) or marked unapplicable are skipped.
     Each returned dict contains all original columns from its source table plus a
@@ -191,26 +238,57 @@ def get_jobs(
             conn = sqlite3.connect(db_path)
             conn.row_factory = sqlite3.Row
             try:
-                # Build keyword OR clause dynamically — title only, LOWER on both sides.
-                # Searching company name causes false positives (e.g. "Engineering Corp"
-                # pulls in all their unrelated jobs).
-                kw_clauses = " OR ".join(
-                    ["LOWER(title) LIKE ?"] * len(keywords)
+                # ── keyword clause ────────────────────────────────────────────
+                # Title only — searching company causes false positives
+                # (e.g. "Engineering Corp" pulls all their unrelated jobs).
+                kw_clauses = " OR ".join(["LOWER(title) LIKE ?"] * len(keywords))
+                params: list[Any] = [f"%{kw.lower()}%" for kw in keywords]
+
+                # ── source-level always-on constraints ────────────────────────
+                always_on = SOURCE_CONSTRAINTS.get(source_name, "")
+
+                # ── introspect available columns ──────────────────────────────
+                col_names = {
+                    r[1] for r in conn.execute("PRAGMA table_info(items)").fetchall()
+                }
+
+                # ── location filter ───────────────────────────────────────────
+                if cities:
+                    # City-based search — remote_only does not apply.
+                    if "city" not in col_names:
+                        # Source has no city column — skip it entirely.
+                        print(f"  [{source_name}] no city column, skipping for local search.")
+                        continue
+                    city_clauses = " OR ".join(["LOWER(city) LIKE ?"] * len(cities))
+                    params += [f"%{c.lower()}%" for c in cities]
+                    if province and "province" in col_names:
+                        location_sql = f"AND ({city_clauses}) AND UPPER(province) = ?"
+                        params.append(province.upper())
+                    else:
+                        location_sql = f"AND ({city_clauses})"
+                else:
+                    # Remote filter — only applied to sources that have work_mode.
+                    location_sql = REMOTE_CONSTRAINTS.get(source_name, "") if remote_only else ""
+
+                sql = (
+                    f"SELECT * FROM items "
+                    f"WHERE ({kw_clauses}) {always_on} {location_sql}"
                 )
-                params: list[Any] = []
-                for kw in keywords:
-                    params.append(f"%{kw.lower()}%")
-
-                always_on  = SOURCE_CONSTRAINTS.get(source_name, "")
-                remote_sql = REMOTE_CONSTRAINTS.get(source_name, "") if remote_only else ""
-
-                sql = f"SELECT * FROM items WHERE ({kw_clauses}) {always_on} {remote_sql}"
                 rows = conn.execute(sql, params).fetchall()
 
-                new, skip_applied, skip_failed = 0, 0, 0
+                new, skip_applied, skip_failed, skip_boundary = 0, 0, 0, 0
                 for row in rows:
                     record = dict(row)
                     record["source"] = source_name
+
+                    # Word-boundary guard for placement searches (e.g. "intern"
+                    # must not match "internal auditor").
+                    if cities and not _placement_word_boundary_ok(
+                        record.get("title", ""), keywords
+                    ):
+                        skip_boundary += 1
+                        continue
+
                     if is_failed(tracker, record.get("url")):
                         skip_failed += 1
                     elif already_applied(tracker, record.get("title", ""), record.get("company", "")):
@@ -224,9 +302,11 @@ def get_jobs(
                     label += f", {skip_applied} already applied (skipped)"
                 if skip_failed:
                     label += f", {skip_failed} unapplicable (skipped)"
-                print(f"[{source_name}] {label}")
+                if skip_boundary:
+                    label += f", {skip_boundary} false-positive (skipped)"
+                print(f"  [{source_name}] {label}")
             except sqlite3.Error as e:
-                print(f"[{source_name}] query error: {e}")
+                print(f"  [{source_name}] query error: {e}")
             finally:
                 conn.close()
     finally:
@@ -237,13 +317,44 @@ def get_jobs(
 
 # ── main ──────────────────────────────────────────────────────────────────────
 
+# Cities in the Toronto / Durham / Kawarthas corridor (ON).
+GTA_CITIES = [
+    "toronto",
+    "peterborough",
+    "oshawa",
+    "durham",
+    "whitby",
+    "ajax",
+    "pickering",
+    "scarborough",
+    "north york",
+]
+
 if __name__ == "__main__":
     import json
 
-    keywords = SOFTWARE_KEYWORDS
-    print(f"\nSearching all databases for {len(keywords)} keywords (remote only)\n{'='*50}")
-    jobs = get_jobs(keywords, remote_only=True)
-    print(f"\nTotal results: {len(jobs)}")
-    print(f"Showing first 20:\n{'='*50}")
-    for job in jobs[:20]:
+    # ── Search 1: remote software jobs ────────────────────────────────────────
+    print(f"\n{'='*60}")
+    print(f"SEARCH 1 — Remote software jobs ({len(SOFTWARE_KEYWORDS)} keywords)")
+    print(f"{'='*60}")
+    remote_jobs = get_jobs(SOFTWARE_KEYWORDS, remote_only=True)
+    print(f"\nTotal: {len(remote_jobs)}  |  Showing first 20")
+    print(f"{'-'*60}")
+    for job in remote_jobs[:20]:
+        print(json.dumps(job, indent=2, default=str))
+
+    # ── Search 2: local internships / co-ops / summer roles in ON ─────────────
+    print(f"\n{'='*60}")
+    print(f"SEARCH 2 — ON internships / co-ops / summer roles ({len(PLACEMENT_KEYWORDS)} keywords)")
+    print(f"Cities: {', '.join(GTA_CITIES)}")
+    print(f"{'='*60}")
+    local_jobs = get_jobs(
+        PLACEMENT_KEYWORDS,
+        remote_only=False,
+        cities=GTA_CITIES,
+        province="ON",
+    )
+    print(f"\nTotal: {len(local_jobs)}  |  Showing first 20")
+    print(f"{'-'*60}")
+    for job in local_jobs[:20]:
         print(json.dumps(job, indent=2, default=str))
