@@ -14,6 +14,8 @@ I found your posting for {title} on {board} and wanted to reach out. Please find
 
 I am a software engineer with a background in mathematics, full stack development, and data systems. My project portfolio is available at foreandr.github.io. I would welcome the opportunity to speak further about the role.
 
+To confirm: I am a Canadian citizen, fully authorized to work in Canada, and I have relevant experience for this position.
+
 Best regards,
 Andre Foreman
 519-636-3173
@@ -24,6 +26,8 @@ foreandr@gmail.com""",
 I came across your posting for {title} on {board} and am writing to express my interest. Please find my resume and cover letter attached.
 
 I bring a background in software development, mathematics, and high performance sport. I am a hard worker, a fast learner, and I take quality seriously. I would welcome the chance to speak further about how I can contribute.
+
+To confirm: I am a Canadian citizen, fully authorized to work in Canada, and I have relevant experience for this position.
 
 Best regards,
 Andre Foreman
