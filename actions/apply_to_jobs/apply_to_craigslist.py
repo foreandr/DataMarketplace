@@ -23,6 +23,7 @@ def apply(job: dict[str, Any]) -> None:
     )
     browser.init_browser()
     browser.go_to_site(url)
+    input(f"[craigslist] Paused — press Enter to continue...")
 
     # ── internal application logic goes here ──────────────────────────────────
 

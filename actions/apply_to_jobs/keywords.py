@@ -128,6 +128,21 @@ SOFTWARE_KEYWORDS = [
     "Rust developer",
     "dotnet developer",
     "C# developer",
+
+    # Mid-level / intermediate
+    "intermediate developer",
+    "intermediate engineer",
+    "intermediate software developer",
+    "intermediate software engineer",
+    "mid-level developer",
+    "mid-level engineer",
+
+    # Flask / framework-specific roles
+    "Flask developer",
+    "Django developer",
+    "FastAPI developer",
+    "Node.js developer",
+    "Spring developer",
 ]
 
 # ── internship / co-op / summer student keywords ──────────────────────────────

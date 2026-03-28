@@ -333,26 +333,31 @@ _APPLIERS = {
     "workbc":           apply_to_workbc.apply,
 }
 
+def _apply_job(job: dict[str, Any]) -> None:
+    """Apply to a single job with error handling; failures are recorded and skipped."""
+    source = job.get("source")
+    applier = _APPLIERS.get(source)
+    if applier is None:
+        print(f"  [skip] no applier for source: {source}")
+        return
+
+    url = job.get("url", "<no url>")
+    title = job.get("title", "<no title>")
+    print(f"  [{source}] applying → {title}  ({url})")
+    try:
+        applier(job)
+        input("Application sent. Press Enter to continue...")
+        record_application(job)
+        print(f"  [{source}] recorded application for: {title}")
+    except Exception as e:
+        print(f"  [{source}] failed: {e}")
+        record_failure(job, reason=str(e))
+
 
 def run_applications(jobs: list[dict]) -> None:
     """Loop through jobs, apply to each via the matching source applier, and record the result."""
     for job in jobs:
-        source = job.get("source")
-        applier = _APPLIERS.get(source)
-        if applier is None:
-            print(f"  [skip] no applier for source: {source}")
-            continue
-
-        url = job.get("url", "<no url>")
-        title = job.get("title", "<no title>")
-        print(f"  [{source}] applying → {title}  ({url})")
-        try:
-            applier(job)
-            record_application(job)
-            print(f"  [{source}] recorded application for: {title}")
-        except Exception as e:
-            print(f"  [{source}] failed: {e}")
-            record_failure(job, reason=str(e))
+        _apply_job(job)
 
 
 # ── main ──────────────────────────────────────────────────────────────────────
@@ -373,28 +378,13 @@ GTA_CITIES = [
 if __name__ == "__main__":
     import json
 
-    # ── Search 1: remote software jobs ────────────────────────────────────────
-    print(f"\n{'='*60}")
-    print(f"SEARCH 1 — Remote software jobs ({len(SOFTWARE_KEYWORDS)} keywords)")
-    print(f"{'='*60}")
-    remote_jobs = get_jobs(SOFTWARE_KEYWORDS, remote_only=True)
-    print(f"\nTotal: {len(remote_jobs)}  |  Showing first 20")
-    print(f"{'-'*60}")
-    for job in remote_jobs[:20]:
-        print(json.dumps(job, indent=2, default=str))
-
-    # ── Search 2: local internships / co-ops / summer roles in ON ─────────────
-    print(f"\n{'='*60}")
-    print(f"SEARCH 2 — ON internships / co-ops / summer roles ({len(PLACEMENT_KEYWORDS)} keywords)")
-    print(f"Cities: {', '.join(GTA_CITIES)}")
-    print(f"{'='*60}")
-    local_jobs = get_jobs(
+    all_jobs = get_jobs(SOFTWARE_KEYWORDS, remote_only=True) + get_jobs(
         PLACEMENT_KEYWORDS,
         remote_only=False,
         cities=GTA_CITIES,
         province="ON",
     )
-    print(f"\nTotal: {len(local_jobs)}  |  Showing first 20")
-    print(f"{'-'*60}")
-    for job in local_jobs[:20]:
+
+    for job in all_jobs:
         print(json.dumps(job, indent=2, default=str))
+        run_applications([job])
