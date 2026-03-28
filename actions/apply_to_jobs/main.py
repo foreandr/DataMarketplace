@@ -315,6 +315,46 @@ def get_jobs(
     return results
 
 
+# ── applier dispatch ──────────────────────────────────────────────────────────
+
+import apply_to_canadian_jobbank
+import apply_to_charityvillage
+import apply_to_craigslist
+import apply_to_goodwork
+import apply_to_saskjobs
+import apply_to_workbc
+
+_APPLIERS = {
+    "canadian_jobbank": apply_to_canadian_jobbank.apply,
+    "charityvillage":   apply_to_charityvillage.apply,
+    "craigslist":       apply_to_craigslist.apply,
+    "goodwork":         apply_to_goodwork.apply,
+    "saskjobs":         apply_to_saskjobs.apply,
+    "workbc":           apply_to_workbc.apply,
+}
+
+
+def run_applications(jobs: list[dict]) -> None:
+    """Loop through jobs, apply to each via the matching source applier, and record the result."""
+    for job in jobs:
+        source = job.get("source")
+        applier = _APPLIERS.get(source)
+        if applier is None:
+            print(f"  [skip] no applier for source: {source}")
+            continue
+
+        url = job.get("url", "<no url>")
+        title = job.get("title", "<no title>")
+        print(f"  [{source}] applying → {title}  ({url})")
+        try:
+            applier(job)
+            record_application(job)
+            print(f"  [{source}] recorded application for: {title}")
+        except Exception as e:
+            print(f"  [{source}] failed: {e}")
+            record_failure(job, reason=str(e))
+
+
 # ── main ──────────────────────────────────────────────────────────────────────
 
 # Cities in the Toronto / Durham / Kawarthas corridor (ON).
