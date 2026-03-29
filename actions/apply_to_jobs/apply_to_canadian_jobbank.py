@@ -55,7 +55,7 @@ def apply(job: dict[str, Any]) -> None:
 
         browser = instance.Browser(
             driver_choice='selenium',
-            headless=False,
+            headless=True,
             zoom_level=100,
         )
         browser.init_browser()

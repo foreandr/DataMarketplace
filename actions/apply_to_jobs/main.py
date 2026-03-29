@@ -14,7 +14,7 @@ import sqlite3
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
-
+from hyperSel import log
 from keywords import SOFTWARE_KEYWORDS, PLACEMENT_KEYWORDS
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -25,12 +25,12 @@ REAPPLY_AFTER_DAYS = 365
 _STATS = {"success": 0, "failed": 0, "total": 0}
 
 SOURCES = {
-    #"canadian_jobbank": ROOT / "src/_canadian_jobbank/database.sqlite",
-    # "charityvillage":   ROOT / "src/_charityvillage_jobs/database.sqlite",
-    #"craigslist":       ROOT / "src/_craigslist_jobs/database.sqlite",
-    #"goodwork":         ROOT / "src/_goodwork_jobs/database.sqlite",
-    #"indeed":           ROOT / "src/_indeed_jobs/database.sqlite",
-    #"saskjobs":         ROOT / "src/_saskjobs/database.sqlite",
+    "canadian_jobbank": ROOT / "src/_canadian_jobbank/database.sqlite",
+    "charityvillage":   ROOT / "src/_charityvillage_jobs/database.sqlite",
+    "craigslist":       ROOT / "src/_craigslist_jobs/database.sqlite",
+    "goodwork":         ROOT / "src/_goodwork_jobs/database.sqlite",
+    "indeed":           ROOT / "src/_indeed_jobs/database.sqlite",
+    "saskjobs":         ROOT / "src/_saskjobs/database.sqlite",
     "workbc":           ROOT / "src/_workbc_jobs/database.sqlite",
 }
 
@@ -196,33 +196,14 @@ def record_application(job: dict[str, Any]) -> None:
 
 
 # ── job fetcher ───────────────────────────────────────────────────────────────
-
 def get_jobs(
     keywords: str | list[str],
-    remote_only: bool = True,
+    # These parameters can remain in the signature to avoid breaking other code,
+    # but we will ignore them to ensure the search is "General".
+    remote_only: bool = False, 
     cities: list[str] | None = None,
     province: str | None = None,
 ) -> list[dict[str, Any]]:
-    """
-    Query all job databases for one or more keywords (OR logic, case-insensitive
-    substring match against title only).
-
-    Parameters
-    ----------
-    keywords    : a single keyword string or a list of keywords.
-    remote_only : when True, sources that have a work_mode column are filtered
-                  to remote roles only. Sources without work_mode are unaffected.
-                  Ignored when ``cities`` is provided.
-    cities      : optional list of city names to filter by (OR logic, substring
-                  match against the ``city`` column). When set, ``remote_only``
-                  is ignored and results are restricted to these cities.
-    province    : optional two-letter province code (e.g. "ON") applied alongside
-                  ``cities`` to avoid cross-province false positives.
-
-    Jobs already applied to (within cooldown) or marked unapplicable are skipped.
-    Each returned dict contains all original columns from its source table plus a
-    ``source`` key — fields are NOT normalized so source-specific filters remain.
-    """
     if isinstance(keywords, str):
         keywords = [keywords]
 
@@ -233,81 +214,39 @@ def get_jobs(
     try:
         for source_name, db_path in SOURCES.items():
             if not db_path.exists():
-                print(f"[{source_name}] database not found, skipping.")
                 continue
 
             conn = sqlite3.connect(db_path)
             conn.row_factory = sqlite3.Row
             try:
-                # ── keyword clause ────────────────────────────────────────────
-                # Title only — searching company causes false positives
-                # (e.g. "Engineering Corp" pulls all their unrelated jobs).
+                # ── Simplified Keyword Clause ─────────────────────────────────
+                # This matches your keywords against the title.
                 kw_clauses = " OR ".join(["LOWER(title) LIKE ?"] * len(keywords))
                 params: list[Any] = [f"%{kw.lower()}%" for kw in keywords]
 
-                # ── source-level always-on constraints ────────────────────────
-                always_on = SOURCE_CONSTRAINTS.get(source_name, "")
-
-                # ── introspect available columns ──────────────────────────────
-                col_names = {
-                    r[1] for r in conn.execute("PRAGMA table_info(items)").fetchall()
-                }
-
-                # ── location filter ───────────────────────────────────────────
-                if cities:
-                    # City-based search — remote_only does not apply.
-                    if "city" not in col_names:
-                        # Source has no city column — skip it entirely.
-                        print(f"  [{source_name}] no city column, skipping for local search.")
-                        continue
-                    city_clauses = " OR ".join(["LOWER(city) LIKE ?"] * len(cities))
-                    params += [f"%{c.lower()}%" for c in cities]
-                    if province and "province" in col_names:
-                        location_sql = f"AND ({city_clauses}) AND UPPER(province) = ?"
-                        params.append(province.upper())
-                    else:
-                        location_sql = f"AND ({city_clauses})"
-                else:
-                    # Remote filter — only applied to sources that have work_mode.
-                    location_sql = REMOTE_CONSTRAINTS.get(source_name, "") if remote_only else ""
-
-                sql = (
-                    f"SELECT * FROM items "
-                    f"WHERE ({kw_clauses}) {always_on} {location_sql}"
-                )
+                # ── Remove all Location/Remote logic ──────────────────────────
+                # We ignore 'cities', 'province', and 'remote_only' here
+                # to make the search as broad as possible.
+                sql = f"SELECT * FROM items WHERE ({kw_clauses})"
+                
                 rows = conn.execute(sql, params).fetchall()
+                print(f"   [{source_name}] Found {len(rows)} raw matches for keywords.")
 
-                new, skip_applied, skip_failed, skip_boundary = 0, 0, 0, 0
+                new = 0
                 for row in rows:
                     record = dict(row)
                     record["source"] = source_name
-
-                    # Word-boundary guard for placement searches (e.g. "intern"
-                    # must not match "internal auditor").
-                    if cities and not _placement_word_boundary_ok(
-                        record.get("title", ""), keywords
-                    ):
-                        skip_boundary += 1
-                        continue
-
-                    if is_failed(tracker, record.get("url")):
-                        skip_failed += 1
-                    elif already_applied(tracker, record.get("title", ""), record.get("company", "")):
-                        skip_applied += 1
-                    else:
+                    
+                    # We still check the tracker so you don't double-apply
+                    if not is_failed(tracker, record.get("url")) and \
+                       not already_applied(tracker, record.get("title", ""), record.get("company", "")):
                         results.append(record)
                         new += 1
+                
+                print(f"   [{source_name}] {new} are new/not yet applied.")
 
-                label = f"{new} new"
-                if skip_applied:
-                    label += f", {skip_applied} already applied (skipped)"
-                if skip_failed:
-                    label += f", {skip_failed} unapplicable (skipped)"
-                if skip_boundary:
-                    label += f", {skip_boundary} false-positive (skipped)"
-                print(f"  [{source_name}] {label}")
             except sqlite3.Error as e:
-                print(f"  [{source_name}] query error: {e}")
+                print(f"   [{source_name}] query error: {e}")
             finally:
                 conn.close()
     finally:
@@ -346,6 +285,13 @@ def _apply_job(job: dict[str, Any]) -> None:
     title = job.get("title", "<no title>")
     _STATS["total"] += 1
     print(f"  [{source}] applying → {title}  ({url})")
+    
+
+    if "numerical" in title or "automobile" in title:
+        record_application(job)
+        return
+        
+    
     try:
         # Re-check tracker right before applying to avoid duplicates in the same run.
         tracker = sqlite3.connect(DB)
@@ -376,7 +322,11 @@ def _apply_job(job: dict[str, Any]) -> None:
 def run_applications(jobs: list[dict]) -> None:
     """Loop through jobs, apply to each via the matching source applier, and record the result."""
     for job in jobs:
+        log.checkpoint()
+        print("DOING JOB:", job)
         _apply_job(job)
+        log.checkpoint()
+        # input("-")
 
 
 # ── main ──────────────────────────────────────────────────────────────────────
@@ -397,13 +347,14 @@ GTA_CITIES = [
 if __name__ == "__main__":
     import json
 
-    all_jobs = get_jobs(SOFTWARE_KEYWORDS, remote_only=True) + get_jobs(
-        PLACEMENT_KEYWORDS,
-        remote_only=False,
-        cities=GTA_CITIES,
-        province="ON",
-    )
+    # Combine both lists into one big search
+    all_keywords = SOFTWARE_KEYWORDS + PLACEMENT_KEYWORDS
+
+    # This will now search the entire WorkBC (and other) DBs for any of these titles
+    all_jobs = get_jobs(all_keywords) 
+    
+    print(f"Total jobs found across all databases: {len(all_jobs)}")
 
     for job in all_jobs:
-        print(json.dumps(job, indent=2, default=str))
+        # Proceed with applications
         run_applications([job])

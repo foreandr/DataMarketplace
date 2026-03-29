@@ -10,7 +10,7 @@ COVER_LETTERS = {
 BODIES = {
     "swe": lambda title, board: f"""Hello,
 
-My name is Andre Foreman. I found your posting for {title} on {board} and wanted to reach out. Please find my resume and cover letter attached.
+My name is Andre Foreman. I found your posting for {title} and wanted to reach out. Please find my resume and cover letter attached.
 
 I am a software engineer with a background in mathematics and the humanities.
 
@@ -25,7 +25,7 @@ foreandr@gmail.com""",
 
     "general": lambda title, board: f"""Hello,
 
-My name is Andre Foreman. I found your posting for {title} on {board} and wanted to reach out. Please find my resume and cover letter attached.
+My name is Andre Foreman. I found your posting for {title}  and wanted to reach out. Please find my resume and cover letter attached.
 
 I would welcome the opportunity to work with your team. My background is in software engineering, mathematics, and the humanities, and I take quality and reliability seriously. I was also a national team athlete.
 

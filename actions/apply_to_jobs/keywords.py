@@ -9,6 +9,7 @@ Two keyword sets:
 """
 
 SOFTWARE_KEYWORDS = [
+    "programmer","computer","information technology", "data", "software", "web", "mobile", "cloud", "devops",
     # Software / general
     "software developer",
     "software engineer",
@@ -143,26 +144,8 @@ SOFTWARE_KEYWORDS = [
     "FastAPI developer",
     "Node.js developer",
     "Spring developer",
-]
-
-# ── internship / co-op / summer student keywords ──────────────────────────────
-# Used with a city-based location filter (ON cities) rather than remote_only.
-#
-# Real job titles rarely read "software intern" — they read things like
-# "Software Developer Intern" or "Co-op Student – Data".  These bare terms
-# matched against the title column, combined with the city/province filter,
-# keep results tight without over-engineering the compound phrases.
-PLACEMENT_KEYWORDS = [
-    # Placement-type words (broad — the city filter narrows the noise)
-    "intern",
-    "internship",
-    "co-op",
-    "coop",
-    "summer student",
-    "student position",
-    "work placement",
-
-    # Junior / entry-level software titles (specific enough on their own)
+    
+        # Junior / entry-level software titles (specific enough on their own)
     "junior developer",
     "junior engineer",
     "junior software developer",
@@ -181,4 +164,16 @@ PLACEMENT_KEYWORDS = [
     "associate developer",
     "associate engineer",
     "associate software",
+    
+]
+
+# ── internship / co-op / summer student keywords ──────────────────────────────
+# Used with a city-based location filter (ON cities) rather than remote_only.
+#
+# Real job titles rarely read "software intern" — they read things like
+# "Software Developer Intern" or "Co-op Student – Data".  These bare terms
+# matched against the title column, combined with the city/province filter,
+# keep results tight without over-engineering the compound phrases.
+PLACEMENT_KEYWORDS = [
+
 ]
