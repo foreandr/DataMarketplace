@@ -25,12 +25,12 @@ REAPPLY_AFTER_DAYS = 365
 _STATS = {"success": 0, "failed": 0, "total": 0}
 
 SOURCES = {
-    "canadian_jobbank": ROOT / "src/_canadian_jobbank/database.sqlite",
-    "charityvillage":   ROOT / "src/_charityvillage_jobs/database.sqlite",
-    "craigslist":       ROOT / "src/_craigslist_jobs/database.sqlite",
-    "goodwork":         ROOT / "src/_goodwork_jobs/database.sqlite",
-    "indeed":           ROOT / "src/_indeed_jobs/database.sqlite",
-    "saskjobs":         ROOT / "src/_saskjobs/database.sqlite",
+    #"canadian_jobbank": ROOT / "src/_canadian_jobbank/database.sqlite",
+    # "charityvillage":   ROOT / "src/_charityvillage_jobs/database.sqlite",
+    #"craigslist":       ROOT / "src/_craigslist_jobs/database.sqlite",
+    #"goodwork":         ROOT / "src/_goodwork_jobs/database.sqlite",
+    #"indeed":           ROOT / "src/_indeed_jobs/database.sqlite",
+    #"saskjobs":         ROOT / "src/_saskjobs/database.sqlite",
     "workbc":           ROOT / "src/_workbc_jobs/database.sqlite",
 }
 
@@ -44,7 +44,7 @@ SOURCE_CONSTRAINTS = {
 REMOTE_CONSTRAINTS = {
     "charityvillage":   "AND LOWER(work_mode) LIKE '%remote%'",
     "goodwork":         "AND LOWER(work_mode) LIKE '%remote%'",
-    "workbc":           "AND LOWER(work_mode) LIKE '%remote%'",
+    # "workbc":           "AND LOWER(work_mode) LIKE '%remote%'",
     # craigslist, saskjobs, indeed have no work_mode column — no constraint added
 }
 

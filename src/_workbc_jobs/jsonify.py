@@ -21,17 +21,14 @@ def _next_value(row: list[str], label: str) -> str:
 
 
 def _first_url(row: list[str]) -> str:
+    base_path = "https://www.workbc.ca/search-and-prepare-job/find-jobs#/job-details/"
+    
     for item in row:
-        if isinstance(item, str) and item.startswith("https://api-jobboard.workbc.ca/Print/Job?jobid="):
-            return item
-    for item in row:
-        if isinstance(item, str) and item.startswith("http"):
-            return item
-    for item in row:
-        if isinstance(item, str) and item.startswith("/search-and-prepare-job/find-jobs#/job-details/"):
-            return "https://www.workbc.ca" + item
+        if isinstance(item, str) and "jobid=" in item:
+            job_id = item.split("jobid=")[-1]
+            return f"{base_path}{job_id}"
+            
     return ""
-
 
 def _extract_job_id(job_number: str, url: str) -> str:
     if job_number:
@@ -103,6 +100,7 @@ class WorkbcJobsJsonify:
 
         records: list[dict] = []
         for row in data:
+            # print(len(row), row)
             if not isinstance(row, list) or not row:
                 continue
             title = str(row[1]).strip() if len(row) > 1 else ""

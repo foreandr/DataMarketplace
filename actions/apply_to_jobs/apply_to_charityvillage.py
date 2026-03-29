@@ -25,6 +25,7 @@ PHONE = "5196363173"
 
 
 def apply(job: dict[str, Any]) -> None:
+    
     url = job.get("url")
     if not url:
         raise ValueError(f"charityvillage job missing url: {job}")

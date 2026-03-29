@@ -98,7 +98,7 @@ class WorkbcJobsCrawler:
                     results = soup_.find("div", class_="results")
                     soup = results if results is not None else soup_
                     data = parser.main(soup)
-
+                    
                     jsonifier = WorkbcJobsJsonify(self.name)
                     clean_data = jsonifier.run_analysis(data, print_samples=False)
                     inserted = self._store_clean_data(clean_data)
