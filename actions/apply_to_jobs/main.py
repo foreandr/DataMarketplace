@@ -22,6 +22,8 @@ DB   = Path(__file__).resolve().parent / "database.sqlite"
 
 REAPPLY_AFTER_DAYS = 365
 
+_STATS = {"success": 0, "failed": 0, "total": 0}
+
 SOURCES = {
     "canadian_jobbank": ROOT / "src/_canadian_jobbank/database.sqlite",
     "charityvillage":   ROOT / "src/_charityvillage_jobs/database.sqlite",
@@ -40,7 +42,6 @@ SOURCE_CONSTRAINTS = {
 # Remote work_mode constraints per source, applied when remote_only=True.
 # Values taken from the actual data in each DB.
 REMOTE_CONSTRAINTS = {
-    "canadian_jobbank": "AND LOWER(work_mode) LIKE '%remote%'",
     "charityvillage":   "AND LOWER(work_mode) LIKE '%remote%'",
     "goodwork":         "AND LOWER(work_mode) LIKE '%remote%'",
     "workbc":           "AND LOWER(work_mode) LIKE '%remote%'",
@@ -343,15 +344,33 @@ def _apply_job(job: dict[str, Any]) -> None:
 
     url = job.get("url", "<no url>")
     title = job.get("title", "<no title>")
+    _STATS["total"] += 1
     print(f"  [{source}] applying → {title}  ({url})")
     try:
+        # Re-check tracker right before applying to avoid duplicates in the same run.
+        tracker = sqlite3.connect(DB)
+        _init_db(tracker)
+        try:
+            if is_failed(tracker, url):
+                print(f"  [{source}] skip (marked failed): {title}")
+                return
+            if already_applied(tracker, title, job.get("company", "")):
+                print(f"  [{source}] skip (already applied): {title}")
+                return
+        finally:
+            tracker.close()
+
         applier(job)
-        input("Application sent. Press Enter to continue...")
+        # input("Application sent. Press Enter to continue...")
         record_application(job)
+        _STATS["success"] += 1
         print(f"  [{source}] recorded application for: {title}")
+        print(f"  [stats] success={_STATS['success']} failed={_STATS['failed']} total={_STATS['total']}")
     except Exception as e:
         print(f"  [{source}] failed: {e}")
         record_failure(job, reason=str(e))
+        _STATS["failed"] += 1
+        print(f"  [stats] success={_STATS['success']} failed={_STATS['failed']} total={_STATS['total']}")
 
 
 def run_applications(jobs: list[dict]) -> None:

@@ -9,6 +9,7 @@ from __future__ import annotations
 from typing import Any
 
 from hyperSel import instance
+from net_guard import ensure_page_loaded
 
 
 def apply(job: dict[str, Any]) -> None:
@@ -23,6 +24,9 @@ def apply(job: dict[str, Any]) -> None:
     )
     browser.init_browser()
     browser.go_to_site(url)
+    if not ensure_page_loaded(browser):
+        browser.close_browser()
+        raise ValueError("network hangup")
     input(f"[goodwork] Paused — press Enter to continue...")
 
     # ── internal application logic goes here ──────────────────────────────────

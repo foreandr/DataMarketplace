@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import ssl
 import smtplib
+import time
 from pathlib import Path
 from email import encoders
 from email.mime.base import MIMEBase
@@ -27,6 +28,7 @@ def send_email_with_account(
     subject: str,
     body: str,
     attachment_paths: list[str] | None = None,
+    bcc_self: bool = False,
 ) -> bool:
     print("==== EMAIL DEBUG INFO ====")
     print(f"Sender:   {email_sender}")
@@ -43,6 +45,8 @@ def send_email_with_account(
     msg["From"]    = email_sender
     msg["To"]      = receiver
     msg["Subject"] = subject
+    if bcc_self:
+        msg["Bcc"] = email_sender
     msg.attach(MIMEText(body, "plain"))
 
     for path in (attachment_paths or []):
@@ -58,13 +62,35 @@ def send_email_with_account(
             print(f"Failed to attach {path}: {e}")
             return False
 
-    context = ssl.create_default_context()
-    try:
+    def _send_once() -> bool:
+        context = ssl.create_default_context()
+        recipients = [receiver]
+        if bcc_self:
+            recipients.append(email_sender)
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
             smtp.login(email_sender, email_password)
-            smtp.sendmail(email_sender, receiver, msg.as_string())
-        print("Email sent successfully!")
+            smtp.sendmail(email_sender, recipients, msg.as_string())
         return True
+
+    try:
+        if _send_once():
+            print("Email sent successfully!")
+            return True
+    except smtplib.SMTPDataError as e:
+        print(f"SMTPDataError: {e.smtp_code} - {e.smtp_error.decode()}")
+    except smtplib.SMTPAuthenticationError as e:
+        print(f"SMTPAuthenticationError: {e.smtp_code} - {e.smtp_error.decode()}")
+    except smtplib.SMTPException as e:
+        print(f"SMTPException: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+
+    print("Google is rate limiting our emails, waiting 6 hours, then retrying...")
+    time.sleep(6 * 60 * 60)
+    try:
+        if _send_once():
+            print("Email sent successfully!")
+            return True
     except smtplib.SMTPDataError as e:
         print(f"SMTPDataError: {e.smtp_code} - {e.smtp_error.decode()}")
     except smtplib.SMTPAuthenticationError as e:
@@ -82,6 +108,7 @@ def send_email(
     body: str,
     attachment_paths: list[str] | None = None,
     account_index: int = 0,
+    bcc_self: bool = False,
 ) -> bool:
     accounts = list(data.email_password_combinations.items())
     email_sender, email_password = accounts[account_index]
@@ -92,4 +119,5 @@ def send_email(
         subject=subject,
         body=body,
         attachment_paths=attachment_paths,
+        bcc_self=bcc_self,
     )

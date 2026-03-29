@@ -53,7 +53,7 @@ def generate_application(job_title, job_board, cover_letter_type="swe"):
         dict with keys: subject, body, attachments
     """
     return {
-        "subject":     f"Application for {job_title} — Andre Foreman",
+        "subject":     f"Application for {job_title.title()} role — Andre Foreman",
         "body":        BODIES[cover_letter_type](job_title, job_board),
         "attachments": [RESUME, COVER_LETTERS[cover_letter_type]],
     }
