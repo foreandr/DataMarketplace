@@ -1,5 +1,7 @@
 """Crawler for _indeed_jobs."""
 from __future__ import annotations
+import time
+import random
 
 import sqlite3
 import subprocess
@@ -13,12 +15,16 @@ from hyperSel import instance, parser
 try:
     from _indeed_jobs.jsonify import IndeedJobsJsonify
     from _indeed_jobs.schema import SCHEMA
+    from _indeed_jobs.some_keywords import SOFTWARE_KEYWORDS
 except ModuleNotFoundError:
     import sys
     ROOT_DIR = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(ROOT_DIR / "src"))
     from _indeed_jobs.jsonify import IndeedJobsJsonify
     from _indeed_jobs.schema import SCHEMA
+    from _indeed_jobs.some_keywords import SOFTWARE_KEYWORDS
+
+random.shuffle(SOFTWARE_KEYWORDS)
 
 # ── ANSI colours ──────────────────────────────────────────────────────────────
 R  = '\033[0m'
@@ -30,7 +36,6 @@ RD = '\033[91m'
 WH = '\033[97m'
 
 PUSH_INTERVAL = 600  # seconds between GitHub pushes
-
 
 def _banner(lines: list[str], color: str = CY) -> None:
     width  = max(len(l) for l in lines) + 6
@@ -76,56 +81,46 @@ class IndeedJobsCrawler:
     def run(self) -> None:
         browser = instance.Browser(
             driver_choice="selenium",
-            headless=True,
+            headless=False,
             zoom_level=100,
         )
         browser.init_browser()
-        browser.go_to_site("https://foreandr.github.io/")
+        browser.go_to_site("https://ca.indeed.com/")
 
-        # TODO: replace `items` with your actual iteration list
-        #       e.g. cities, keywords, category URLs, page numbers, etc.
-        items = []  # TODO
-        total = len(items)
+        input("I AM NOW LOGGED IN ")
+        root_struture = '''https://ca.indeed.com/jobs?q=@KEYWORD&l=Ontario&radius=100&start=@OFFSET'''
+        
+        total_inserted = 0
 
-        input("TODO: populate `items` above — press ENTER when ready (Ctrl+C to abort) ")
-        input("TODO: implement `_process_item()` and `jsonify.run_analysis()` — press ENTER when ready (Ctrl+C to abort) ")
+        for keyword in SOFTWARE_KEYWORDS:
+            for j in range(0, 100, 10):
+                url = root_struture.replace("@KEYWORD", keyword.replace(" ", "+")).replace("@OFFSET", str(j))
+                print(url)
+                browser.go_to_site(url)
+                soup = browser.return_current_soup()
+                    
+                print("len(str(soup)):", len(str(soup)))
+                data = parser.main(soup)
+                
+                print("AMOUNT OF DATA", len(data))
+                if len(data) < 1:
+                    input("HANDCLICK THE VERIFICATION TO FIX")
+                
+                jsonifier = IndeedJobsJsonify(self.name)
+                clean_data = jsonifier.run_analysis(data, print_samples=False)
+                
 
-        for i, item in enumerate(items, 1):
-            try:
-                raw_data = self._process_item(browser, item)
-                for row in raw_data[:10]:
-                    print(row)
-                input("raw data printed above — press ENTER to jsonify (Ctrl+C to abort) ")
-
-                jsonifier  = IndeedJobsJsonify(self.name)
-                clean_data = jsonifier.run_analysis(raw_data, print_samples=False)
-                for rec in clean_data[:10]:
-                    print(rec)
-                input("clean data printed above — press ENTER to continue (Ctrl+C to abort) ")
-
-                continue  # TODO: remove this line when ready to store
-
+                
                 inserted = self._store_clean_data(clean_data)
-                self._total_rows  += inserted
-                self._items_done  += 1
-            except Exception as e:
-                print(f"{RD}[ERROR] item={item}: {e}{R}")
+                total_inserted += inserted
+                
+                print(f"PAGE COMPLETE | Inserted: | Total Session: {total_inserted}")
+                # input("Press Enter to continue to the next page...")
+                time.sleep(random.uniform(5, 15))
 
-            db_total = self._db_total_rows()
-            print(f"[{i}/{total}] {self.name} | item={item} | rows={db_total}")
-            self._maybe_push()
+            print(f"SCRAPE FINISHED | Grand Total Inserted: {total_inserted}")
+            self._push_to_github()
 
-        browser.close_browser()
-        self._push_to_github()
-
-    # ── Scraping — implement this ──────────────────────────────────────────────
-    def _process_item(self, browser: Any, item: Any) -> List[List[Any]]:
-        # TODO: navigate to the target URL and return raw scraped rows
-        # Example:
-        #   browser.go_to_site(f"https://example.com/search?q={item}")
-        #   soup = browser.return_current_soup()
-        #   return parser.main(soup)
-        raise NotImplementedError("_process_item not implemented")
 
     # ── Storage ────────────────────────────────────────────────────────────────
     def _store_clean_data(self, clean_data: Any) -> int:

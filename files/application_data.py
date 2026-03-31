@@ -14,7 +14,7 @@ My name is Andre Foreman. I found your posting for {title} and wanted to reach o
 
 I am a software engineer with a background in mathematics and the humanities.
 
-If you would like a deeper look at what I am capable of, my portfolio at foreandr.github.io highlights my software experience with many projects you can browse.
+If you would like a deeper look at my skillset, my portfolio at foreandr.github.io highlights my software experience with many projects you can browse.
 
 To confirm: I am a Canadian citizen, fully authorized to work in Canada, and I have relevant experience for this position.
 
@@ -29,7 +29,7 @@ My name is Andre Foreman. I found your posting for {title}  and wanted to reach 
 
 I would welcome the opportunity to work with your team. My background is in software engineering, mathematics, and the humanities, and I take quality and reliability seriously. I was also a national team athlete.
 
-If you would like a deeper look at what I am capable of, my portfolio is available at foreandr.github.io with many projects you can browse.
+If you would like a deeper look at my skillset, my portfolio is available at foreandr.github.io with many projects you can browse.
 
 To confirm: I am a Canadian citizen, fully authorized to work in Canada, and I have relevant experience for this position.
 

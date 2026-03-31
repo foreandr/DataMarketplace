@@ -1,13 +1,3 @@
-"""
-actions/apply_to_jobs/keywords.py
-
-Two keyword sets:
-  SOFTWARE_KEYWORDS  — remote software roles (title-search only, >= 7 chars,
-                       no bare generics, no non-technical roles)
-  PLACEMENT_KEYWORDS — internship / co-op / summer student roles filtered
-                       to a specific geographic area (see main.py)
-"""
-
 SOFTWARE_KEYWORDS = [
     "programmer","computer","information technology", "data", "software", "web", "mobile", "cloud", "devops",
     # Software / general
@@ -165,15 +155,4 @@ SOFTWARE_KEYWORDS = [
     "associate engineer",
     "associate software",
     
-]
-
-# ── internship / co-op / summer student keywords ──────────────────────────────
-# Used with a city-based location filter (ON cities) rather than remote_only.
-#
-# Real job titles rarely read "software intern" — they read things like
-# "Software Developer Intern" or "Co-op Student – Data".  These bare terms
-# matched against the title column, combined with the city/province filter,
-# keep results tight without over-engineering the compound phrases.
-PLACEMENT_KEYWORDS = [
-
 ]
