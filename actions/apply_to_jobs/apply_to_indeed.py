@@ -5,6 +5,7 @@ Fetch easy-apply Indeed jobs matching software keywords, then apply.
 """
 from __future__ import annotations
 
+import re
 import sqlite3
 import sys
 from pathlib import Path
@@ -14,7 +15,7 @@ import requests
 from hyperSel import instance, parser, log
 import random
 from collections import defaultdict
-from datetime import date
+from datetime import date, datetime
 from selenium.webdriver.support.ui import Select as SeleniumSelect
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -22,7 +23,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from some_keywords import SOFTWARE_KEYWORDS
 
-INDEED_DB = ROOT / "src/_indeed_jobs/database.sqlite"
+INDEED_DB   = ROOT / "src/_indeed_jobs/database.sqlite"
+APPLIED_DB  = ROOT / "src/_indeed_jobs/applied_jobs.sqlite"
 
 
 def get_indeed_easy_apply_jobs() -> list[dict[str, Any]]:
@@ -47,8 +49,80 @@ def get_indeed_easy_apply_jobs() -> list[dict[str, Any]]:
     finally:
         conn.close()
 
+# ── Applied-jobs DB ───────────────────────────────────────────────────────── #
+
+def _extract_jk(url: str) -> str | None:
+    """Pull the 'jk' job-key from any Indeed URL — the stable canonical ID."""
+    m = re.search(r'[?&]jk=([a-zA-Z0-9]+)', url or "")
+    return m.group(1) if m else None
+
+
+def init_applied_db() -> None:
+    """Create the applied_jobs table if it doesn't exist yet."""
+    APPLIED_DB.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(APPLIED_DB)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS applied_jobs (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            jk          TEXT,
+            title       TEXT,
+            company     TEXT,
+            url         TEXT,
+            applied_at  TEXT
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+
+def already_applied(job: dict) -> bool:
+    """
+    Dedup check.  Matches on jk (canonical ID) first, then falls back to
+    normalised title + company so minor URL changes don't let dupes through.
+    """
+    if not APPLIED_DB.exists():
+        return False
+    url     = job.get("url", "")
+    title   = (job.get("title",   "") or "").lower().strip()
+    company = (job.get("company", "") or "").lower().strip()
+    jk      = _extract_jk(url)
+    conn = sqlite3.connect(APPLIED_DB)
+    try:
+        if jk:
+            if conn.execute("SELECT 1 FROM applied_jobs WHERE jk=?", (jk,)).fetchone():
+                return True
+        if title and company:
+            if conn.execute(
+                "SELECT 1 FROM applied_jobs WHERE LOWER(title)=? AND LOWER(company)=?",
+                (title, company),
+            ).fetchone():
+                return True
+    finally:
+        conn.close()
+    return False
+
+
+def record_application(job: dict) -> None:
+    """Insert a successfully submitted job into applied_jobs with a timestamp."""
+    url        = job.get("url", "")
+    jk         = _extract_jk(url)
+    title      = job.get("title",   "")
+    company    = job.get("company", "")
+    applied_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    conn = sqlite3.connect(APPLIED_DB)
+    try:
+        conn.execute(
+            "INSERT INTO applied_jobs (jk, title, company, url, applied_at) VALUES (?,?,?,?,?)",
+            (jk, title, company, url, applied_at),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    _log(f"  -> RECORDED application: jk={jk!r}  title={title!r}  applied_at={applied_at}")
+
+
 # ── Smart field defaults ──────────────────────────────────────────────────── #
-DUMMY_TEXT     = "3"
+DUMMY_TEXT     = "n/a"
 NEXT_BTN_XPATH   = '//*[@id="mosaic-provider-module-apply-questions"]/div/div/button'
 SUBMIT_BTN_XPATH = '//*[@id="mosaic-provider-module-apply-preview"]/div/div/div[3]/button'
 
@@ -119,8 +193,12 @@ def _default_for_label(label: str) -> str:
     if "state"          in l or "province"                 in l: return "Ontario"
     if "city"                                              in l: return "London"
     if "address"                                           in l: return "745 Railton"
-    if "pay"    in l or "salary"   in l or "wage"          in l: return "80000"
-    if "sponsor" in l or "visa"    in l or "sponsorship"   in l: return "No"
+    if "pay"       in l or "salary"    in l or "wage"        in l: return "80000"
+    if "sponsor"   in l or "visa"      in l or "sponsorship" in l: return "No"
+    if "website"   in l or "blog"      in l or "portfolio"   in l: return "https://foreandr.github.io/"
+    if "referred"  in l or "referral"  in l                      : return "n/a"
+    if "education" in l or "highest level" in l or ("level" in l and "degree" in l): return "Bachelor's Degree"
+    if "experience" in l or "years of" in l or "how many years" in l             : return "3"
     return DUMMY_TEXT
 
 
@@ -304,6 +382,20 @@ def parse_and_fill_questions(browser, soup) -> None:
             if "country" in l or "nation" in l:
                 sel_obj.select_by_visible_text("Canada")
                 _log(f"    -> ANSWERED: 'Canada'  xpath={xpath!r}")
+            elif "education" in l or "highest level" in l or ("level" in l and "degree" in l):
+                sel_obj.select_by_visible_text("Bachelor's Degree")
+                _log(f"    -> ANSWERED: \"Bachelor's Degree\"  xpath={xpath!r}")
+            elif "experience" in l or "years of" in l or "how many years" in l:
+                # Pick the option whose text or value contains "3"
+                hit = next(
+                    (o for o in options if "3" in o.get_text(strip=True) or "3" in o.get("value", "")),
+                    None,
+                )
+                if hit is None:
+                    hit = next((o for o in options if o.get("value", "").strip()), None)
+                if hit:
+                    sel_obj.select_by_value(hit["value"])
+                    _log(f"    -> ANSWERED (experience): {hit.get_text(strip=True)!r}  xpath={xpath!r}")
             else:
                 non_empty = [o for o in options if o.get("value", "").strip()]
                 if non_empty:
@@ -380,6 +472,7 @@ def click_next_button(browser) -> bool:
 
 
 def main() -> None:
+    init_applied_db()
     jobs = get_indeed_easy_apply_jobs()
     random.shuffle(jobs)
     print(f"Found {len(jobs)} easy-apply Indeed jobs matching keywords.")
@@ -395,13 +488,21 @@ def main() -> None:
     for job in jobs:
         print(job)
         url = job.get("url")
+
+        # ── Skip already-applied jobs ──────────────────────────────────── #
+        if already_applied(job):
+            jk    = _extract_jk(url or "")
+            title = job.get("title")
+            _log(f"  -> SKIPPING (already applied): jk={jk!r}  title={title!r}")
+            continue
+
         time.sleep(2)
         browser.go_to_site(url)
-        soup = browser.return_current_soup()   
+        soup = browser.return_current_soup()
         print("len(str(soup))", len(str(soup)))
         if "We can’t find this page".lower() in str(soup).lower():
             print("Page not found, skipping.")
-            continue  
+            continue
         
         # APPLICATION PROCESS
         print("BEGINNIG APPLICATION PROCESS")
@@ -431,6 +532,7 @@ def main() -> None:
             # ── Check for successful submission confirmation ───────────── #
             if "your application has been submitted" in str(soup).lower():
                 _log("  -> 'Your application has been submitted!' detected — moving to next job.")
+                record_application(job)
                 break
 
             # HUGE IF TREE
@@ -463,6 +565,7 @@ def main() -> None:
             # Try the final Submit button first (only present on the preview page)
             if click_submit_button(browser):
                 _log("  -> Application submitted — moving to next job.")
+                record_application(job)
                 break
 
             # Not on preview page yet — click Next to advance
