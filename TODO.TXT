@@ -4,11 +4,13 @@ https://www.arbeitnow.com/
 maybe
 adzuna
 
-go through this sites jobs, and check if any have emial
-https://www.juju.com/job/00000000fnqjor?impression_id=uslUhKfxQGqlVUNIGSX_ag&c=&k=software&cluster_id=795804468&l=
-
 this seemed to hgave some 
 https://www.jobspider.com/job/computer-technician-rhinelander-wisconsin-14155587
 
 prettyy striaght forward
 https://www.gojobs.gov.on.ca/
+
+
+new appe, showcase of internal tool that makes it impossible to crawl
+show storage and whatnot 
+have to be able ot inergate it with existing tools

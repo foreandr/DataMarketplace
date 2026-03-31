@@ -105,7 +105,7 @@ if __name__ == "__main__":
     # =========================
     # CONFIG (edit these)
     # =========================
-    SOURCE_NAME = "_indeed_jobs"
+    SOURCE_NAME = "_jobspider_jobs"
     # =========================
 
     main(SOURCE_NAME)

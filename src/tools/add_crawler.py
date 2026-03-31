@@ -1249,21 +1249,23 @@ def delete_crawler(source_name: str) -> None:
 
 if __name__ == "__main__":
     # ── CONFIG ───────────────────────────────────────────────────────────────────
-    SOURCE_NAME = "goodwork_jobs"
-    SHORT_DESC  = "Job postings scraped from GoodWork."
+    SOURCE_NAME = "jobspider_jobs"
+    SHORT_DESC  = "Job postings scraped from JobSpider."
     LONG_DESC   = (
-        "GoodWork listings scraped from the results page. Records include "
-        "job title, organization, location, work mode, and job type."
+        "JobSpider listings scraped from the results page. Records include "
+        "job title, company, location, category, posted date, and sponsored flag."
     )
     EXTRA_FIELDS: list[dict] = [
-        {"name": "title",         "type": "TEXT",                                       "description": "Job title (GoodWork listing)"},
-        {"name": "company",       "type": "TEXT",                                       "description": "Organization name"},
-        {"name": "location_raw",  "type": "TEXT",                                       "description": "Location as shown (e.g., Toronto ON, remote, anywhere in Canada)"},
-        {"name": "work_mode",     "type": "TEXT",    "indexed": True,                   "description": "Work mode (Remote, Hybrid, On-site) if present"},
-        {"name": "job_type",      "type": "TEXT",    "indexed": True,                   "description": "Job type (e.g., full-time, contract)"},
-        {"name": "url",           "type": "TEXT",    "unique": True, "indexed": True,   "description": "URL to the GoodWork job posting"},
+        {"name": "title",         "type": "TEXT",                                       "description": "Job title"},
+        {"name": "company",       "type": "TEXT",                                       "description": "Company or organization name"},
+        {"name": "location_raw",  "type": "TEXT",                                       "description": "Location as shown (e.g., Juneau, AK)"},
+        {"name": "category",      "type": "TEXT",    "indexed": True,                   "description": "Job category (e.g., General, Building Trades/Construction)"},
+        {"name": "posted_date",   "type": "TEXT",    "indexed": True,                   "description": "Date the listing was added (e.g., 3/31/2026 1:24:21 PM PST)"},
+        {"name": "is_sponsored",  "type": "INTEGER", "indexed": True,                   "description": "1 if the listing is sponsored/promoted, else 0"},
+        {"name": "description",   "type": "TEXT",                                       "description": "Short description snippet from the listing"},
+        {"name": "url",           "type": "TEXT",    "unique": True, "indexed": True,   "description": "URL to the JobSpider job posting"},
         {"name": "city",          "type": "TEXT",    "indexed": True, "location": True, "description": "Parsed city"},
-        {"name": "province",      "type": "TEXT",    "indexed": True, "location": True, "description": "Province or state code (e.g., ON, BC)"},
+        {"name": "province",      "type": "TEXT",    "indexed": True, "location": True, "description": "State or province code (e.g., AK, ON)"},
         {"name": "country",       "type": "TEXT",    "indexed": True, "location": True, "description": "Country"},
     ]
     # ─────────────────────────────────────────────────────────────────────────────

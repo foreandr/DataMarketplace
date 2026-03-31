@@ -52,11 +52,17 @@ def _ram_usage_percent() -> float:
     return (used / stat.ullTotalPhys) * 100.0 if stat.ullTotalPhys else 0.0
 
 
+EXCLUDED_CRAWLERS = {
+    "_indeed_jobs",
+}
+
+
 def _discover_crawlers() -> list[str]:
     modules = []
     for p in sorted(SRC_DIR.iterdir()):
         if p.is_dir() and p.name.startswith("_") and (p / "crawler.py").exists():
-            modules.append(p.name)
+            if p.name not in EXCLUDED_CRAWLERS:
+                modules.append(p.name)
     return modules
 
 

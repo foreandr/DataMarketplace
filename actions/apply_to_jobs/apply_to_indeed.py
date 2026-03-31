@@ -17,7 +17,7 @@ from hyperSel import instance, parser, log
 import random
 from collections import defaultdict
 from datetime import date, datetime
-from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
+from selenium.webdriver.support.ui import Select as SeleniumSelect
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -35,82 +35,6 @@ SKIP_KEYWORDS: list[str] = [
 
 INDEED_DB   = ROOT / "src/_indeed_jobs/database.sqlite"
 APPLIED_DB  = ROOT / "src/_indeed_jobs/applied_jobs.sqlite"
-_CHROME_PROFILE = ROOT / "src/_indeed_jobs/chrome_profile"
-
-
-# ── Playwright browser wrapper ────────────────────────────────────────────── #
-
-class PlaywrightBrowser:
-    """
-    Thin wrapper around Playwright that mimics the hyperSel browser interface.
-    Opens the user's real Chrome with a persistent profile so logins are saved.
-    """
-    def __init__(self):
-        self._pw       = None
-        self._context  = None
-        self.page      = None
-
-    def init_browser(self):
-        _CHROME_PROFILE.mkdir(parents=True, exist_ok=True)
-        self._pw      = sync_playwright().start()
-        self._context = self._pw.chromium.launch_persistent_context(
-            user_data_dir=str(_CHROME_PROFILE),
-            channel="chrome",
-            headless=False,
-            args=["--start-maximized"],
-            no_viewport=True,
-        )
-        self.page = self._context.new_page()
-
-    # ── Navigation ────────────────────────────────────────────────────────── #
-    def go_to_site(self, url: str) -> None:
-        self.page.goto(url, wait_until="domcontentloaded", timeout=30_000)
-
-    # ── Current URL (drop-in for browser.current_url) ──────────── #
-    @property
-    def current_url(self) -> str:
-        return self.page.url
-
-    # ── Page source as BeautifulSoup ──────────────────────────────────────── #
-    def return_current_soup(self):
-        from bs4 import BeautifulSoup
-        return BeautifulSoup(self.page.content(), "html.parser")
-
-    # ── Click ─────────────────────────────────────────────────────────────── #
-    def click_element(self, *, by_type: str, value: str, timeout: int = 10) -> None:
-        self._loc(by_type, value).click(timeout=timeout * 1_000)
-
-    # ── Fill text / number inputs ─────────────────────────────────────────── #
-    def clear_and_enter_text(self, *, by_type: str, value: str,
-                             content_to_enter: str, timeout: int = 10) -> None:
-        loc = self._loc(by_type, value)
-        loc.click(timeout=timeout * 1_000)
-        loc.fill(content_to_enter, timeout=timeout * 1_000)
-
-    # ── Select dropdowns ──────────────────────────────────────────────────── #
-    def select_option_by_value(self, xpath: str, option_value: str,
-                               timeout: int = 10) -> None:
-        self.page.locator(f"xpath={xpath}").select_option(
-            value=option_value, timeout=timeout * 1_000
-        )
-
-    def select_option_by_text(self, xpath: str, text: str,
-                              timeout: int = 10) -> None:
-        self.page.locator(f"xpath={xpath}").select_option(
-            label=text, timeout=timeout * 1_000
-        )
-
-    # ── Internal helper ───────────────────────────────────────────────────── #
-    def _loc(self, by_type: str, value: str):
-        if by_type == "xpath":
-            return self.page.locator(f"xpath={value}")
-        return self.page.locator(value)
-
-    def close(self):
-        if self._context:
-            self._context.close()
-        if self._pw:
-            self._pw.stop()
 
 
 # ── ANSI colour helpers ───────────────────────────────────────────────────── #
@@ -996,18 +920,18 @@ def parse_and_fill_questions(browser, soup) -> None:
             continue
         xpath = f'//*[@id="{sel_id}"]'
         try:
-            l         = q_text.lower()
+            el      = browser.get_elements(by_type="xpath", value=xpath, condition="visible", timeout=3)
+            sel_obj = SeleniumSelect(el)
+            l       = q_text.lower()
             non_empty = [o for o in options if o.get("value", "").strip()]
 
             def _pick_by_text(fragments: list[str]):
+                """Find the first option whose display text contains any fragment."""
                 for frag in fragments:
                     for o in non_empty:
                         if frag.lower() in o.get_text(strip=True).lower():
                             return o
                 return None
-
-            def _sel_val(opt):
-                browser.select_option_by_value(xpath, opt["value"])
 
             # ── Skill rating dropdowns ─────────────────────────────────── #
             if any(t in l for t in _SKILL_RATING_TRIGGERS):
@@ -1021,6 +945,7 @@ def parse_and_fill_questions(browser, soup) -> None:
                     )
                     if hit:
                         break
+                # avoid beginner if nothing else matched
                 if hit is None:
                     hit = next(
                         (o for o in non_empty
@@ -1029,23 +954,24 @@ def parse_and_fill_questions(browser, soup) -> None:
                         non_empty[-1] if non_empty else None,
                     )
                 if hit:
-                    _sel_val(hit)
+                    sel_obj.select_by_value(hit["value"])
                     _log(f"    -> ANSWERED (skill rating): {hit.get_text(strip=True)!r}  xpath={xpath!r}")
 
             elif "country" in l or "nation" in l:
-                browser.select_option_by_text(xpath, "Canada")
+                sel_obj.select_by_visible_text("Canada")
                 _log(f"    -> ANSWERED: 'Canada'  xpath={xpath!r}")
 
             elif "education" in l or "highest level" in l or ("level" in l and "degree" in l):
                 hit = _pick_by_text(["Bachelor", "bachelor"])
                 if hit:
-                    _sel_val(hit)
+                    sel_obj.select_by_value(hit["value"])
                     _log(f"    -> ANSWERED (education): {hit.get_text(strip=True)!r}  xpath={xpath!r}")
                 else:
                     _log(f"    -> could not find Bachelor option for education select")
 
             elif "experience" in l or "years of" in l or "how many years" in l \
                     or "years with" in l or "years using" in l or "years in" in l:
+                # Prefer an option containing "3"; accept "2-3", "3-5", "3+" etc.
                 hit = next(
                     (o for o in non_empty if "3" in o.get_text(strip=True) or "3" in o.get("value", "")),
                     None,
@@ -1053,45 +979,45 @@ def parse_and_fill_questions(browser, soup) -> None:
                 if hit is None:
                     hit = non_empty[0] if non_empty else None
                 if hit:
-                    _sel_val(hit)
+                    sel_obj.select_by_value(hit["value"])
                     _log(f"    -> ANSWERED (experience): {hit.get_text(strip=True)!r}  xpath={xpath!r}")
 
             elif "sponsor" in l or "visa" in l or "sponsorship" in l:
                 hit = _pick_by_text(["No", "no", "Not required", "I do not"])
                 if hit:
-                    _sel_val(hit)
+                    sel_obj.select_by_value(hit["value"])
                     _log(f"    -> ANSWERED (sponsor/visa): {hit.get_text(strip=True)!r}  xpath={xpath!r}")
                 elif non_empty:
-                    _sel_val(non_empty[0])
+                    sel_obj.select_by_value(non_empty[0]["value"])
                     _log(f"    -> ANSWERED (fallback): {non_empty[0].get_text(strip=True)!r}  xpath={xpath!r}")
 
             elif "gender" in l or "pronouns" in l:
                 hit = _pick_by_text(["Prefer not", "Decline", "Rather not"])
                 if hit:
-                    _sel_val(hit)
+                    sel_obj.select_by_value(hit["value"])
                     _log(f"    -> ANSWERED (gender): {hit.get_text(strip=True)!r}  xpath={xpath!r}")
                 elif non_empty:
-                    _sel_val(non_empty[0])
+                    sel_obj.select_by_value(non_empty[0]["value"])
 
             elif "ethnicity" in l or "race" in l:
                 hit = _pick_by_text(["Prefer not", "Decline", "Rather not", "No answer"])
                 if hit:
-                    _sel_val(hit)
+                    sel_obj.select_by_value(hit["value"])
                     _log(f"    -> ANSWERED (ethnicity): {hit.get_text(strip=True)!r}  xpath={xpath!r}")
                 elif non_empty:
-                    _sel_val(non_empty[0])
+                    sel_obj.select_by_value(non_empty[0]["value"])
 
             elif "province" in l or "state" in l:
                 hit = _pick_by_text(["Ontario", "ON"])
                 if hit:
-                    _sel_val(hit)
+                    sel_obj.select_by_value(hit["value"])
                     _log(f"    -> ANSWERED (province): {hit.get_text(strip=True)!r}  xpath={xpath!r}")
                 elif non_empty:
-                    _sel_val(non_empty[0])
+                    sel_obj.select_by_value(non_empty[0]["value"])
 
             else:
                 if non_empty:
-                    _sel_val(non_empty[0])
+                    sel_obj.select_by_value(non_empty[0]["value"])
                     _log(f"    -> ANSWERED: {non_empty[0]['value']!r}  xpath={xpath!r}")
 
         except Exception as e:
@@ -1130,11 +1056,11 @@ def click_submit_button(browser) -> bool:
     Returns True if the URL changed after clicking.
     Returns False silently if the button is not present yet.
     """
-    url_before = browser.current_url
+    url_before = browser.WEBDRIVER.current_url
     try:
         browser.click_element(by_type="xpath", value=SUBMIT_BTN_XPATH, timeout=3)
         time.sleep(2)
-        url_after = browser.current_url
+        url_after = browser.WEBDRIVER.current_url
         if url_after != url_before:
             _log(f"  -> SUBMITTED! URL changed to: {url_after}")
             return True
@@ -1149,12 +1075,12 @@ def click_next_button(browser) -> bool:
     Click the Next / Continue button on the application form.
     Retries up to 5 times.  Returns True if the URL changed (page advanced).
     """
-    url_before = browser.current_url
+    url_before = browser.WEBDRIVER.current_url
     for attempt in range(1, 6):
         try:
             browser.click_element(by_type="xpath", value=NEXT_BTN_XPATH, timeout=3)
             time.sleep(2)
-            url_after = browser.current_url
+            url_after = browser.WEBDRIVER.current_url
             if url_after != url_before:
                 _log(f"  -> Next clicked, URL changed to: {url_after}")
                 return True
@@ -1171,10 +1097,15 @@ def main() -> None:
     init_applied_db()
     jobs = get_indeed_easy_apply_jobs()
     random.shuffle(jobs)
+    jobs.sort(key=lambda j: 0 if "data" in (j.get("title") or "").lower() else 1)
     print(f"Found {len(jobs)} easy-apply Indeed jobs matching keywords.")
     print(f"{_Y}TIP: Press {_B}P{_X}{_Y} at any time to pause and get options.{_X}\n")
 
-    browser = PlaywrightBrowser()
+    browser = instance.Browser(
+        driver_choice="selenium",
+        headless=False,
+        zoom_level=100,
+    )
     browser.init_browser()
     browser.go_to_site("https://ca.indeed.com/")
     input("I AM NOW LOGGED IN ")
@@ -1244,7 +1175,7 @@ def main() -> None:
                 loop_count = 0
 
             soup        = browser.return_current_soup()
-            current_url = browser.current_url
+            current_url = browser.WEBDRIVER.current_url
             print("CURRENT URL", current_url)
 
             # ── Successful submission ──────────────────────────────────── #

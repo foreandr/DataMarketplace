@@ -39,6 +39,10 @@
     "_goodwork_jobs": {
       "db_path": "src/_goodwork_jobs/database.sqlite",
       "schema": "_goodwork_jobs"
+    },
+    "_jobspider_jobs": {
+      "db_path": "src/_jobspider_jobs/database.sqlite",
+      "schema": "_jobspider_jobs"
     }
   }
 }
