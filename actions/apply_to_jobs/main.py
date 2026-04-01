@@ -9,18 +9,15 @@ Reapply cooldown: REAPPLY_AFTER_DAYS — fair game again after this many days.
 """
 from __future__ import annotations
 
-import re
 import sqlite3
-from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 from hyperSel import log
 from keywords import SOFTWARE_KEYWORDS, PLACEMENT_KEYWORDS
 
-ROOT = Path(__file__).resolve().parents[2]
-DB   = Path(__file__).resolve().parent / "database.sqlite"
+from tracker_db import DB, _init_db, already_applied, is_failed, record_failure, record_application
 
-REAPPLY_AFTER_DAYS = 365
+ROOT = Path(__file__).resolve().parents[2]
 
 _STATS = {"success": 0, "failed": 0, "total": 0}
 
@@ -48,152 +45,6 @@ REMOTE_CONSTRAINTS = {
     # "workbc":           "AND LOWER(work_mode) LIKE '%remote%'",
     # craigslist, saskjobs, indeed have no work_mode column — no constraint added
 }
-
-
-# ── tracker DB ────────────────────────────────────────────────────────────────
-
-def _init_db(conn: sqlite3.Connection) -> None:
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS applied_jobs (
-            id         INTEGER PRIMARY KEY AUTOINCREMENT,
-            title      TEXT NOT NULL,
-            company    TEXT NOT NULL,
-            source     TEXT,
-            url        TEXT,
-            applied_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
-    conn.execute("""
-        CREATE INDEX IF NOT EXISTS idx_applied_title_company
-        ON applied_jobs (title, company)
-    """)
-    # Tracks URLs that couldn't be applied to (bad link, no email, etc.)
-    # Keyed by URL so the same company can repost a working link later.
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS failed_jobs (
-            url       TEXT PRIMARY KEY,
-            title     TEXT,
-            company   TEXT,
-            source    TEXT,
-            reason    TEXT,
-            failed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
-    conn.commit()
-
-
-def _normalize(s: str | None) -> str:
-    return (s or "").strip().lower()
-
-
-# Keywords that are short enough to be substrings of unrelated words and need
-# a proper word-boundary check rather than a bare LIKE match.
-# e.g. "intern" → "internal auditor" is a false positive.
-_WORD_BOUNDARY_KEYWORDS: dict[str, re.Pattern[str]] = {
-    kw: re.compile(rf"\b{re.escape(kw)}\b", re.IGNORECASE)
-    for kw in ("intern",)
-}
-
-
-def _placement_word_boundary_ok(title: str, keywords: list[str]) -> bool:
-    """
-    For any keyword that requires a word-boundary check, confirm the title
-    actually contains that keyword as a standalone word (not as a substring
-    of a longer word like "internal" or "international").
-
-    Returns True if:
-      - none of the matched keywords are in _WORD_BOUNDARY_KEYWORDS, OR
-      - at least one of them genuinely matches as a whole word.
-    """
-    title_lower = title.lower()
-    sensitive = [kw for kw in keywords if kw.lower() in _WORD_BOUNDARY_KEYWORDS]
-    if not sensitive:
-        return True  # nothing to double-check
-
-    # Check whether a sensitive keyword is the ONLY reason this row matched.
-    non_sensitive = [kw for kw in keywords if kw.lower() not in _WORD_BOUNDARY_KEYWORDS]
-    non_sensitive_hit = any(kw.lower() in title_lower for kw in non_sensitive)
-    if non_sensitive_hit:
-        return True  # a safe keyword already matches — row is legitimate
-
-    # Only sensitive keywords matched — verify each has a true word boundary.
-    return any(
-        _WORD_BOUNDARY_KEYWORDS[kw.lower()].search(title)
-        for kw in sensitive
-        if kw.lower() in _WORD_BOUNDARY_KEYWORDS
-    )
-
-
-def already_applied(conn: sqlite3.Connection, title: str, company: str) -> bool:
-    """Return True if we applied to this (title, company) within the cooldown window."""
-    cutoff = (datetime.now() - timedelta(days=REAPPLY_AFTER_DAYS)).strftime("%Y-%m-%d %H:%M:%S")
-    row = conn.execute(
-        """
-        SELECT MAX(applied_at) FROM applied_jobs
-        WHERE title = ? AND company = ? AND applied_at >= ?
-        """,
-        (_normalize(title), _normalize(company), cutoff),
-    ).fetchone()
-    return row[0] is not None
-
-
-def is_failed(conn: sqlite3.Connection, url: str | None) -> bool:
-    """Return True if this URL has been marked as unapplicable."""
-    if not url:
-        return False
-    row = conn.execute(
-        "SELECT 1 FROM failed_jobs WHERE url = ?", (url,)
-    ).fetchone()
-    return row is not None
-
-
-def record_failure(job: dict[str, Any], reason: str = "") -> None:
-    """
-    Call this when an application attempt fails (bad link, no contact info, etc.).
-    That URL will be permanently skipped in future get_jobs() calls.
-    """
-    conn = sqlite3.connect(DB)
-    _init_db(conn)
-    conn.execute(
-        """
-        INSERT OR IGNORE INTO failed_jobs (url, title, company, source, reason, failed_at)
-        VALUES (?, ?, ?, ?, ?, ?)
-        """,
-        (
-            job.get("url"),
-            _normalize(job.get("title")),
-            _normalize(job.get("company")),
-            job.get("source"),
-            reason,
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        ),
-    )
-    conn.commit()
-    conn.close()
-
-
-def record_application(job: dict[str, Any]) -> None:
-    """
-    Call this after successfully applying to a job. Logs the application so
-    the same (title, company) is skipped for the next REAPPLY_AFTER_DAYS days.
-    """
-    conn = sqlite3.connect(DB)
-    _init_db(conn)
-    conn.execute(
-        """
-        INSERT INTO applied_jobs (title, company, source, url, applied_at)
-        VALUES (?, ?, ?, ?, ?)
-        """,
-        (
-            _normalize(job.get("title")),
-            _normalize(job.get("company")),
-            job.get("source"),
-            job.get("url"),
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        ),
-    )
-    conn.commit()
-    conn.close()
 
 
 # ── job fetcher ───────────────────────────────────────────────────────────────

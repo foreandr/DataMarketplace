@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from typing import List, Any
+import random
 import time
 import sqlite3
 import subprocess
@@ -113,6 +114,7 @@ class CraigslistJobsCrawler:
         browser.go_to_site("https://foreandr.github.io/")
 
         cities = list(get_all_cities_with_location())
+        random.shuffle(cities)
         total_cities = len(cities)
 
         for i, location in enumerate(cities, 1):

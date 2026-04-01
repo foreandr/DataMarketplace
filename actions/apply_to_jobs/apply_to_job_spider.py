@@ -15,7 +15,7 @@ from selenium.webdriver.common.by import By
 from hyperSel import instance
 
 from some_keywords import SOFTWARE_KEYWORDS
-from main import already_applied, is_failed, _init_db, DB, record_failure, record_application
+from tracker_db import already_applied, is_failed, _init_db, DB, record_failure, record_application
 import time
 
 ROOT        = Path(__file__).resolve().parents[2]
