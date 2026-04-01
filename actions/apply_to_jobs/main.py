@@ -30,6 +30,7 @@ SOURCES = {
     "craigslist":       ROOT / "src/_craigslist_jobs/database.sqlite",
     "goodwork":         ROOT / "src/_goodwork_jobs/database.sqlite",
     "indeed":           ROOT / "src/_indeed_jobs/database.sqlite",
+    "jobspider":        ROOT / "src/_jobspider_jobs/database.sqlite",
     "saskjobs":         ROOT / "src/_saskjobs/database.sqlite",
     "workbc":           ROOT / "src/_workbc_jobs/database.sqlite",
 }
@@ -261,6 +262,7 @@ import apply_to_canadian_jobbank
 import apply_to_charityvillage
 import apply_to_craigslist
 import apply_to_goodwork
+import apply_to_job_spider
 import apply_to_saskjobs
 import apply_to_workbc
 
@@ -269,6 +271,7 @@ _APPLIERS = {
     "charityvillage":   apply_to_charityvillage.apply,
     "craigslist":       apply_to_craigslist.apply,
     "goodwork":         apply_to_goodwork.apply,
+    "jobspider":        apply_to_job_spider.apply,
     "saskjobs":         apply_to_saskjobs.apply,
     "workbc":           apply_to_workbc.apply,
 }
