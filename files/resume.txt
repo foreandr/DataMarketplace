@@ -1,0 +1,70 @@
+Andre Foreman
+519-636-3173
+foreandr@gmail.com
+
+Education
+--------------
+
+Trent University
+B.Sc in Mathematics, 2024-2026
+
+Fanshawe College of Applied Arts And Technology
+Advanced Diploma in Computer Programming and Analysis, 2020-2023
+
+Volleyball Canada
+Canadian National Excellence Program, 2017-2020
+
+Fanshawe College of Applied Arts And Technology
+Diploma in General Arts and Sciences, 2015-2017
+
+Certifications
+--------------
+
+Standard First Aid & CPR (Level C) — Canadian Red Cross
+Private Investigative License — Ontario Ministry of the Solicitor General
+
+Work history
+--------------
+
+Security
+The Social, Present
+- Meticulously screened legal documentation to prevent underage entry and ensure 100% compliance with liquor laws.
+- Facilitated seamless entry for high-profile guests and table reservations while maintaining strict security protocols.
+
+Office Manager & Software Engineer
+QuickQr, 2024
+- Managed office operations, payroll, bookkeeping, and company finances using QuickBooks; including taxes, digital and physical recordkeeping, and administrative compliance.
+- Built internal tools to maintain the company's QR code platform, contributing to both frontend features and backend infrastructure.
+
+Software Engineer
+Reload Strathroy, 2023
+- Built a large internal tool to monitor public marketplaces and send instant notifications when items matching specific criteria appeared, enabling early arbitrage opportunities and reducing manual tracking.
+
+Security
+The Ceeps and Barney's, 2023
+- Maintained a safe and orderly environment by managing entry, monitoring crowds, and resolving conflicts with discretion and professionalism.
+- Collaborated with venue staff to enforce policies, check identification, and ensure compliance with safety and capacity regulations.
+
+Software Engineering Intern
+Perimeter Institute for Theoretical Physics, 2022
+- Modernized internal infrastructure by Dockerizing and deploying services via Kubernetes, improving reliability and streamlining research workflows.
+
+Software Engineering Intern
+A & L Laboratories, 2022
+- Developed automation tools that reduced manual data handling and improved lab workflow efficiency.
+
+Game QA Intern
+BetaDwarf, 2021
+- Tested core gameplay features, balance, and user experience for in-development titles, documenting bugs and collaborating directly with devs to improve game quality.
+
+Seasonal Associate
+Walmart, 2020
+- Provided customer support and maintained organized stock flow in a high-traffic retail environment during the height of the COVID-19 pandemic.
+
+Professional Athlete
+Volleyball Canada, Gatineau, August 2017 - March 2020
+- Represented Canada at international events, including the Olympic Qualifier and Pan American Cup in Mexico; earned 3 national championships and 2 provincial titles.
+
+Clinic Intern
+Fowler Kennedy Sports Medicine Clinic, 2019
+- Assisted with injury assessments, treatment preparation, and athlete rehab tracking in a high-performance sports medicine environment.

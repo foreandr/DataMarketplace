@@ -1,5 +1,5 @@
 SOFTWARE_KEYWORDS = [
-    "programmer","computer","information technology", "data", "software", "web", "mobile", "cloud", "devops",
+    "programmer","computer","information technology", "data", "software", "web","cloud", "devops",
     # Software / general
     "software developer",
     "software engineer",

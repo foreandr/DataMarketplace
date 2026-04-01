@@ -62,4 +62,4 @@ def manage_databases(target_source="workbc"):
     conn.close()
 
 if __name__ == "__main__":
-    manage_databases("workbc")
+    manage_databases("job_spider")
