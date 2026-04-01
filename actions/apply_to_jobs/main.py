@@ -23,10 +23,10 @@ _STATS = {"success": 0, "failed": 0, "total": 0}
 
 SOURCES = {
     "canadian_jobbank": ROOT / "src/_canadian_jobbank/database.sqlite",
-    "charityvillage":   ROOT / "src/_charityvillage_jobs/database.sqlite",
+    # "charityvillage":   ROOT / "src/_charityvillage_jobs/database.sqlite",
     "craigslist":       ROOT / "src/_craigslist_jobs/database.sqlite",
-    "goodwork":         ROOT / "src/_goodwork_jobs/database.sqlite",
-    "indeed":           ROOT / "src/_indeed_jobs/database.sqlite",
+    # "goodwork":         ROOT / "src/_goodwork_jobs/database.sqlite",
+    # "indeed":           ROOT / "src/_indeed_jobs/database.sqlite",
     "jobspider":        ROOT / "src/_jobspider_jobs/database.sqlite",
     "saskjobs":         ROOT / "src/_saskjobs/database.sqlite",
     "workbc":           ROOT / "src/_workbc_jobs/database.sqlite",
@@ -185,18 +185,7 @@ def run_applications(jobs: list[dict]) -> None:
 
 # ── main ──────────────────────────────────────────────────────────────────────
 
-# Cities in the Toronto / Durham / Kawarthas corridor (ON).
-GTA_CITIES = [
-    "toronto",
-    "peterborough",
-    "oshawa",
-    "durham",
-    "whitby",
-    "ajax",
-    "pickering",
-    "scarborough",
-    "north york",
-]
+
 
 if __name__ == "__main__":
     import json
