@@ -17,7 +17,7 @@ JOB_MODULES = [
     "_craigslist_jobs",
     "_eluta_jobs",
     "_goodwork_jobs",
-    "_indeed_jobs",
+    # "_indeed_jobs",
     "_saskjobs",
     "_workbc_jobs",
 ]

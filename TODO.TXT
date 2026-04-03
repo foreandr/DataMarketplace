@@ -12,5 +12,8 @@ https://www.gojobs.gov.on.ca/
 
 
 new appe, showcase of internal tool that makes it impossible to crawl
-show storage and whatnot 
-have to be able ot inergate it with existing tools
+    show storage and whatnot 
+    have to be able ot inergate it with existing tools
+
+    instead of the antichrist, we call it the anticrawl
+    mixing as usual, break context window
