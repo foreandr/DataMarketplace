@@ -1249,24 +1249,32 @@ def delete_crawler(source_name: str) -> None:
 
 if __name__ == "__main__":
     # ── CONFIG ───────────────────────────────────────────────────────────────────
-    SOURCE_NAME = "jobspider_jobs"
-    SHORT_DESC  = "Job postings scraped from JobSpider."
+    SOURCE_NAME = "upwork_jobs"
+    SHORT_DESC  = "Upwork job feed cards (title, budget, client details, and tags)."
     LONG_DESC   = (
-        "JobSpider listings scraped from the results page. Records include "
-        "job title, company, location, category, posted date, and sponsored flag."
+        "Upwork job cards scraped from the search results feed. Records include "
+        "post age, title, rate/budget details, experience level, description snippet, "
+        "skills/tags, client verification, client rating/spend, client location, and "
+        "proposal counts."
     )
     EXTRA_FIELDS: list[dict] = [
-        {"name": "title",         "type": "TEXT",                                       "description": "Job title"},
-        {"name": "company",       "type": "TEXT",                                       "description": "Company or organization name"},
-        {"name": "location_raw",  "type": "TEXT",                                       "description": "Location as shown (e.g., Juneau, AK)"},
-        {"name": "category",      "type": "TEXT",    "indexed": True,                   "description": "Job category (e.g., General, Building Trades/Construction)"},
-        {"name": "posted_date",   "type": "TEXT",    "indexed": True,                   "description": "Date the listing was added (e.g., 3/31/2026 1:24:21 PM PST)"},
-        {"name": "is_sponsored",  "type": "INTEGER", "indexed": True,                   "description": "1 if the listing is sponsored/promoted, else 0"},
-        {"name": "description",   "type": "TEXT",                                       "description": "Short description snippet from the listing"},
-        {"name": "url",           "type": "TEXT",    "unique": True, "indexed": True,   "description": "URL to the JobSpider job posting"},
-        {"name": "city",          "type": "TEXT",    "indexed": True, "location": True, "description": "Parsed city"},
-        {"name": "province",      "type": "TEXT",    "indexed": True, "location": True, "description": "State or province code (e.g., AK, ON)"},
-        {"name": "country",       "type": "TEXT",    "indexed": True, "location": True, "description": "Country"},
+        {"name": "title",               "type": "TEXT",                                       "description": "Job title"},
+        {"name": "posted_age",          "type": "TEXT",    "indexed": True,                   "description": "Relative posted time (e.g., 'Posted 2 hours ago')"},
+        {"name": "job_type",            "type": "TEXT",    "indexed": True,                   "description": "Hourly or Fixed"},
+        {"name": "experience_level",    "type": "TEXT",    "indexed": True,                   "description": "Experience level (Entry, Intermediate, Expert)"},
+        {"name": "est_time",            "type": "TEXT",                                       "description": "Estimated project time / hours per week"},
+        {"name": "hourly_rate_min",     "type": "REAL",    "indexed": True,                   "description": "Minimum hourly rate if shown"},
+        {"name": "hourly_rate_max",     "type": "REAL",    "indexed": True,                   "description": "Maximum hourly rate if shown"},
+        {"name": "fixed_budget",        "type": "REAL",    "indexed": True,                   "description": "Fixed-price budget if shown"},
+        {"name": "description",         "type": "TEXT",                                       "description": "Short description snippet"},
+        {"name": "skills",              "type": "TEXT",    "indexed": True,                   "description": "Comma-separated skills/tags"},
+        {"name": "is_featured",         "type": "INTEGER", "indexed": True,                   "description": "1 if the job is marked Featured"},
+        {"name": "payment_verified",    "type": "INTEGER", "indexed": True,                   "description": "1 if client is payment verified"},
+        {"name": "client_rating",       "type": "REAL",    "indexed": True,                   "description": "Client rating (0-5) if shown"},
+        {"name": "client_spend",        "type": "TEXT",                                       "description": "Client spend summary (e.g., '$80K+ spent')"},
+        {"name": "client_location",     "type": "TEXT",    "indexed": True, "location": True, "description": "Client location as shown (e.g., United States)"},
+        {"name": "proposals_range",     "type": "TEXT",    "indexed": True,                   "description": "Proposals range (e.g., '20 to 50')"},
+        {"name": "url",                 "type": "TEXT",    "unique": True, "indexed": True,   "description": "URL to the Upwork job post"},
     ]
     # ─────────────────────────────────────────────────────────────────────────────
 

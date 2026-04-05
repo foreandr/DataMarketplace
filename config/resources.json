@@ -43,6 +43,10 @@
     "_jobspider_jobs": {
       "db_path": "src/_jobspider_jobs/database.sqlite",
       "schema": "_jobspider_jobs"
+    },
+    "_upwork_jobs": {
+      "db_path": "src/_upwork_jobs/database.sqlite",
+      "schema": "_upwork_jobs"
     }
   }
 }
