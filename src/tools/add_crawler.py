@@ -1248,6 +1248,7 @@ def delete_crawler(source_name: str) -> None:
 
 
 if __name__ == "__main__":
+    #TEST
     # ── CONFIG ───────────────────────────────────────────────────────────────────
     SOURCE_NAME = "upwork_jobs"
     SHORT_DESC  = "Upwork job feed cards (title, budget, client details, and tags)."
