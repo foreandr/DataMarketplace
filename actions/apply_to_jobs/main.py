@@ -28,7 +28,7 @@ SOURCES = {
     # "goodwork":         ROOT / "src/_goodwork_jobs/database.sqlite",
     # "indeed":           ROOT / "src/_indeed_jobs/database.sqlite",
     "jobspider":        ROOT / "src/_jobspider_jobs/database.sqlite",
-    "saskjobs":         ROOT / "src/_saskjobs/database.sqlite",
+    # "saskjobs":         ROOT / "src/_saskjobs/database.sqlite",
     "workbc":           ROOT / "src/_workbc_jobs/database.sqlite",
 }
 
