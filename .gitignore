@@ -30,8 +30,9 @@ output/
 logs/
 gunicorn.ctl
 
-# SQLite
+# SQLite (local only)
 *.db
+*.sqlite
 src/crawlers/logs
 logs/test/*.json
 
