@@ -1,0 +1,1443 @@
+Company Name,Industry
+RBC (Royal Bank of Canada),Banking & Finance
+TD Bank (Toronto-Dominion),Banking & Finance
+Scotiabank (Bank of Nova Scotia),Banking & Finance
+BMO (Bank of Montreal),Banking & Finance
+CIBC (Canadian Imperial Bank of Commerce),Banking & Finance
+National Bank of Canada,Banking & Finance
+Desjardins Group,Banking & Finance
+Manulife Financial,Insurance & Wealth
+Sun Life Financial,Insurance & Wealth
+Great-West Lifeco (Canada Life),Insurance & Wealth
+Fairfax Financial Holdings,Insurance & Wealth
+Intact Financial Corporation,Insurance & Wealth
+Industrial Alliance (iA Financial),Insurance & Wealth
+Laurentian Bank,Banking & Finance
+Canadian Western Bank,Banking & Finance
+EQ Bank (Equitable Bank),Banking & Finance
+ATB Financial,Banking & Finance
+Canaccord Genuity,Wealth Management
+Raymond James Canada,Wealth Management
+PSP Investments,Institutional Investing
+CPPIB (Canada Pension Plan Investment Board),Institutional Investing
+Ontario Teachers' Pension Plan (OTPP),Institutional Investing
+OMERS,Institutional Investing
+CDPQ (Caisse de dépôt et placement du Québec),Institutional Investing
+Wealthsimple,Fintech
+Questrade,Fintech
+Tangerine,Fintech
+Simplii Financial,Fintech
+PC Financial,Fintech/Retail
+Canadian Tire Financial Services,Fintech/Retail
+Hopper,Fintech/Travel
+Nuvei,Payments Tech
+Lightspeed Commerce,E-commerce Tech
+PlusGrade,Fintech/Aviation
+Koho,Fintech
+Mogo,Fintech
+Clearco,Fintech
+Rogers Communications,Telecommunications
+Bell Canada (BCE Inc.),Telecommunications
+Telus,Telecommunications
+Quebecor (Videotron/Freedom Mobile),Telecommunications
+Cogeco,Telecommunications
+Shaw Communications,Telecommunications
+SaskTel,Telecommunications
+Teksavvy,Telecommunications
+CBC / Radio-Canada,Media
+Cineplex,Entertainment
+Thomson Reuters,Information Services
+Corus Entertainment,Media
+Shopify,Software/E-commerce
+OpenText,Enterprise Software
+Constellation Software,Software Acquisition
+CGI Inc.,IT Consulting
+Kinaxis,Supply Chain Software
+Descartes Systems Group,Logistics Software
+Docebo,Learning Management Software
+Benevity,Social Impact Tech
+Clio (Themis Solutions),Legal Tech
+PointClickCare,Health Tech
+Geotab,IoT/Telematics
+BlackBerry,Cybersecurity
+D2L (Desire2Learn),Education Tech
+Google Canada,Big Tech
+Amazon Canada,Big Tech
+Microsoft Canada,Big Tech
+Meta Canada,Big Tech
+IBM Canada,Big Tech
+Loblaw Companies Limited,Retail
+Empire Company (Sobeys),Retail
+Metro Inc.,Retail
+Alimentation Couche-Tard (Circle K),Retail
+Dollarama,Retail
+Hudson's Bay Company,Retail
+Lululemon Athletica,Retail
+Aritzia,Retail
+Indigo Books & Music,Retail
+Goodness Me!,Retail
+Enbridge,Energy & Utilities
+TC Energy,Energy & Utilities
+Suncor Energy,Energy & Utilities
+Canadian Natural Resources (CNRL),Energy & Utilities
+Cenovus Energy,Energy & Utilities
+Imperial Oil,Energy & Utilities
+Hydro-Québec,Utilities
+Ontario Power Generation (OPG),Utilities
+Hydro One,Utilities
+BC Hydro,Utilities
+Bruce Power,Utilities
+Fortis Inc.,Utilities
+Brookfield Asset Management,Asset Management
+Canadian National Railway (CN),Transportation
+Canadian Pacific Kansas City (CPKC),Transportation
+Air Canada,Aviation
+WestJet,Aviation
+Bombardier,Aerospace
+CAE Inc.,Aerospace/Simulation
+MDA Space,Space Tech
+Magna International,Automotive Manufacturing
+Linamar,Automotive Manufacturing
+Purolator,Logistics
+Stantec,Engineering & Consulting
+WSP Global,Engineering & Consulting
+SNC-Lavalin (AtkinsRéalis),Engineering & Consulting
+Hatch,Engineering & Consulting
+Tetra Tech Canada,Engineering & Consulting
+EllisDon,Construction
+PCL Construction,Construction
+Graham Construction,Construction
+Bird Construction,Construction
+Aecon Group,Construction
+Colliers International,Real Estate
+Brookfield Real Estate,Real Estate
+FirstService Corporation,Real Estate Services
+Cadillac Fairview,Real Estate
+Oxford Properties,Real Estate
+Allied REIT,Real Estate
+RioCan REIT,Real Estate
+SmartCentres REIT,Real Estate
+Choice Properties REIT,Real Estate
+Dream Unlimited,Real Estate
+Gildan Activewear,Apparel Manufacturing
+Canada Goose,Apparel
+Arc'teryx (Amer Sports),Apparel
+Roots Canada,Retail/Apparel
+Reitmans,Retail/Apparel
+Spin Master,Toy Manufacturing
+DHX Media (WildBrain),Children's Entertainment
+eOne (Entertainment One),Media Production
+Stingray Group,Media/Music
+Torstar,Media/Publishing
+Postmedia Network,Media/Publishing
+Globe and Mail,Media/Publishing
+Maclean's (Rogers Media),Media/Publishing
+Cinespace Film Studios,Film Production
+Ubisoft Montreal,Video Games
+Behaviour Interactive,Video Games
+Digital Extremes,Video Games
+Relic Entertainment,Video Games
+Kabam,Mobile Gaming
+Hootsuite,Social Media Tech
+Slack (Salesforce Canada),Enterprise Software
+Introhive,CRM/AI
+Tulip Retail,Retail Tech
+Vendasta,Marketing Tech
+Jobber,Field Service Software
+ApplyBoard,Ed Tech
+Top Hat,Ed Tech
+Neatly (MindBridge),AI/Fintech
+Cohere,AI/NLP
+Ada (Ada Support),AI/Chatbot
+Sanctuary AI,AI/Robotics
+Integrate.ai,AI
+Coveo,AI/Search
+Klue,Competitive Intelligence AI
+Grafana Labs (Canada office),Observability Software
+Dapper Labs,Web3/NFT
+Consensys (Canada),Blockchain
+Ledn,Crypto Lending
+Shakepay,Crypto Exchange
+Bitbuy,Crypto Exchange
+CIBC Mellon,Custody & Fund Services
+SS&C Technologies Canada,Fund Administration
+Broadridge Canada,Financial Infrastructure
+TMX Group,Capital Markets
+Cboe Canada,Capital Markets
+NEO Exchange,Capital Markets
+Fidelity Canada,Asset Management
+Franklin Templeton Canada,Asset Management
+AGF Management,Asset Management
+CI Financial,Asset Management
+Gluskin Sheff (CI),Wealth Management
+Burgundy Asset Management,Wealth Management
+Addenda Capital,Asset Management
+Fiera Capital,Asset Management
+Sprott Inc.,Resource Asset Management
+Ninepoint Partners,Alternative Asset Management
+Picton Mahoney,Hedge Funds
+Polar Asset Management,Hedge Funds
+Alignvest,Private Equity
+Birch Hill Equity Partners,Private Equity
+Novacap,Private Equity
+MDS Capital,Life Sciences Investing
+BDC Capital,Venture Capital
+MaRS Investment Accelerator Fund,Venture Capital
+Real Ventures,Venture Capital
+Inovia Capital,Venture Capital
+Radical Ventures,AI Venture Capital
+Panache Ventures,Venture Capital
+OMERS Ventures,Venture Capital
+Greenspring Associates Canada,Venture Capital
+Paladin Labs (Endo International),Pharma
+Knight Therapeutics,Pharma
+Bausch Health,Pharma
+Zymeworks,Biotech
+AbCellera Biologics,Biotech
+Sernova,Biotech
+Sophiris Bio,Biotech
+Ballard Power Systems,Clean Energy/Hydrogen
+Algonquin Power & Utilities,Renewable Energy
+Boralex,Renewable Energy
+Innergex Renewable Energy,Renewable Energy
+Agnico Eagle Mines,Mining
+Barrick Gold,Mining
+Kinross Gold,Mining
+Eldorado Gold,Mining
+First Majestic Silver,Mining
+Pan American Silver,Mining
+Teck Resources,Mining
+Lundin Mining,Mining
+Ivanhoe Mines,Mining
+Hudbay Minerals,Mining
+First Quantum Minerals,Mining
+Yamana Gold (Agnico),Mining
+Equinox Gold,Mining
+Osisko Gold Royalties,Mining Royalties
+Wheaton Precious Metals,Mining Royalties
+Franco-Nevada,Mining Royalties
+Triple Flag Precious Metals,Mining Royalties
+Sandstorm Gold,Mining Royalties
+Torex Gold Resources,Mining
+Alamos Gold,Mining
+Nutrien,Agriculture/Fertilizer
+Viterra (Glencore Canada),Agri-Food
+Canola Council of Canada (ops),Agriculture
+Limagrain Canada,Agriculture/Seeds
+Richardson International,Grain & Agri-Food
+Maple Leaf Foods,Food Manufacturing
+McCain Foods,Food Manufacturing
+Saputo,Dairy
+Gay Lea Foods,Dairy Co-op
+Lactalis Canada,Dairy
+Lassonde Industries,Beverages
+Andrew Peller,Winery
+Molson Coors Canada,Brewing
+Labatt Breweries,Brewing
+Steam Whistle Brewing,Craft Beer
+Sleeman Breweries,Brewing
+Arterra Wines Canada,Wine
+Premium Brands Holdings,Specialty Foods
+Clearwater Seafoods,Seafood
+High Liner Foods,Seafood
+Trident Seafoods Canada,Seafood
+GreenFirst Forest Products,Forestry
+Resolute Forest Products,Forestry/Paper
+West Fraser Timber,Forestry
+Canfor Corporation,Forestry
+Interfor,Forestry
+Mercer International,Pulp & Paper
+Cascades Inc.,Packaging/Paper
+Domtar (Paper Excellence),Paper
+Kruger Inc.,Paper/Tissue
+Transcontinental Inc.,Printing/Packaging
+Winpak,Packaging
+ATS Corporation,Industrial Automation
+Exco Technologies,Automotive Parts
+Martinrea International,Automotive Parts
+Multimatic,Automotive Engineering
+Dana Canada,Automotive Parts
+Stackpole International,Automotive Parts
+ABC Technologies,Automotive Parts
+Shawflex (Prysmian Canada),Wire & Cable
+Nexans Canada,Wire & Cable
+Hammond Power Solutions,Electrical Equipment
+Roper Industries Canada,Industrial
+Toromont Industries,Equipment Dealer
+Finning International,Equipment Dealer
+Wajax,Industrial Distribution
+Russel Metals,Metals Distribution
+Stelco Holdings,Steel
+Algoma Steel,Steel
+Evraz (now part of Stelco group),Steel
+Samuel Son & Co.,Metals Distribution
+Novelis Canada (Hindalco),Aluminum
+Rio Tinto Canada (Alcan),Aluminum
+Constellium Canada,Aluminum
+Arconic Canada,Aluminum
+Norbord (West Fraser),Wood Panels
+Ainsworth Lumber,Wood Products
+Tolko Industries,Lumber
+Zellers (HBC),Retail
+Revy Home Centres (RONA),Retail/Home Improvement
+RONA (Lowe's Canada),Home Improvement Retail
+Sleep Country Canada,Retail
+Leon's Furniture,Retail
+The Brick,Retail
+Bouclair,Retail/Home
+Simons,Retail/Apparel
+La Maison Simons,Retail/Apparel
+Moores Clothing for Men,Retail/Apparel
+Reitmans (Penningtons/Addition Elle),Retail/Apparel
+Mark's (Canadian Tire),Retail/Apparel
+Sporting Life,Retail/Sports
+Sport Chek (Canadian Tire),Retail/Sports
+Atmosphere (Canadian Tire),Retail/Outdoor
+Sail Outdoors,Retail/Outdoor
+Cabela's Canada (Bass Pro),Retail/Outdoor
+Clover Leaf Seafoods,Consumer Foods
+Dare Foods,Consumer Foods
+Voortman Cookies (Voortman Biscuits),Consumer Foods
+Biscuits Leclerc,Consumer Foods
+Viau (Leclerc),Consumer Foods
+Krispy Kreme Canada,Food Service
+Tim Hortons (Restaurant Brands),Food Service
+A&W Canada,Food Service
+MTY Food Group,Food Service Franchising
+Recipe Unlimited (Swiss Chalet/Harvey's),Food Service
+Cara Operations,Food Service
+Pita Pit,Food Service
+MR MIKES Steakhouse,Food Service
+St-Hubert (Cara),Food Service
+Couche-Tard Convenience,Retail Convenience
+Parkland Corporation,Fuel & Convenience Retail
+Gibson Energy,Midstream Energy
+Keyera Corp,Midstream Energy
+Pembina Pipeline,Midstream Energy
+Inter Pipeline (Brookfield),Midstream Energy
+Tidal Royalty,Cannabis/Energy
+Whitecap Resources,Oil & Gas E&P
+Crew Energy,Oil & Gas E&P
+Baytex Energy,Oil & Gas E&P
+Vermilion Energy,Oil & Gas E&P
+Paramount Resources,Oil & Gas E&P
+Tourmaline Oil,Natural Gas E&P
+Arc Resources,Natural Gas E&P
+Peyto Exploration,Natural Gas E&P
+Bonavista Energy,Natural Gas E&P
+Canacol Energy,Natural Gas
+Secure Energy Services,Oilfield Services
+Calfrac Well Services,Oilfield Services
+Trican Well Service,Oilfield Services
+CES Energy Solutions,Oilfield Chemicals
+PHX Energy Services,Directional Drilling
+Precision Drilling,Contract Drilling
+Cathedral Energy Services,Oilfield Services
+Tidewater Midstream,Midstream/Renewables
+Pengrowth Energy (Cona Resources),Oil & Gas
+Tamarack Valley Energy,Oil & Gas E&P
+Storm Resources,Natural Gas
+Athabasca Oil,Oil Sands
+MEG Energy,Oil Sands
+Canadian Oil Sands (Suncor legacy),Oil Sands
+Husky Energy (Cenovus),Oil & Gas
+SunPower Canada,Solar Energy
+Canadian Solar,Solar Manufacturing
+Enercare,Home Services/Energy
+Just Energy,Energy Retail
+Enmax,Utility
+ATCO Ltd.,Diversified Utility/Logistics
+Capital Power,Power Generation
+TransAlta,Power Generation
+Northland Power,Renewable Energy
+Pattern Energy Canada,Wind Energy
+Potentia Renewables,Renewable Energy
+BluEarth Renewables,Renewable Energy
+Rupert's Land Capital (Windiga),Renewable Energy
+Greengate Power,Renewable Energy
+SaskPower,Crown Utility
+Manitoba Hydro,Crown Utility
+Newfoundland Power (Fortis),Utility
+Nova Scotia Power (Emera),Utility
+Emera Inc.,Utility
+Stella-Jones,Railway Ties/Utility Poles
+Finch West LRT (Metrolinx),Transit Infrastructure
+Metrolinx,Transit
+Ontario Northland,Rail/Transit
+VIA Rail Canada,Passenger Rail
+Algoma Central,Marine Shipping
+Seaspan (Washington Marine),Marine Shipping
+CSL Group (Canada Steamship Lines),Marine Shipping
+Cargojet,Air Cargo
+Chorus Aviation,Regional Aviation
+Sunwing (West Jet group),Leisure Aviation
+Air Transat (Transat A.T.),Leisure Aviation
+Porter Airlines,Regional Aviation
+Pacific Coastal Airlines,Regional Aviation
+Central Mountain Air,Regional Aviation
+Exchange Income Corporation,Aerospace/Aviation Services
+StandardAero,Aerospace MRO
+Magellan Aerospace,Aerospace Manufacturing
+IMP Aerospace,Aerospace MRO
+Pratt & Whitney Canada,Aerospace Engines
+Safran Canada,Aerospace
+Collins Aerospace Canada,Aerospace
+L3Harris Canada,Defence Electronics
+General Dynamics Canada,Defence
+Rheinmetall Canada,Defence
+SNC-Lavalin Nuclear,Nuclear Engineering
+Cameco,Uranium Mining
+Denison Mines,Uranium
+NexGen Energy,Uranium
+Uranium One (Kazatomprom Canada),Uranium
+CanAtom (partnerships),Nuclear Services
+Kinectrics,Nuclear Services
+Bruce Power Services,Nuclear Operations
+Terrestrial Energy,SMR/Nuclear Tech
+Moltex Energy,Nuclear Tech
+Nano One Materials,Battery Materials
+Electrovaya,Battery Technology
+Li-Cycle Holdings,Battery Recycling
+Lithium Americas,Lithium Mining
+Standard Lithium,Lithium Extraction
+E3 Lithium,Lithium
+Patriot Battery Metals,Critical Minerals
+Generation Mining,Copper/Palladium
+Surge Battery Metals,Nickel
+Canada Nickel Company,Nickel
+Giga Metals,Nickel/Cobalt
+FPX Nickel,Nickel
+Torchlight Energy (Meta Materials),Advanced Materials
+Spartan Delta (Inception),Oil & Gas
+Greenfield Acquisition,SPAC/Finance
+Absolute Software (now Absolute Security),Cybersecurity
+Beauceron Security,Cybersecurity
+eSentire,Cybersecurity
+Herjavec Group,Cybersecurity
+Scalar Decisions,IT Solutions
+Compugen,IT Distribution
+Softchoice,IT Solutions
+Long View Systems,IT Managed Services
+Pivotal IT,IT Services
+Microserve,IT Services
+ThinkOn,Cloud Services
+Hypertec,Cloud/Hardware
+NOVIPAX (Novacap portfolio),Packaging
+BioAtla Canada,Biotech
+Profound Medical,Medical Devices
+Shockwave Medical Canada,Medical Devices
+Sievert Medical,Medical Devices
+Nanoform Canada,Pharma
+Cipher Pharmaceuticals,Pharma
+Theratechnologies,Biotech/Pharma
+Acerus Pharmaceuticals,Pharma
+Suncere Healthcare,Healthcare Services
+Medavie,Healthcare/Insurance
+Chartwell Retirement Residences,Senior Living
+Sienna Senior Living,Senior Living
+Revera,Senior Living
+Extendicare,Long-Term Care
+CareRx,Pharmacy Services
+Neighbourly Pharmacy,Pharmacy
+MedReleaf (Aurora Cannabis),Cannabis
+Canopy Growth,Cannabis
+Tilray Brands Canada,Cannabis
+Cronos Group,Cannabis
+Auxly Cannabis,Cannabis
+Organigram,Cannabis
+Hexo Corp,Cannabis
+Village Farms International,Cannabis/Agriculture
+Accenture Canada,IT Consulting
+Capgemini Canada,IT Consulting
+Deloitte Canada,Professional Services
+KPMG Canada,Professional Services
+PwC Canada,Professional Services
+EY Canada,Professional Services
+MNP LLP,Accounting & Advisory
+BDO Canada,Accounting & Advisory
+Grant Thornton Canada,Accounting & Advisory
+McCarthy Tétrault,Legal Services
+Osler Hoskin & Harcourt,Legal Services
+Bennett Jones,Legal Services
+Stikeman Elliott,Legal Services
+Fasken Martineau,Legal Services
+Blake Cassels & Graydon,Legal Services
+Norton Rose Fulbright Canada,Legal Services
+Torys LLP,Legal Services
+Borden Ladner Gervais,Legal Services
+Gowling WLG,Legal Services
+Dentons Canada,Legal Services
+Sun Life Global Investments,Asset Management
+Mackenzie Investments,Asset Management
+Dynamic Funds (Scotiabank),Asset Management
+TD Asset Management,Asset Management
+RBC Global Asset Management,Asset Management
+CIBC Asset Management,Asset Management
+BMO Asset Management,Asset Management
+Natixis Canada,Asset Management
+Mawer Investment Management,Asset Management
+Leith Wheeler Investment Counsel,Asset Management
+Connor Clark & Lunn,Asset Management
+Beutel Goodman,Asset Management
+Jarislowsky Fraser (Scotiabank),Asset Management
+Phillips Hager & North (RBC),Asset Management
+Guardian Capital Group,Asset Management
+Canso Investment Counsel,Fixed Income
+Algonquin Capital,Fixed Income
+Horizons ETFs (Mirae),ETF Provider
+iShares Canada (BlackRock),ETF Provider
+Vanguard Canada,ETF Provider
+Purpose Investments,ETF/Alt Investments
+Hamilton ETFs,ETF Provider
+Evolve Funds,ETF Provider
+First Asset (CI),ETF Provider
+Middlefield Group,Closed-End Funds
+Trez Capital,Private Mortgage Lending
+Equitable Life of Canada,Insurance
+SSQ Insurance (Beneva),Insurance
+Beneva,Insurance
+Promutuel Assurance,Insurance
+Economical Insurance (Definity),Insurance
+Definity Financial,Insurance
+Wawanesa Mutual Insurance,Insurance
+Co-operators Group,Insurance
+Gore Mutual Insurance,Insurance
+Aviva Canada,Insurance
+RSA Canada (Intact),Insurance
+Northbridge Financial (Fairfax),Insurance
+Chubb Canada,Insurance
+Zurich Canada,Insurance
+Manulife Bank,Banking
+HomeEquity Bank,Reverse Mortgage
+Equitable Trust,Trust Services
+Community Trust,Trust Services
+Concentra Bank,Credit Union Services
+Meridian Credit Union,Credit Union
+Libro Credit Union,Credit Union
+First West Credit Union,Credit Union
+Servus Credit Union,Credit Union
+Conexus Credit Union,Credit Union
+Assiniboine Credit Union,Credit Union
+Affinity Credit Union,Credit Union
+Alterna Savings,Credit Union
+Luminus Financial,Credit Union
+Coast Capital Savings,Credit Union
+Integris Credit Union,Credit Union
+Northern Credit Union,Credit Union
+Kindred Credit Union,Credit Union
+Alterna Bank,Digital Banking
+Manulife One,Banking
+Neo Financial,Fintech
+Stack (Koho partner),Fintech
+Nyble,Fintech/Credit
+Borrowell,Fintech/Credit
+Refresh Financial,Fintech/Credit
+Spring Financial,Fintech/Lending
+Progressa,Fintech/Lending
+Thinking Capital (Purpose),SME Lending
+Merchant Growth,SME Lending
+Lendified,SME Lending
+FundThrough,Invoice Financing
+Veriday,Fintech
+Finn AI (NCino),AI Banking
+Brim Financial,Credit Card Tech
+Paays,HR Fintech
+Rise (Payworks),Payroll Tech
+Payworks,Payroll
+Ceridian (Dayforce),HCM Software
+Paylocity Canada,Payroll
+ADP Canada,HR/Payroll
+Morneau Shepell (LifeWorks/TELUS Health),Employee Wellbeing
+TELUS Health,Digital Health
+Maple (virtual health),Health Tech
+Dialogue Health,Virtual Care
+CloudMD,Digital Health
+Hims & Hers Canada,Digital Health
+Think Research,Health IT
+Greenspace Mental Health,Mental Health Tech
+MindBeacon (TELUS Health),Mental Health
+Inkblot Therapy,Mental Health Tech
+Carebook Technologies,Health Tech
+CloudDX,Remote Patient Monitoring
+Mednow,Online Pharmacy
+PocketPills,Online Pharmacy
+Pillway,Online Pharmacy
+Remedy (Medisys),Occupational Health
+CBI Health,Rehabilitation Services
+Bayshore HealthCare,Home Health
+ParaMed (Extendicare),Home Care
+SE Health,Home Health
+VHA Home HealthCare,Home Care
+CarePartners,Home Care
+Lifemark Health Group,Physiotherapy
+Klass & Associates,Physiotherapy
+Results Physiotherapy Canada,Physiotherapy
+LifeLabs,Medical Laboratory
+Dynacare,Medical Laboratory
+Alpha Laboratories,Medical Laboratory
+Gamma-Dynacare,Lab Services
+Medical Facilities Corporation,Surgical Facilities
+Strata Health,Care Coordination
+AccuMed,Health Data
+Medstack,Health Cloud
+League,Health Benefits Platform
+InteraXon (Muse),Neurotechnology
+MDA Ltd.,Space Technology
+Telesat,Satellite Communications
+ViaSat Canada,Satellite
+SkyWatch,Satellite Data
+GHGSat,Emissions Monitoring Satellite
+Xplore Technologies,Satellite Internet
+Xplornet,Rural Internet
+B2 Networks,ISP
+EBOX,ISP
+Storm Internet,ISP
+VMedia,IPTV/ISP
+Start.ca,ISP
+Beanfield Technologies,Fibre ISP
+Primus Canada,Telecom
+Iristel,Telecom
+TELUS International,BPO/Digital Services
+Mitel Networks,Unified Communications
+8x8 Canada,Cloud Communications
+RingCentral Canada,Cloud Communications
+Avaya Canada,Communications
+Salesforce Canada,CRM
+ServiceNow Canada,Cloud Software
+Workday Canada,HCM Cloud
+Oracle Canada,Enterprise Software
+SAP Canada,Enterprise Software
+SAS Canada,Analytics Software
+Klipfolio,Business Intelligence
+Validere,Data/Energy Analytics
+Humi,HR Software
+Collage HR,HR Software
+Rise People,HR Software
+Xero Canada,Accounting Software
+Sage Canada,Accounting Software
+FreshBooks,Accounting Software
+Wave Financial (H&R Block),Accounting Software
+Knit People,Payroll Software
+Wagepoint,Payroll Software
+Greenfield Global,Spirits Manufacturing
+Corby Spirit and Wine,Spirits
+Mark Anthony Group,Beverages/White Claw
+Cott Corporation (Prima Water),Beverages
+Refresco Canada,Beverage Manufacturing
+Smucker Foods of Canada,Consumer Foods
+Kraft Heinz Canada,Consumer Foods
+Nestlé Canada,Consumer Foods
+Unilever Canada,Consumer Goods
+Procter & Gamble Canada,Consumer Goods
+Colgate-Palmolive Canada,Consumer Goods
+Kimberly-Clark Canada,Consumer Goods
+Johnson & Johnson Canada,Consumer/Pharma
+Bayer Canada,Pharma/Consumer
+Pfizer Canada,Pharma
+Novartis Canada,Pharma
+AstraZeneca Canada,Pharma
+GlaxoSmithKline Canada,Pharma
+Roche Canada,Pharma/Diagnostics
+Sanofi Canada,Pharma
+Eli Lilly Canada,Pharma
+Bristol-Myers Squibb Canada,Pharma
+Amgen Canada,Biotech/Pharma
+Gilead Sciences Canada,Pharma
+Teva Canada,Generic Pharma
+Apotex,Generic Pharma
+Pharmascience,Generic Pharma
+Pendopharm (Pharmascience),Pharma
+AA Pharma,Generic Pharma
+Jamp Pharma,Generic Pharma
+Sanis Health,Generic Pharma
+Sivem Pharmaceuticals,Generic Pharma
+Sterimax,Sterile Pharma
+Searchlight Pharma,Specialty Pharma
+Tribute Pharmaceuticals,Specialty Pharma
+HLS Therapeutics,Specialty Pharma
+Xenon Pharmaceuticals,Biotech
+Intellijoint Surgical,Medical Devices
+Synaptive Medical,Medical Devices
+Softlanding Systems,IT Managed Services
+Pythian Group,Data/Cloud Services
+Myplanet,Digital Product Studio
+Mobiquity Canada,Digital Consulting
+Polar Geomatics,Geospatial Services
+DMTI Spatial,Geospatial Data
+Esri Canada,GIS Software
+Pelmorex (The Weather Network),Media/Weather Data
+Numeris,Audience Measurement
+Environics Analytics,Data Analytics
+Meltwater Canada,Media Intelligence
+Cision Canada,PR Software
+Newswire Canada,Press Release Distribution
+Canada Newswire (CNW),Press Release Distribution
+BusinessWire Canada,Press Release Distribution
+Marketwired (GlobeNewswire),Press Release Distribution
+Plusgrade (Loyalty),Loyalty Tech
+Points.com (Plusgrade),Loyalty Tech
+Givex,Gift Card/Loyalty Tech
+Bountii,Coupon/Loyalty Tech
+Aislelabs,Retail Analytics
+Tulip,Retail Tech
+Miovision,Smart Traffic Tech
+Miovision Technologies,Traffic Intelligence
+Recon Instruments,Wearable Tech
+Myo (Thalmic Labs),Wearable/AR Tech
+North (Focals),Smart Glasses
+Ritual,Food Ordering Tech
+SkipTheDishes (Just Eat),Food Delivery
+DoorDash Canada,Food Delivery
+Uber Eats Canada,Food Delivery
+Instacart Canada,Grocery Delivery
+Goodfood Market,Meal Kit Delivery
+Chef's Plate (HelloFresh),Meal Kit Delivery
+Fresh Prep,Meal Kit Delivery
+Miss Fresh,Meal Kit Delivery
+Flashfood,Food Waste Tech
+Too Good To Go Canada,Food Waste Tech
+GreenStar Agricultural,AgTech
+Decisive Farming (Telus Ag),AgTech
+Semios,AgTech
+Farmers Edge,AgTech
+Deveron (Corteva),Ag Data Services
+Resson,Ag AI
+Herd Management Systems,Livestock Tech
+BioHarvest Sciences Canada,AgBiotech
+Solynta Canada,Potato Breeding
+Terramera,Ag Biotech
+Ag-Bio Inc.,Agricultural Biotech
+Olds College AgTech,AgTech Education
+Conestoga College Applied AI,Applied AI
+Mila (Quebec AI Institute),AI Research
+Vector Institute,AI Research
+Alberta Machine Intelligence Institute (Amii),AI Research
+Kindred AI,Robotics/AI
+Sanctuary Cognitive Systems,Humanoid Robotics
+Phantom Auto Canada,Remote Operations
+Clearpath Robotics,Industrial Robotics
+Avidbots,Autonomous Floor Cleaning
+Borealis AI (RBC),AI Research Lab
+Layer 6 AI (TD),AI Research Lab
+Thomson Reuters Labs,AI Research
+D-Wave Systems,Quantum Computing
+Xanadu Quantum Technologies,Quantum Computing
+1QBit,Quantum Software
+Photonic Inc.,Quantum Hardware
+Nord Quantique,Quantum Computing
+Quantum Valley Investments,Quantum Commercialization
+QEYnet,Quantum Encryption
+SiGe Semiconductor,Semiconductors
+Ciena Canada,Optical Networking
+Ericsson Canada,Telecom Equipment
+Nokia Canada,Telecom Equipment
+Cielo Waste Solutions,Waste-to-Fuel
+GFL Environmental,Waste Management
+Waste Connections Canada,Waste Management
+Clean Harbors Canada,Environmental Services
+Stericycle Canada,Medical Waste
+Newalta (Tervita),Environmental Services
+Tervita,Environmental Services
+Dillon Consulting,Environmental Consulting
+Pinchin,Environmental Consulting
+WSP Environmental,Environmental Services
+Golder Associates (WSP),Geotechnical
+Knight Piesold,Geotechnical
+SLR Consulting Canada,Environmental Consulting
+Thurber Engineering,Geotechnical
+Morrison Hershfield,Engineering Consulting
+Exp Services,Engineering Consulting
+Ausenco,Engineering/Mining Consulting
+Jacobs Canada,Engineering Consulting
+Black & McDonald,Facilities & Construction
+Maple Reinders,Construction
+Stuart Olson (Bird Construction),Construction
+Pomerleau,Construction
+Ledcor Group,Construction/Energy
+Aecon Nuclear,Nuclear Construction
+Graham Infrastructure,Infrastructure Construction
+Bantrel (Bechtel Canada),Engineering/Construction
+Fluor Canada,Engineering/Construction
+KBR Canada,Engineering/Construction
+Worley Canada,Engineering Services
+Amec Foster Wheeler (Wood),Engineering
+Wood Canada,Engineering Services
+Caliber Imaging & Diagnostics Canada,Medical Imaging
+Nuvectra Canada,Medical Devices
+Sophiris Bio (Fortis),Biotech
+Milestone Pharma,Cardiology Pharma
+Microbix Biosystems,Diagnostic Products
+Norwood Financial Canada,Financial Services
+iGan Partners,Venture Capital
+Georgian Partners,Growth Equity
+Yaletown Partners,Venture Capital
+Relay Ventures,Venture Capital
+Rho Impact Canada,Impact Investing
+McRock Capital,IoT Venture Capital
+Version One Ventures,Venture Capital
+W Media Ventures,Media Venture Capital
+Celtic House Venture Partners,Venture Capital
+Export Development Canada (EDC),Export Finance
+Business Development Bank (BDC),SME Finance
+Farm Credit Canada,Agricultural Finance
+Canada Mortgage and Housing (CMHC),Housing Finance
+Infrastructure Ontario,Infrastructure Finance
+Alberta Investment Management (AIMCo),Institutional Investing
+Healthcare of Ontario Pension (HOOPP),Institutional Investing
+CAAT Pension Plan,Institutional Investing
+Colleges of Applied Arts Pension,Institutional Investing
+OPTrust,Institutional Investing
+NSPP (Nova Scotia Pension),Institutional Investing
+BCIMC (BC Investment Management),Institutional Investing
+PEIAC (PEI Pension),Institutional Investing
+Vestcor (NB Investment Management),Institutional Investing
+Lifelong Learners Association,Education
+Coursera Canada,Ed Tech
+D2L Brightspace,Ed Tech
+Prodigy Game (Prodigy Education),Ed Tech
+Knewton Canada (Wiley),Ed Tech
+Chalk,Ed Tech
+Kidoodle.TV,Children's Streaming
+Crave (Bell Media),Streaming
+Tubi Canada (Fox),Streaming
+Plex Canada,Streaming
+Club illico (Videotron),Streaming
+Storyhive (TELUS),Content Development
+Wattpad (Naver),Publishing/Social
+Rakuten Kobo,E-books
+Indigo Digital,Digital Publishing
+MediaLink Canada,Media Consulting
+IPG Mediabrands Canada,Media Agency
+Dentsu Canada,Advertising Agency
+Publicis Canada,Advertising Agency
+Ogilvy Canada,Advertising Agency
+BBDO Canada,Advertising Agency
+Leo Burnett Canada,Advertising Agency
+DDB Canada,Advertising Agency
+FCB Canada,Advertising Agency
+Havas Canada,Advertising Agency
+Grey Canada,Advertising Agency
+TBWA Canada,Advertising Agency
+Bensimon Byrne,Advertising Agency
+Zulu Alpha Kilo,Advertising Agency
+john st.,Advertising Agency
+Cossette,Advertising & Communications
+KBS Canada,Advertising Agency
+Mosaic Canada,Experiential Marketing
+Environics Communications,PR Agency
+National PR,PR Agency
+Hill+Knowlton Canada,PR Agency
+Edelman Canada,PR Agency
+Weber Shandwick Canada,PR Agency
+Fleishman-Hillard Canada,PR Agency
+Ketchum Canada,PR Agency
+Narrative PR,PR Agency
+North Strategic,PR Agency
+Citizen Relations,PR Agency
+Talk Shop Media,PR Agency
+Craft Public Relations,PR Agency
+Hatch Communications,PR Agency
+New Gravity Media,Media Production
+Boat Rocker Media,Media Production
+marblemedia,Content Production
+marblemedia (kids/family),Content Production
+Shaftesbury,Film/TV Production
+Arcana Studio,Comics/Animation
+Portfolio Entertainment,Content Distribution
+Frantic Films,Film/TV Production
+Nerd Corps Entertainment,Animation
+Mercury Filmworks,Animation
+Guru Studio,Animation
+Cloudco Entertainment,Animation
+9 Story Media Group,Animation/Distribution
+Rainmaker Entertainment,Animation/VFX
+Bardel Entertainment,Animation/VFX
+Rodeo FX,VFX
+Cinesite Montreal,VFX
+Mr. X (Technicolor),VFX
+Hybride Technologies,VFX
+Image Engine,VFX
+Spin VFX,VFX
+Oblique FX,VFX
+Fuel VFX Canada,VFX
+Sable VFX,VFX
+Jam Filled Entertainment,Animation
+Wow! Unlimited Media,Animation
+Nelvana (Corus),Animation/Publishing
+Indigo Entertainment,Entertainment
+Groupe V Média,Media/Broadcasting
+Canal D (Corus),Broadcasting
+Historia (Corus),Broadcasting
+Évasion (Corus),Broadcasting
+Super Écran (Bell),Broadcasting
+Série+ (Corus),Broadcasting
+Zeste (Corus),Broadcasting
+Ici Télé (CBC),Public Broadcasting
+TVA Group (Quebecor),Broadcasting
+Noovo (Bell),Broadcasting
+LCN (Quebecor),News Broadcasting
+RDI (CBC),News Broadcasting
+CP24 (Bell Media),News Broadcasting
+BNN Bloomberg Canada (Bell),Financial News
+CTV News (Bell),Broadcasting
+Global News (Corus),Broadcasting
+City TV (Rogers),Broadcasting
+Citytv (Rogers Media),Broadcasting
+The Score (Rogers),Sports Broadcasting
+Sportsnet (Rogers),Sports Broadcasting
+TSN (Bell Media),Sports Broadcasting
+RDS (Bell Media),French Sports Broadcasting
+Mise-O-Jeu,Sports Betting
+Sports Interaction (Mohegan),Sports Betting
+PointsBet Canada,Sports Betting
+bet365 Canada,Sports Betting
+theScore Bet (Penn),Sports Betting
+BetMGM Canada,Sports Betting
+DraftKings Canada,Sports Betting
+FanDuel Canada,Sports Betting
+Jackpot Digital,Electronic Table Games
+NRT Technology,Gaming Technology
+Interac Corp,Payments Network
+Moneris Solutions,Payment Processing
+TD Merchant Solutions,Payment Processing
+Chase Paymentech Canada,Payment Processing
+Global Payments Canada,Payment Processing
+Bambora (Worldline),Payment Processing
+Helcim,Payment Processing
+Pivotal Payments,Payment Processing
+Beanstream (Bambora),Payment Processing
+Payfirma (Merrco),Payment Processing
+ChargeAfter Canada,BNPL
+Sezzle Canada,BNPL
+Afterpay Canada,BNPL
+Klarna Canada,BNPL
+PayBright (Affirm),BNPL
+Flexiti Financial,BNPL
+goeasy Ltd.,Consumer Lending
+easyfinancial (goeasy),Consumer Lending
+easyhome (goeasy),Lease-to-Own
+Fairstone Financial,Consumer Lending
+Prudential Investments Canada,Consumer Finance
+Money Mart (DFC Global),Consumer Finance
+Cash Money (Speedy Cash),Consumer Finance
+Mogo Mortgage,Fintech/Mortgage
+nesto,Digital Mortgage
+Pine (mortgage),Digital Mortgage
+Perch (mortgage),Digital Mortgage
+Homewise,Digital Mortgage
+True North Mortgage,Mortgage Brokerage
+Dominion Lending Centres,Mortgage Brokerage
+Mortgage Alliance,Mortgage Brokerage
+Invis (Mortgage Intelligence),Mortgage Brokerage
+CENTUM Financial,Mortgage Brokerage
+M3 Mortgage Group,Mortgage Brokerage
+Real Broker (Canada),Real Estate Brokerage
+Royal LePage,Real Estate Brokerage
+RE/MAX Canada,Real Estate Brokerage
+Century 21 Canada,Real Estate Brokerage
+Sutton Group,Real Estate Brokerage
+HomeLife Realty,Real Estate Brokerage
+Sotheby's International Canada,Luxury Real Estate
+Engel & Völkers Canada,Luxury Real Estate
+Zoocasa,PropTech
+Properly,PropTech
+Wahi,PropTech
+Zolo,PropTech
+HonestDoor,PropTech
+Losani Homes,Home Building
+Mattamy Homes,Home Building
+Minto Group,Home Building/Real Estate
+Tribute Communities,Home Building
+Greenpark Group,Home Building
+Menkes Developments,Real Estate Development
+Remington Group,Real Estate Development
+Tridel,Condo Development
+Great Gulf Group,Real Estate Development
+Daniels Corporation,Real Estate Development
+Aspen Properties,Commercial Real Estate
+QuadReal Property Group,Real Estate
+Anthem Properties,Real Estate Development
+Concert Properties,Real Estate Development
+Bosa Properties,Real Estate Development
+Wesgroup Properties,Real Estate Development
+Holborn Group,Real Estate Development
+Shape Properties,Real Estate Development
+Morguard Corporation,Real Estate Investment
+Crombie REIT,Real Estate
+Cominar REIT,Real Estate
+Automotive Properties REIT,Real Estate
+Slate Retail REIT,Real Estate
+Slate Office REIT,Real Estate
+Ivanhoé Cambridge (CDPQ),Real Estate
+Fengate Asset Management,Infrastructure/Real Estate
+Fiera Real Estate,Real Estate
+Hazelview Investments,Real Estate
+Killam Apartment REIT,Residential REIT
+Boardwalk REIT,Residential REIT
+InterRent REIT,Residential REIT
+Minto Apartment REIT,Residential REIT
+Canadian Apartment Properties REIT (CAPREIT),Residential REIT
+Mainstreet Equity,Residential Real Estate
+True North Commercial REIT,Office REIT
+Skyline Real Estate,Private REIT
+Centurion Asset Management,Private REIT
+Equiton,Private REIT
+Trez Capital Real Estate,Real Estate Lending
+Romspen Investment,Mortgage Investment
+Firm Capital,Mortgage Investment
+Atrium Mortgage Investment,Mortgage Investment
+Calvert Home Mortgage,Mortgage Investment
+Antrim Balanced Mortgage,Mortgage Investment
+Radius Financial,Mortgage Investment
+MCAP Financial,Mortgage/Commercial Lending
+First National Financial,Mortgage Lending
+Street Capital (RFA),Mortgage Lender
+RFA Mortgage,Mortgage Lender
+Merix Financial,Mortgage Lender
+Lendwise,Mortgage/Student Lending
+Lendesk,Mortgage Tech
+Finmo (Velocity Mortgage),Mortgage Tech
+Filogix (Finastra),Mortgage Software
+D+H (Finastra),Financial Software
+Finastra Canada,Financial Software
+Temenos Canada,Banking Software
+Intellicheck Canada,Identity Verification
+Trulioo,Identity Verification
+SecureKey (Interac),Digital Identity
+Verified.Me,Digital Identity
+Notarize Canada,Digital Notary
+Clio Grow,Legal Tech
+Lawyaw,Legal Tech
+Divorcemate,Legal Tech
+ACL Services (Galvanize),Audit/Risk Software
+Galvanize (Diligent),GRC Software
+Resolver,Risk Management Software
+Reciprocity (ZenGRC),GRC
+Navex Global Canada,Ethics/Compliance
+Roper Technologies Canada,Diversified Software
+Dye & Durham,Legal/Government Software
+OneSpan Canada,Digital Identity/Security
+Entrinsik Canada,BI Software
+Analytics4Life,AI Diagnostics
+Imagia,Medical AI
+Winterlight Labs,AI Health Assessment
+Ada Health Canada,AI Symptom Checker
+Oncobiologics Canada,Oncology
+Profound Medical Corp,Prostate Cancer Tech
+Hemostemix,Stem Cell Therapy
+Platelet BioGenesis Canada,Blood Biotech
+Amplifica Holdings,BioInformatics
+Deep Genomics,AI Genomics
+Cyclica,Drug Discovery AI
+Recursion Canada,Drug Discovery
+Isoform Therapeutics,Biotech
+Repare Therapeutics,Oncology Biotech
+Turnstone Biologics,Cancer Immunotherapy
+Notch Therapeutics,Cell Therapy
+Fusion Pharmaceuticals,Radiopharmaceuticals
+Triumvira Immunologics,Cell Therapy
+Imago BioSciences Canada,Oncology
+Hepion Pharmaceuticals,Liver Disease
+ProMIS Neurosciences,Neurodegeneration Biotech
+Neuroinflammation Research Canada,Biotech
+AlzeCure Canada,CNS Biotech
+Iteris Canada,Traffic Analytics
+Bluewater Technologies,IoT
+Decisive Systems,Transit Tech
+Trapeze Group,Transit Software
+Optibus Canada,Transit Planning
+Spare Labs,Mobility Tech
+Uride,Rideshare
+Facedrive,Rideshare/EV
+Alto Solutions Canada,Transportation
+Routemaster,Fleet Management
+Samsara Canada,Fleet Telematics
+Verizon Connect Canada,Fleet Telematics
+Fleetcomplete,Fleet Management
+PowerFleet Canada,Fleet IoT
+Spireon Canada,Fleet Intelligence
+Mix Telematics Canada,Fleet Management
+Platform Science Canada,Fleet Software
+Trimble Canada,Fleet/Construction Tech
+Calamp Canada,IoT/Telematics
+Orbcomm Canada,IoT/Telematics
+Sierra Wireless (Semtech),IoT
+Telit Canada,IoT
+Numerex Canada,IoT
+Digi International Canada,IoT Connectivity
+Lantronix Canada,IoT
+Sequans Canada,IoT Chips
+Globecomm Canada,Satellite IoT
+SkyBell Canada,Smart Home
+Ecobee,Smart Home/Thermostat
+Maskeen Group,Smart Building
+Acuity Brands Canada,Smart Lighting
+Leviton Canada,Electrical/Smart Home
+Legrand Canada,Electrical Infrastructure
+Schneider Electric Canada,Energy Management
+ABB Canada,Power & Automation
+Siemens Canada,Industrial Automation
+Honeywell Canada,Industrial/Building Tech
+Emerson Canada,Automation
+Rockwell Automation Canada,Industrial Automation
+Yokogawa Canada,Industrial Automation
+Endress+Hauser Canada,Process Instrumentation
+Hatch Mott MacDonald,Engineering
+Amec Americas,Engineering
+Matrix Solutions,Environmental Engineering
+Associated Engineering,Engineering/Environmental
+McElhanney,Engineering/Geomatics
+ISL Engineering,Infrastructure Engineering
+AECOM Canada,Engineering/Infrastructure
+Parsons Canada,Defence/Infrastructure Engineering
+Gannett Fleming Canada,Infrastructure Engineering
+HDR Canada,Engineering
+IBI Group (Arcadis),Urban Planning/Engineering
+Urban Systems,Planning/Engineering
+BA Group,Transportation Planning
+MMM Group (WSP),Engineering
+R.V. Anderson Associates,Engineering
+Dillon Consulting Engineering,Engineering
+CIMA+,Engineering Consulting
+BPR (Tetra Tech),Engineering
+Ramboll Canada,Engineering/Environment
+Ausenco Engineering,Mining Engineering
+DRA Global Canada,Mining Engineering
+Lycopodium Canada,Mining Engineering
+Wardrop (Tetra Tech),Engineering
+Klohn Crippen Berger,Geotechnical/Dams
+BGC Engineering,Geotechnical
+EXP Inc.,Engineering
+COWI Canada,Bridges/Structural
+Entuitive,Structural Engineering
+Read Jones Christoffersen,Structural Engineering
+Smith + Andersen,MEP Engineering
+Integral Group Canada,Sustainable Engineering
+Stantec Architecture,Architecture
+B+H Architects,Architecture
+DIALOG,Architecture/Engineering
+NORR Architects,Architecture
+Perkins&Will Canada,Architecture
+Zeidler Architecture,Architecture
+Quadrangle,Architecture
+architectsAlliance,Architecture
+ERA Architects,Heritage Architecture
+Moriyama & Teshima,Architecture
+Diamond Schmitt Architects,Architecture
+Sweeny &Co Architects,Architecture
+MacLennan Jaunkalns Miller Architects,Architecture
+LGA Architectural Partners,Architecture
+SvN Architects,Architecture/Planning
+DTAH,Landscape Architecture
+PFS Studio,Landscape Architecture
+Civitas,Landscape Architecture
+Stoss Landscape Urbanism Canada,Landscape Architecture
+Janet Rosenberg & Studio,Landscape Architecture
+Forrec,Theme Park/Entertainment Design
+Entro Communications,Wayfinding Design
+II BY IV Design,Interior Design
+Yabu Pushelberg,Interior Design
+Munge Design,Interior Design
+Figure3,Interior Design
+Mason Studio,Interior Design
+Intact Public Entities,Specialty Insurance
+Trisura Group,Specialty Insurance
+Kingsway Financial Services,Insurance
+Fairfax India Holdings,Investment
+Fairfax Africa Holdings,Investment
+Hamblin Watsa Investment Counsel,Investment
+Greybrook Capital,Real Estate Private Equity
+Timbercreek Asset Management,Real Estate
+Centurion Apartment REIT,Residential Real Estate
+Firm Capital Apartment REIT,Residential Real Estate
+NexLiving Communities,Residential Real Estate
+Mainstreet Health Investments,Healthcare Real Estate
+Invesque,Healthcare Real Estate
+Granite REIT,Industrial Real Estate
+WPT Industrial REIT,Industrial Real Estate
+Dream Industrial REIT,Industrial Real Estate
+Nexus Industrial REIT,Industrial Real Estate
+Summit Industrial (GIC),Industrial Real Estate
+Pure Industrial (Blackstone),Industrial Real Estate
+Carttera Private Equities,Real Estate
+Peterson Companies Canada,Real Estate
+Crown Realty Partners,Real Estate
+Oberfeld Snowcap,Real Estate Advisory
+Avison Young,Real Estate Services
+Cushman & Wakefield Canada,Real Estate Services
+JLL Canada (Jones Lang LaSalle),Real Estate Services
+CBRE Canada,Real Estate Services
+Colliers Canada,Real Estate Services
+Knight Frank Canada,Real Estate Services
+Newmark Canada,Real Estate Services
+Marcus & Millichap Canada,Real Estate Services
+Lee & Associates Canada,Real Estate Services
+Cushman Commercial Canada,Real Estate Services
+Primecorp Commercial Realty,Commercial Real Estate
+Sperry Commercial Canada,Commercial Real Estate
+Devencore,Commercial Real Estate
+Cresa Canada,Tenant Advisory
+Groupe Mach,Quebec Real Estate
+Ivanhoé Cambridge Retail,Retail Real Estate
+Primaris REIT,Enclosed Mall REIT
+Morguard REIT,Diversified REIT
+BTB REIT,Quebec Commercial REIT
+Plaza REIT,Strip Mall REIT
+Melcor REIT,Western Canada REIT
+Timbercreek Commercial,Commercial Mortgage
+Romspen Commercial,Commercial Mortgage
+Peakhill Capital,Real Estate Debt
+Community Trust Mortgage,Mortgage Lending
+Canadiana Financial,Consumer Finance
+Accord Financial,Commercial Finance
+Bibby Financial Canada,Invoice Finance
+Liquid Capital,Trade Finance
+Lumen Financial,Commercial Finance
+BCI Capital,Infrastructure Equity
+TriWest Capital Partners,Private Equity
+EdgePoint Wealth Management,Asset Management
+Pender Fund Capital,Asset Management
+Middlefield Real Estate,Real Estate Investment
+Mulvihill Capital,Closed-End Funds
+Brompton Funds,Closed-End Funds
+Harvest Portfolios,ETF Provider
+Desjardins ETFs,ETF Provider
+National Bank ETFs,ETF Provider
+CIBC ETFs,ETF Provider
+BMO ETFs,ETF Provider
+TD ETFs,ETF Provider
+RBC iShares ETFs,ETF Provider
+Fidelity ETFs Canada,ETF Provider
+Global X Canada (Mirae),ETF Provider
+Invesco Canada,Asset Management
+Templeton Canada,Asset Management
+MFS Canada,Asset Management
+Dimensional Fund Advisors Canada,Asset Management
+Acadian Asset Management Canada,Quant Asset Management
+AQR Canada,Quant Hedge Fund
+Two Sigma Canada,Quant
+Bridgewater Canada,Macro Hedge Fund
+Man Group Canada,Hedge Fund
+Winton Canada,Quant Fund
+Citadel Canada,Hedge Fund
+Millennium Canada,Hedge Fund
+DE Shaw Canada,Quant
+Jane Street Canada,Market Making
+Virtu Financial Canada,Market Making
+Optiver Canada,Market Making
+IMC Canada,Market Making
+Flow Traders Canada,ETF Market Making
+Susquehanna Canada,Market Making
+Hudson River Trading Canada,HFT
+Tower Research Canada,HFT
+Wolverine Trading Canada,HFT
+DRW Canada,Prop Trading
+Gravitas Securities,Agency Trading
+Cormark Securities,Investment Banking
+Echelon Capital Markets,Investment Banking
+Paradigm Capital,Investment Banking
+Haywood Securities,Investment Banking
+PI Financial,Investment Banking
+Leede Jones Gable,Investment Banking
+Mackie Research Capital,Investment Banking
+GMP Capital,Investment Banking
+Stifel Canada,Investment Banking
+National Bank Financial,Investment Banking
+CIBC Capital Markets,Investment Banking
+TD Securities,Investment Banking
+RBC Capital Markets,Investment Banking
+BMO Capital Markets,Investment Banking
+Scotiabank GBM,Investment Banking
+Desjardins Capital Markets,Investment Banking
+Laurentian Bank Securities,Investment Banking
+Manulife Securities,Investment Banking
+iA Securities,Investment Banking
+Aligned Capital Partners,Wealth Management
+Assante Wealth Management,Wealth Management
+HollisWealth (iA),Wealth Management
+Worldsource Financial,Wealth Management
+Investia Financial,Wealth Management
+Peak Financial Group,Wealth Management
+Portfolio Strategies,Wealth Management
+Carte Wealth Management,Wealth Management
+Harbourfront Wealth Management,Wealth Management
+Nicola Wealth,Wealth Management
+Leith Wheeler Wealth,Wealth Management
+Nexus Investment Management,Wealth Management
+Genus Capital Management,Sustainable Investing
+Vancity Investment Management,Sustainable Investing
+NEI Investments,ESG Investing
+Acuitas Investments,ESG Investing
+Meritas Mutual Funds,Ethical Investing
+Community Forward Fund,Community Finance
+Oikocredit Canada,Impact Investing
+MaRS Centre for Impact Investing,Impact Finance
+SVX (Social Venture Exchange),Impact Investing
+Renewal Funds,Impact Venture Capital
+Renewal3 (Renewal Funds),Impact Venture Capital
+Foresight Canada,CleanTech Accelerator
+Greentown Labs Canada,CleanTech Incubator
+Evok Innovations,CleanTech Venture Capital
+BDC Cleantech,CleanTech Venture Capital
+Export Development CleanTech,CleanTech Finance
+Carbon Streaming Corporation,Carbon Credits
+Anpac Bio-Medical Canada,Cancer Screening
+Ganymede Biotech Canada,Bioprocess AI
+Chinook Therapeutics,Kidney Disease Biotech
+Acasta Therapeutics,Cardiovascular Biotech
+Zucara Therapeutics,Metabolic Disease
+Cardiol Therapeutics,Heart Inflammation
+Liminal BioSciences,Plasma-Derived Biotech
+Profound Pharma,Drug Delivery
+Sievert Scientific,Analytical Instruments
+Hamilton Thorne Canada,Reproductive Tech
+Bioanalytical Systems Canada,Lab Equipment
+Thermo Fisher Canada,Lab Equipment
+Mettler-Toledo Canada,Lab Instruments
+Waters Canada,Lab Instruments
+Agilent Canada,Life Science Instruments
+Bio-Rad Canada,Life Science Products
+Sartorius Canada,Bioprocess Equipment
+Cytiva Canada,Bioprocess Equipment
+MilliporeSigma Canada,Lab Chemicals
+VWR Canada,Lab Distribution
+Fisher Scientific Canada,Lab Distribution
+Oakville Hospital Foundation,Healthcare Philanthropy
+Sunnybrook Health Sciences,Hospital/Research
+SickKids (Hospital for Sick Children),Pediatric Hospital
+University Health Network (UHN),Hospital Network
+St. Michael's Hospital,Hospital
+Mount Sinai Hospital Toronto,Hospital
+Ottawa Hospital,Hospital
+Hamilton Health Sciences,Hospital
+London Health Sciences,Hospital
+Kingston Health Sciences,Hospital
+Horizon Health NB,Regional Health Authority
+Nova Scotia Health Authority,Regional Health
+Alberta Health Services,Provincial Health
+Vancouver Coastal Health,Regional Health
+Interior Health BC,Regional Health
+Northern Health BC,Regional Health
+Island Health BC,Regional Health
+Fraser Health BC,Regional Health
+Providence Health Care,Catholic Health
+Covenant Health Alberta,Catholic Health
+Misericordia Health Centre,Catholic Health
+Grey Nuns Community Hospital,Catholic Health
+St. Boniface Hospital,Hospital
+Winnipeg Regional Health,Regional Health
+Regina Qu'Appelle Health,Regional Health
+Saskatoon Health Region,Regional Health
+Northern Ontario School of Medicine,Medical Education
+McMaster Health Sciences,Medical Education
+Schulich Medicine (Western),Medical Education
+Queen's School of Medicine,Medical Education
+UofT Faculty of Medicine,Medical Education
+UBC Faculty of Medicine,Medical Education
+Alberta Medical Association,Healthcare Association
+Canadian Medical Association (CMA),Healthcare Association
+Nurses Association of NB,Healthcare Association
+Registered Nurses Association Ontario (RNAO),Healthcare Association
+Canadian Dental Association,Healthcare Association
+Canadian Pharmacists Association,Healthcare Association
+Canadian Chiropractic Association,Healthcare Association
+College of Physicians Ontario (CPSO),Regulatory Body
+TELUS Agriculture,AgTech
+Trimble Agriculture Canada,AgTech
+CNH Industrial Canada,Agricultural Equipment
+AGCO Canada,Agricultural Equipment
+Deere & Company Canada,Agricultural Equipment
+Kubota Canada,Agricultural Equipment
+New Holland Canada,Agricultural Equipment
+Versatile (CNH),Tractor Manufacturing
+MacDon Industries,Harvesting Equipment
+Buhler Industries,Agricultural Equipment
+Salford Group,Tillage Equipment
+Bourgault Industries,Seeding Equipment
+Morris Industries,Agricultural Equipment
+Seed Hawk (Vaderstad),Seeding Tech
+Pattison Agriculture,Equipment Dealer
+Cervus Equipment,Equipment Dealer
+Rocky Mountain Equipment,Equipment Dealer
+Enns Brothers,Equipment Dealer
+Flaman Group,Agricultural Equipment/Rental
+Ritchie Bros. Auctioneers,Equipment Auction
+IronPlanet Canada,Equipment Marketplace
+Purple Wave Canada,Online Equipment Auction
+Proxibid Canada,Asset Marketplace
+Rexnord Canada,Process Equipment
+Rugged Controls,Industrial Controls
+Pason Systems,Oilfield Instrumentation
+Topaz Energy,Royalty/Midstream
+Spartan Energy,Royalty
+Prairie Sky Royalty,Oil Royalties
+PrairieSky Royalty,Oil Royalties
+Freehold Royalties,Oil & Gas Royalties
+Gear Energy,Heavy Oil E&P
+Obsidian Energy,Oil & Gas E&P
+Perpetual Energy,Oil & Gas E&P
+Perpetual Energy Royalty,Oil Royalties
+Advantage Oil & Gas (Advantage Energy),Natural Gas
+Nuvista Energy,Condensate/Gas E&P
+Kelt Exploration,Oil & Gas E&P
+Velvet Energy,Oil & Gas E&P
+BPZ Resources Canada,Oil & Gas
+Crescent Point Energy,Oil & Gas E&P
+Cardinal Energy,Oil E&P
+Pengrowth Royalties,Oil Royalties
+Harvest Natural Resources Canada,Oil & Gas
+Strathcona Resources,Oil Sands/Heavy Oil
+Greenfire Resources,Oil Sands
+Osum Oil Sands,Oil Sands
+Connacher Oil and Gas,Oil Sands
+Sunshine Oilsands,Oil Sands
+CNOOC Canada (Nexen),Oil Sands
+Total Canada (TotalEnergies),Oil & Gas
+Shell Canada,Oil & Gas/Chemicals
+Dow Canada,Petrochemicals
+NOVA Chemicals,Petrochemicals
+Inter Pipeline Petrochemicals,Petrochemicals
+Pembina Chemicals,Petrochemicals
+Methanex,Methanol Production
+Calumet Canada,Specialty Refining
+Gibson Energy Terminals,Storage/Midstream
+Enbridge Liquids Pipelines,Pipeline
+Trans Mountain Corporation,Pipeline
+Alliance Pipeline,Pipeline
+Westcoast Energy (Enbridge),Pipeline
+ATCO Pipelines,Natural Gas Distribution
+Fortis BC Energy,Natural Gas Distribution
+Enbridge Gas (Ontario),Natural Gas Distribution
+Nova Gas Transmission,Pipeline
+Pacific Northern Gas,Natural Gas Distribution
+Heritage Gas NS,Natural Gas Distribution
+Énergir (Gaz Métro),Natural Gas Distribution
+Gazifère (Énergir),Natural Gas Distribution
+Centra Gas Manitoba,Natural Gas Distribution
+Superior Plus Energy,Energy Distribution
+Parkland Fuel,Fuel Retail/Refining
+Irving Oil,Refining/Retail
+North Atlantic Refining,Refining
+Federated Co-operatives (Co-op Refinery),Refining
+Framatome Canada,Nuclear Services
+Holtec Canada,Nuclear Decommissioning
+OPG Nuclear,Nuclear Operations
+New Brunswick Power Nuclear,Nuclear Operations
+Point Lepreau (NB Power),Nuclear Power
+Pickering Nuclear (OPG),Nuclear Power
+Darlington Nuclear (OPG),Nuclear Power
+Bruce Nuclear (Bruce Power),Nuclear Power
+Gentilly (Hydro-Quebec),Nuclear/Decommission
+Chalk River Labs (CNL),Nuclear Research
+Canadian Nuclear Laboratories,Nuclear R&D
+Atomic Energy of Canada (AECL),Nuclear Crown Corp
+Nordion (BWX Technologies),Nuclear Medicine
+Isogen (Nordion),Nuclear Isotopes
+Best Theratronics,Radiation Therapy Equipment
+Alpha-9 Theranostics,Nuclear Medicine
+Fusion Pharmaceuticals (AZ),Radiopharmaceuticals
+Lantheus Canada,Radiopharmaceuticals
+Point Biopharma,Radiopharmaceuticals
+RayzeBio Canada,Radiopharmaceuticals
+SHINE Medical Canada,Medical Isotopes
+NorthStar Medical Canada,Medical Isotopes
