@@ -1,70 +1,67 @@
 Andre Foreman
-519-636-3173
 foreandr@gmail.com
+foreandr.github.io
 
 Education
 --------------
 
 Trent University
-B.Sc in Mathematics, 2024-2026
+B.Sc. in Mathematics, 2024-2026
 
-Fanshawe College of Applied Arts And Technology
+Fanshawe College of Applied Arts and Technology
 Advanced Diploma in Computer Programming and Analysis, 2020-2023
 
 Volleyball Canada
 Canadian National Excellence Program, 2017-2020
 
-Fanshawe College of Applied Arts And Technology
+Fanshawe College of Applied Arts and Technology
 Diploma in General Arts and Sciences, 2015-2017
 
-Certifications
---------------
-
-Standard First Aid & CPR (Level C) — Canadian Red Cross
-Private Investigative License — Ontario Ministry of the Solicitor General
-
-Work history
+Work History
 --------------
 
 Security
 The Social, Present
-- Meticulously screened legal documentation to prevent underage entry and ensure 100% compliance with liquor laws.
-- Facilitated seamless entry for high-profile guests and table reservations while maintaining strict security protocols.
+Screen legal documentation, verify identification, and manage guest entry with a high standard of compliance while coordinating smooth access for reservations and high-profile guests.
 
 Office Manager & Software Engineer
 QuickQr, 2024
-- Managed office operations, payroll, bookkeeping, and company finances using QuickBooks; including taxes, digital and physical recordkeeping, and administrative compliance.
-- Built internal tools to maintain the company's QR code platform, contributing to both frontend features and backend infrastructure.
+Built automation for a Django REST API QR platform so schema changes flowed through the wider system automatically, saving hundreds of hours of manual rework. Managed payroll, bookkeeping, and QuickBooks operations to ensure staff were paid accurately and on time, including holidays, then developed an internal QuickBooks-like tool tailored to company workflows.
 
 Software Engineer
 Reload Strathroy, 2023
-- Built a large internal tool to monitor public marketplaces and send instant notifications when items matching specific criteria appeared, enabling early arbitrage opportunities and reducing manual tracking.
+Developed a large-scale automation and analytics tool that pulled vehicle listings from hundreds of websites, analyzed pricing across markets, and helped identify the cheapest make-and-model opportunities across North America.
 
 Security
 The Ceeps and Barney's, 2023
-- Maintained a safe and orderly environment by managing entry, monitoring crowds, and resolving conflicts with discretion and professionalism.
-- Collaborated with venue staff to enforce policies, check identification, and ensure compliance with safety and capacity regulations.
+Maintained a safe venue environment by monitoring crowds, resolving issues professionally, and working closely with staff to enforce entry, safety, and capacity policies during busy service hours.
 
 Software Engineering Intern
 Perimeter Institute for Theoretical Physics, 2022
-- Modernized internal infrastructure by Dockerizing and deploying services via Kubernetes, improving reliability and streamlining research workflows.
+Created a mosaic-generation tool that rendered names using black hole image data and automated a custom email response workflow tied to inbound messages to the institute, turning a timely public outreach idea into a scalable process.
 
 Software Engineering Intern
 A & L Laboratories, 2022
-- Developed automation tools that reduced manual data handling and improved lab workflow efficiency.
+Automated a daily agronomy reporting workflow that collected reports, routed specific data to chemists, captured returned lab data, and produced finished outputs, eliminating roughly four hours of morning manual work each day.
 
 Game QA Intern
 BetaDwarf, 2021
-- Tested core gameplay features, balance, and user experience for in-development titles, documenting bugs and collaborating directly with devs to improve game quality.
+Brought more than 4,000 hours of hands-on game experience to testing, helping the team surface gameplay issues, improve balance, and refine player-facing design.
 
 Seasonal Associate
 Walmart, 2020
-- Provided customer support and maintained organized stock flow in a high-traffic retail environment during the height of the COVID-19 pandemic.
+Worked as an essential frontline employee during the COVID-19 pandemic, supporting customers and maintaining stock flow in a high-volume retail setting.
 
 Professional Athlete
-Volleyball Canada, Gatineau, August 2017 - March 2020
-- Represented Canada at international events, including the Olympic Qualifier and Pan American Cup in Mexico; earned 3 national championships and 2 provincial titles.
+Volleyball Canada, August 2017 - March 2020
+Represented Canada in elite international competition, balancing high-performance training with team execution, discipline, and consistent results under pressure.
 
 Clinic Intern
 Fowler Kennedy Sports Medicine Clinic, 2019
-- Assisted with injury assessments, treatment preparation, and athlete rehab tracking in a high-performance sports medicine environment.
+Supported clinical staff with athlete care, treatment preparation, and rehab tracking in a fast-paced sports medicine environment.
+
+Certifications
+--------------
+
+Standard First Aid & CPR (Level C) - Canadian Red Cross
+Private Investigative License - Ontario Ministry of the Solicitor General
