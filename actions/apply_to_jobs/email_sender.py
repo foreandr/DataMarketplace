@@ -30,6 +30,16 @@ def send_email_with_account(
     attachment_paths: list[str] | None = None,
     bcc_self: bool = False,
 ) -> bool:
+    content_to_check = (subject + " " + body).lower()
+    keywords = ["car", "vehicle", "nurse", "medicine", "automobile"]
+
+    if any(word in content_to_check for word in keywords):
+        print("Keyword match found. Skipping send but returning success.")
+        return True
+
+    if attachment_paths and len(attachment_paths) > 1:
+        attachment_paths = [attachment_paths[0]]
+
     print("==== EMAIL DEBUG INFO ====")
     print(f"Sender:   {email_sender}")
     print(f"Receiver: {receiver}")

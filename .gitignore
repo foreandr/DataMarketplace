@@ -39,3 +39,7 @@ logs/test/*.json
 # Claude Code internals
 .claude/src/reverse_engineer/.env
 files/aggregated_jobs.json
+src/_canadian_jobbank/.fuse_hidden0000001c00000001
+
+# Fuse hidden files
+.fuse_hidden*

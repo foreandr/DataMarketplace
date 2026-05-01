@@ -210,42 +210,8 @@ class CanadianJobbankCrawler:
             try:
                 total_data = self._process_keyword(browser, keyword)
 
-                '''
-                for j in total_data:
-                    print(len(j), j)
-                    print("-")
-                '''
-
-
                 jsonifier  = CanadianJobbankJsonify(self.name)
                 clean_data = jsonifier.run_analysis(total_data, print_samples=True)
-                
-                '''
-                _banner([
-                    f"  PARSED RECORDS FOR: {keyword.upper()}",
-                    f"  Raw rows   : {len(total_data)}",
-                    f"  Parsed OK  : {jsonifier.processed_count}",
-                    f"  Skipped    : {jsonifier.skipped_count}",
-                ], color=CY)
-                '''
-
-                '''
-                for idx, rec in enumerate(clean_data, 1):
-                    print(
-                        f"{YL}[{idx}/{len(clean_data)}]{R} "
-                        f"{BD}{rec.get('title', '???')}{R}\n"
-                        f"  company    : {rec.get('company')}\n"
-                        f"  location   : {rec.get('location_raw')}\n"
-                        f"  pay        : ${rec.get('pay')}/hr\n"
-                        f"  lmia       : {rec.get('is_lmia')}\n"
-                        f"  direct     : {rec.get('is_direct_apply')}\n"
-                        f"  work_mode  : {rec.get('work_mode')}\n"
-                        f"  source     : {rec.get('source')}\n"
-                        f"  posted_date: {rec.get('posted_date')}\n"
-                        f"  url        : {rec.get('url')}\n"
-                    )
-                '''
-                #input(f"{BD}------- press ENTER to store {len(clean_data)} records and continue ------- {R}")
 
                 inserted = self._store_clean_data(clean_data)
                 self._total_rows   += inserted
@@ -265,14 +231,19 @@ class CanadianJobbankCrawler:
     # ── Scraping ───────────────────────────────────────────────────────────────
 
     def _process_keyword(self, browser: Any, keyword: str) -> List[List[Any]]:
-        search_url = (
-            f"{BASE_URL}/jobsearch/jobsearch"
-            f"?searchstring={keyword.replace(' ', '+')}"
-            f"&sort=M"   # sort by most recent
-        )
-        browser.go_to_site(search_url)
-        time.sleep(1.5)
-        return self._paginate_and_scrape(browser)
+        encoded = keyword.replace(' ', '+')
+        urls = [
+            #f"{BASE_URL}/jobsearch/jobsearch?searchstring={encoded}&sort=M",
+            f"{BASE_URL}/jobsearch/jobsearch?searchstring={encoded}&sort=M&fsrc=21",
+        ]
+        total_data: List[List[Any]] = []
+        for url in urls:
+            browser.go_to_site(url)
+            time.sleep(1.5)
+            total_data.extend(self._paginate_and_scrape(browser))
+        # dedup across both passes
+        total_data = [list(x) for x in {tuple(x) for x in total_data}]
+        return total_data
 
     def _paginate_and_scrape(self, browser: Any) -> List[List[Any]]:
         total_data  = []
