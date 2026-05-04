@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import random
 import re
+from collections import Counter
 from datetime import datetime
 from typing import Any, List
 
@@ -61,6 +62,14 @@ class CanadianJobbankJsonify:
         self.skipped_count   = 0
         self.skipped_data:  List[dict] = []
         self.success_data:  List[dict] = []
+
+    def skipped_reason_counts(self) -> dict[str, int]:
+        counter = Counter()
+        for item in self.skipped_data:
+            reason = item.get("reason") if isinstance(item, dict) else None
+            if reason:
+                counter[str(reason)] += 1
+        return dict(counter)
 
     # ── field extractors ──────────────────────────────────────────────────────
 
@@ -242,10 +251,6 @@ class CanadianJobbankJsonify:
                 continue
 
             pay = self._extract_pay(item)
-            if pay is None:
-                self.skipped_count += 1
-                self.skipped_data.append({"reason": "No hourly pay found", "raw": item})
-                continue
 
             title, company = self._extract_title_and_company(item)
             if not title or len(title.strip()) < 3:
@@ -256,16 +261,6 @@ class CanadianJobbankJsonify:
             location_raw, city, prov = self._extract_location(item)
             is_lmia, is_direct_apply = self._extract_flags(item)
             work_mode = self._extract_work_mode(item)
-
-            if not is_direct_apply:
-                self.skipped_count += 1
-                self.skipped_data.append({"reason": "Not direct apply", "raw": item})
-                continue
-
-            if work_mode != "remote":
-                self.skipped_count += 1
-                self.skipped_data.append({"reason": "Not remote", "raw": item})
-                continue
 
             record = {
                 "id":              job_id,

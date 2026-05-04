@@ -8,7 +8,6 @@ import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, List
-import random
 from hyperSel import instance, parser
 
 try:
@@ -32,128 +31,20 @@ WH = '\033[97m'
 
 PUSH_INTERVAL = 600
 BASE_URL      = "https://www.jobbank.gc.ca"
-
-DEFAULT_KEYWORDS = [
-    "administrative", "warehouse", "driver", "cook", "cleaner",
-    "cashier", "labourer", "technician", "nurse", "security",
-    "receptionist", "clerk", "secretary", "assistant", "coordinator",
-    "executive", "manager", "supervisor", "director", "lead",
-    "representative", "associate", "specialist", "consultant", "analyst",
-    "auditor", "accountant", "bookkeeper", "payroll", "billing",
-    "finance", "banking", "teller", "underwriter", "actuary",
-    "marketing", "sales", "retail", "merchandiser", "buyer",
-    "planner", "estimator", "scheduler", "dispatcher", "logistics",
-    "inventory", "shipping", "receiving", "forklift", "operator",
-    "machinist", "welder", "electrician", "plumber", "carpenter",
-    "painter", "roofer", "mason", "mechanic", "millwright",
-    "engineer", "architect", "designer", "drafter", "surveyor",
-    "developer", "programmer", "coder", "software", "hardware",
-    "network", "systems", "database", "cybersecurity", "support",
-    "helpdesk", "tester", "quality", "inspector", "compliance",
-    "legal", "paralegal", "attorney", "lawyer", "counsel",
-    "medical", "doctor", "physician", "surgeon", "dentist",
-    "pharmacist", "therapist", "paramedic", "caregiver", "nanny",
-    "teacher", "instructor", "professor", "tutor", "coach",
-    "trainer", "facilitator", "recruiter", "hr", "human",
-    "janitor", "landscaper", "gardener", "arborist", "custodian",
-    "server", "bartender", "host", "barista", "baker",
-    "chef", "butcher", "dishwasher", "steward", "concierge",
-    "valet", "porter", "attendant", "courier", "delivery",
-    "trucker", "chauffeur", "pilot", "captain", "deckhand",
-    "stewardess", "flight", "agent", "broker", "realtor",
-    "appraiser", "adjuster", "collector", "investigator", "detective",
-    "officer", "patrol", "firefighter", "lifeguard", "volunteer",
-    "intern", "apprentice", "trainee", "junior", "senior",
-    "principal", "staff", "faculty", "editor", "writer",
-    "journalist", "author", "copywriter", "translator", "interpreter",
-    "artist", "illustrator", "photographer", "videographer", "animator",
-    "producer", "curator", "librarian", "archivist", "clergyman",
-    "pastor", "priest", "rabbi", "monk", "nun",
-    "scientist", "biologist", "chemist", "physicist", "geologist",
-    "ecologist", "meteorologist", "astronomer", "statistician", "mathematician",
-    "sociologist", "psychologist", "counselor", "worker", "advocate",
-    "lobbyist", "politician", "diplomat", "ambassador", "clerical",
-    "data", "entry", "typing", "transcription", "filing",
-    "mail", "courier", "messenger", "janitorial", "maintenance",
-    "repair", "installation", "assembly", "production", "manufacturing",
-    "fabrication", "packaging", "sorting", "stacking", "loading",
-    "unloading", "hauling", "lifting", "moving", "transport",
-    "automotive", "aviation", "maritime", "railroad", "transit",
-    "utility", "telecommunications", "broadcasting", "publishing", "printing",
-    "advertising", "media", "entertainment", "hospitality", "tourism",
-    "recreation", "sports", "fitness", "wellness", "spa",
-    "salon", "barber", "stylist", "esthetician", "makeup",
-    "tailor", "seamstress", "upholsterer", "shoemaker", "jeweler",
-    "florist", "pet", "groomer", "veterinary", "kennel",
-    "farm", "ranch", "agriculture", "forestry", "mining",
-    "quarrying", "drilling", "excavation", "construction", "demolition",
-    "surveying", "inspection", "safety", "environmental", "sanitation",
-    "recycling", "waste", "water", "energy", "solar",
-    "wind", "nuclear", "chemical", "pharmaceutical", "biotech",
-    "semiconductor", "electronics", "aerospace", "defense", "military",
-    "government", "public", "nonprofit", "charity", "foundation",
-    "education", "training", "library", "museum", "gallery",
-    "theater", "music", "dance", "film", "radio",
-    "television", "internet", "e-commerce", "retail", "wholesale",
-    "distribution", "brokerage", "insurance", "real", "estate",
-    "leasing", "rental", "property", "facility", "asset",
-    "wealth", "investment", "equity", "venture", "capital",
-    "strategy", "operations", "process", "project", "program",
-    "product", "brand", "account", "customer", "client",
-    "relationship", "success", "experience", "support", "service",
-    "outreach", "engagement", "communication", "relations", "affairs",
-    "policy", "research", "development", "innovation", "digital",
-    "transformation", "cloud", "security", "infrastructure", "architecture",
-    "engineering", "manufacturing", "supply", "chain", "procurement",
-    "sourcing", "vendor", "contract", "legal", "regulatory",
-    "ethics", "risk", "fraud", "loss", "prevention",
-    "safety", "health", "occupational", "wellness", "benefits",
-    "compensation", "talent", "acquisition", "learning", "culture",
-    "diversity", "inclusion", "equity", "accessibility", "sustainability",
-    "governance", "stewardship", "impact", "growth", "performance",
-    "metrics", "analytics", "intelligence", "insights", "reporting",
-    "dashboard", "visualization", "modeling", "simulation", "optimization",
-    "automation", "robotics", "artificial", "intelligence", "machine",
-    "learning", "deep", "neural", "natural", "language",
-    "vision", "audio", "video", "graphics", "interface",
-    "experience", "usability", "accessibility", "interaction", "content",
-    "strategy", "management", "curation", "moderation", "community",
-    "social", "influence", "growth", "retention", "monetization",
-    "subscription", "partnership", "alliance", "ecosystem", "platform",
-    "marketplace", "payments", "fintech", "insurtech", "proptech",
-    "edtech", "healthtech", "biotech", "cleantech", "agtech",
-    "foodtech", "traveltech", "adtech", "martech", "hrtech",
-    "enterprise", "consumer", "business", "industrial", "commercial",
-    "residential", "global", "regional", "local", "remote",
-    "hybrid", "onsite", "freelance", "contract", "temporary",
-    "permanent", "full-time", "part-time", "seasonal", "internship",
-    "residency", "fellowship", "scholarship", "grants", "funding",
-    "budgeting", "forecasting", "treasury", "tax", "audit",
-    "compliance", "standards", "quality", "assurance", "control",
-    "testing", "validation", "verification", "certification", "accreditation",
-    "licensing", "permitting", "zoning", "planning", "development",
-    "redevelopment", "renovation", "restoration", "conservation", "preservation",
-    "reclamation", "remediation", "emergency", "crisis", "disaster",
-    "relief", "humanitarian", "aid", "development", "advocacy",
-    "activism", "organizing", "campaign", "election", "voter",
-    "legislative", "judicial", "executive", "administrative", "regulatory",
-    "enforcement", "protection", "intelligence", "surveillance", "investigation",
-    "forensics", "evidence", "testimony", "litigation", "arbitration",
-    "mediation", "negotiation", "settlement", "contract", "agreement",
-    "treaty", "protocol", "convention", "charter", "constitution",
-    "bylaw", "ordinance", "statute", "regulation", "guideline",
-    "policy", "procedure", "standard", "best", "practice",
-    "framework", "methodology", "approach", "philosophy", "theory",
-    "concept", "principle", "value", "mission", "vision",
-    "goal", "objective", "target", "milestone", "deadline",
-    "priority", "task", "activity", "process", "workflow",
-    "pipeline", "cycle", "lifecycle", "roadmap", "strategy",
-    "tactic", "execution", "implementation", "deployment", "launch",
-    "rollout", "migration", "integration", "configuration", "customization",
-    "optimization", "maintenance", "support", "troubleshooting", "resolution",
-    "escalation", "incident", "problem", "change", "release"
+DEFAULT_PROVINCES = [
+    "ON",
+    "AB",
+    "BC",
+    "MB",
+    "NB",
+    "NS",
+    "NT",
+    "NU",
+    "PE",
+    "QC",
+    "SK",
+    "YT",
 ]
-random.shuffle(DEFAULT_KEYWORDS)
 
 def _banner(lines: list[str], color: str = CY) -> None:
     width  = max(len(l) for l in lines) + 6
@@ -170,7 +61,7 @@ class CanadianJobbankCrawler:
         self.name          = name
         self._last_push    = time.time()
         self._total_rows   = 0
-        self._keywords_done = 0
+        self._provinces_done = 0
 
     # ── Git push ───────────────────────────────────────────────────────────────
 
@@ -194,9 +85,13 @@ class CanadianJobbankCrawler:
 
     # ── Main run ───────────────────────────────────────────────────────────────
 
-    def run(self, keywords: List[str] | None = None) -> None:
-        keywords = keywords or DEFAULT_KEYWORDS
-        total_keywords = len(keywords)
+    def run(
+        self,
+        provinces: List[str] | None = None,
+        keywords: List[str] | None = None,
+    ) -> None:
+        provinces = provinces or keywords or DEFAULT_PROVINCES
+        total_provinces = len(provinces)
 
         browser = instance.Browser(
             driver_choice='selenium',
@@ -204,25 +99,19 @@ class CanadianJobbankCrawler:
             zoom_level=100,
         )
         browser.init_browser()
-        browser.go_to_site("https://foreandr.github.io/")
 
-        for i, keyword in enumerate(keywords, 1):
+        for i, province in enumerate(provinces, 1):
             try:
-                total_data = self._process_keyword(browser, keyword)
-
-                jsonifier  = CanadianJobbankJsonify(self.name)
-                clean_data = jsonifier.run_analysis(total_data, print_samples=True)
-
-                inserted = self._store_clean_data(clean_data)
+                inserted = self._process_province(browser, province)
                 self._total_rows   += inserted
-                self._keywords_done += 1
+                self._provinces_done += 1
 
             except Exception as e:
-                print(f"{RD}[ERROR] keyword={keyword}: {e}{R}")
+                print(f"{RD}[ERROR] province={province}: {e}{R}")
 
-            pct      = f"{i}/{total_keywords}"
+            pct      = f"{i}/{total_provinces}"
             db_total = self._db_total_rows()
-            print(f"[{pct}] {self.name} | keyword={keyword} | db_rows={db_total}")
+            print(f"[{pct}] {self.name} | province={province} | db_rows={db_total}")
             self._maybe_push()
 
         browser.close_browser()
@@ -230,46 +119,90 @@ class CanadianJobbankCrawler:
 
     # ── Scraping ───────────────────────────────────────────────────────────────
 
-    def _process_keyword(self, browser: Any, keyword: str) -> List[List[Any]]:
-        encoded = keyword.replace(' ', '+')
-        urls = [
-            #f"{BASE_URL}/jobsearch/jobsearch?searchstring={encoded}&sort=M",
-            f"{BASE_URL}/jobsearch/jobsearch?searchstring={encoded}&sort=M&fsrc=21",
-        ]
-        total_data: List[List[Any]] = []
-        for url in urls:
-            browser.go_to_site(url)
-            time.sleep(1.5)
-            total_data.extend(self._paginate_and_scrape(browser))
-        # dedup across both passes
-        total_data = [list(x) for x in {tuple(x) for x in total_data}]
-        return total_data
+    def _process_province(self, browser: Any, province: str) -> int:
+        url = f"{BASE_URL}/jobsearch/jobsearch?fage=30&sort=M&fprov={province}"
+        browser.go_to_site(url)
+        time.sleep(1.5)
+        return self._paginate_and_scrape(browser, province)
 
-    def _paginate_and_scrape(self, browser: Any) -> List[List[Any]]:
-        total_data  = []
-        page        = 0
-        max_pages   = 40   # safety cap
+    def _paginate_and_scrape(self, browser: Any, province: str) -> int:
+        seen_rows: set[tuple[Any, ...]] = set()
+        total_inserted = 0
+        page = 0
+        max_pages = 50  # switch provinces after 50 pages to keep the crawl moving
+        page_wait = 2.0
+        jsonifier = CanadianJobbankJsonify(self.name)
 
         while page < max_pages:
-            soup     = browser.return_current_soup()
+            soup = browser.return_current_soup()
             raw_rows = parser.main(soup)
-            total_data.extend(raw_rows)
-            # Dedup within session
-            total_data = [list(x) for x in {tuple(x) for x in total_data}]
+            raw_count = len(raw_rows)
+            page_index = page + 1
+
+            new_rows: List[List[Any]] = []
+            for row in raw_rows:
+                row_key = tuple(row)
+                if row_key in seen_rows:
+                    continue
+                seen_rows.add(row_key)
+                new_rows.append(row)
+
+            session_new_count = len(new_rows)
+            session_dupe_count = max(raw_count - session_new_count, 0)
+            clean_data = jsonifier.run_analysis(new_rows, print_samples=True)
+            db_existing_count = self._count_existing_urls(clean_data)
+            inserted_count = self._store_clean_data(clean_data)
+            db_new_count = max(len(clean_data) - db_existing_count, 0)
+            total_inserted += inserted_count
+            skipped_summary = jsonifier.skipped_reason_counts()
+            skipped_text = (
+                ", ".join(f"{reason}={count}" for reason, count in skipped_summary.items())
+                if skipped_summary else
+                "none"
+            )
+
+            print(
+                f"{CY}------- province={province} page={page_index} -------{R}"
+            )
+            print(
+                f"{CY}[PAGE {page_index}] scraped={raw_count} | "
+                f"session_new={session_new_count} | session_dupes={session_dupe_count} | "
+                f"seen_total={len(seen_rows)}{R}"
+            )
+            print(
+                f"{CY}[PAGE {page_index}] clean_rows={len(clean_data)} | "
+                f"already_in_db={db_existing_count} | db_new={db_new_count} | "
+                f"inserted_now={inserted_count}{R}"
+            )
+            print(
+                f"{CY}[PAGE {page_index}] skipped={jsonifier.skipped_count} | "
+                f"skip_reasons={skipped_text}{R}"
+            )
+
+            if page > 0 and session_new_count == 0:
+                print(
+                    f"{YL}[PAGE {page_index}] stopping: no new unique jobs detected after pagination.{R}"
+                )
+                break
 
             page += 1
 
-            # Try to click "Load more results" button
             button_xpath = '//*[@id="moreresultbutton"]'
             try:
                 browser.scroll_to_bottom()
                 time.sleep(0.5)
                 browser.click_element("xpath", button_xpath, 3)
-                time.sleep(1.5)
-            except Exception:
-                break   # no more pages
+                print(
+                    f"{GR}[PAGE {page}] clicked 'show more results' | waiting {page_wait:.1f}s for new jobs to load...{R}"
+                )
+                time.sleep(page_wait)
+            except Exception as e:
+                print(
+                    f"{YL}[PAGE {page}] stopping: could not click 'show more results' ({e}).{R}"
+                )
+                break
 
-        return total_data
+        return total_inserted
 
     # ── Storage ────────────────────────────────────────────────────────────────
 
@@ -300,13 +233,50 @@ class CanadianJobbankCrawler:
         if rows:
             placeholders = ", ".join(["?"] * len(SCHEMA.field_names()))
             columns      = ", ".join(SCHEMA.field_names())
+            before_changes = conn.total_changes
             conn.executemany(
                 f"INSERT OR IGNORE INTO items ({columns}) VALUES ({placeholders});",
                 rows,
             )
+            inserted = conn.total_changes - before_changes
+        else:
+            inserted = 0
         conn.commit()
         conn.close()
-        return len(rows)
+        return inserted
+
+    def _count_existing_urls(self, clean_data: Any) -> int:
+        if not isinstance(clean_data, list):
+            return 0
+
+        urls = [
+            item.get("url")
+            for item in clean_data
+            if isinstance(item, dict) and item.get("url")
+        ]
+        if not urls:
+            return 0
+
+        db_path = self._db_path()
+        if not db_path.exists():
+            return 0
+
+        conn = sqlite3.connect(str(db_path), timeout=30)
+        conn.execute("PRAGMA journal_mode=WAL;")
+        try:
+            total_existing = 0
+            chunk_size = 200
+            for i in range(0, len(urls), chunk_size):
+                chunk = urls[i:i + chunk_size]
+                placeholders = ", ".join(["?"] * len(chunk))
+                row = conn.execute(
+                    f"SELECT COUNT(*) FROM items WHERE url IN ({placeholders});",
+                    chunk,
+                ).fetchone()
+                total_existing += int(row[0]) if row else 0
+            return total_existing
+        finally:
+            conn.close()
 
     def _db_path(self) -> Path:
         return Path(__file__).resolve().parents[2] / "src" / self.name / "database.sqlite"

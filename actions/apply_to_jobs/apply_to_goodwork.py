@@ -6,11 +6,6 @@ Internal application logic is handled by the caller.
 """
 from __future__ import annotations
 
-from typing import Any
-
-from hyperSel import instance
-from net_guard import ensure_page_loaded
-
 import re
 from typing import Any
 
@@ -18,32 +13,11 @@ from hyperSel import instance
 
 import email_sender
 from files.application_data import generate_application
-from keywords import SOFTWARE_KEYWORDS
 from skip_emails import SKIP_EMAILS
 from net_guard import ensure_page_loaded
 
 EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
 _TEST_DOMAINS = {"test.com", "example.com", "mailinator.com", "tempmail.com"}
-
-def _is_software_title(title: str) -> bool:
-    title_lower = (title or "").lower()
-    if any(kw.lower() in title_lower for kw in SOFTWARE_KEYWORDS):
-        return True
-    signals = (
-        "software",
-        "developer",
-        "engineer",
-        "full stack",
-        "frontend",
-        "backend",
-        "devops",
-        "data",
-        "machine learning",
-        "ml",
-        "ai",
-    )
-    return any(sig in title_lower for sig in signals)
-
 
 def apply(job: dict[str, Any]) -> None:
     url = job.get("url")
@@ -73,11 +47,10 @@ def apply(job: dict[str, Any]) -> None:
         print(f"  [Goodwork] emails found: {emails}")
 
         title = job.get("title", "the posted position")
-        cover_letter_type = "swe" if _is_software_title(title) else "general"
         app = generate_application(
             job_title=title,
             job_board="Goodwork",
-            cover_letter_type=cover_letter_type,
+            job_url=url,
         )
 
         for recipient in emails:
@@ -85,6 +58,7 @@ def apply(job: dict[str, Any]) -> None:
                 receiver=recipient,
                 subject=app["subject"],
                 body=app["body"],
+                body_html=app["body_html"],
                 attachment_paths=app["attachments"],
                 bcc_self=True,
             )

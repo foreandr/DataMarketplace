@@ -2,7 +2,7 @@
 actions/apply_to_jobs/email_sender.py
 
 Send application emails via Gmail SMTP.
-Supports multiple attachments (resume + cover letter).
+Supports HTML bodies and file attachments.
 """
 from __future__ import annotations
 
@@ -27,6 +27,7 @@ def send_email_with_account(
     receiver: str,
     subject: str,
     body: str,
+    body_html: str | None = None,
     attachment_paths: list[str] | None = None,
     bcc_self: bool = False,
 ) -> bool:
@@ -51,13 +52,17 @@ def send_email_with_account(
         print("No attachments.")
     print("==========================")
 
-    msg = MIMEMultipart()
+    msg = MIMEMultipart("mixed")
     msg["From"]    = email_sender
     msg["To"]      = receiver
     msg["Subject"] = subject
     if bcc_self:
         msg["Bcc"] = email_sender
-    msg.attach(MIMEText(body, "plain"))
+    body_part = MIMEMultipart("alternative")
+    body_part.attach(MIMEText(body, "plain", "utf-8"))
+    if body_html:
+        body_part.attach(MIMEText(body_html, "html", "utf-8"))
+    msg.attach(body_part)
 
     for path in (attachment_paths or []):
         try:
@@ -116,6 +121,7 @@ def send_email(
     receiver: str,
     subject: str,
     body: str,
+    body_html: str | None = None,
     attachment_paths: list[str] | None = None,
     account_index: int = 0,
     bcc_self: bool = False,
@@ -128,6 +134,7 @@ def send_email(
         receiver=receiver,
         subject=subject,
         body=body,
+        body_html=body_html,
         attachment_paths=attachment_paths,
         bcc_self=bcc_self,
     )

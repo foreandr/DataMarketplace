@@ -1,69 +1,117 @@
+from __future__ import annotations
+
+import html
+
 BASE = r"C:\Users\forea\Documents\DataMarketplace\files"
 
 RESUME = f"{BASE}\\Andre Foreman Resume.pdf"
-
 COVER_LETTERS = {
-    "swe":     f"{BASE}\\Andre Foreman Cover Letter.pdf",
+    "swe": f"{BASE}\\Andre Foreman Cover Letter.pdf",
     "general": f"{BASE}\\Andre_Foreman_Cover_Letter.pdf",
 }
-
-BODIES = {
-    "swe": lambda title, board: f"""Hello,
-
-My name is Andre Foreman. I found your posting for {title} and wanted to reach out. Please find my resume and cover letter attached.
-
-I am a software engineer with a background in mathematics and the humanities.
-
-If you would like a deeper look at my skillset, my portfolio at foreandr.github.io highlights my software experience with many projects you can browse.
-
-To confirm: I am a Canadian citizen, fully authorized to work in Canada, and I have relevant experience for this position.
-
-Best regards,
-Andre Foreman
-519-636-3173
-foreandr@gmail.com""",
-
-    "general": lambda title, board: f"""Hello,
-
-My name is Andre Foreman. I found your posting for {title}  and wanted to reach out. Please find my resume and cover letter attached.
-
-I would welcome the opportunity to work with your team. My background is in software engineering, mathematics, and the humanities, and I take quality and reliability seriously. I was also a national team athlete.
-
-If you would like a deeper look at my skillset, my portfolio is available at foreandr.github.io with many projects you can browse.
-
-To confirm: I am a Canadian citizen, fully authorized to work in Canada, and I have relevant experience for this position.
-
-Best regards,
-Andre Foreman
-519-636-3173
-foreandr@gmail.com""",
-}
+PORTFOLIO_URL = "https://foreandr.github.io/"
+GITHUB_URL = "https://github.com/foreandr?tab=repositories"
 
 
-def generate_application(job_title, job_board, cover_letter_type="swe"):
+def _formatted_title(job_title: str) -> str:
+    title = (job_title or "the posted position").strip()
+    return title.title()
+
+
+def _plain_body(job_title: str, job_url: str | None = None) -> str:
+    title_text = _formatted_title(job_title)
+    lines = [
+        "Hello,",
+        "",
+        (
+            f"My name is Andre Foreman, and I’m reaching out regarding your "
+            f"{title_text} posting."
+        ),
+        (
+            "I bring 5 years of experience across software engineering and data analytics, "
+            "with a portfolio of shipped projects that reflects the quality and range of "
+            f"my work: {PORTFOLIO_URL}"
+        ),
+        (
+            "I’d welcome the opportunity to contribute to your team, do thoughtful work, "
+            "and make a strong contribution from day one."
+        ),
+    ]
+    if job_url:
+        lines.append(f"Original job posting: {job_url}")
+    lines.extend(
+        [
+            (
+                "For clarity, I am a Canadian citizen and fully authorized to work in Canada."
+            ),
+            "",
+            "Best regards,",
+            "Andre Foreman",
+            "519-636-3173",
+            "foreandr@gmail.com",
+            GITHUB_URL,
+        ]
+    )
+    return "\n".join(lines)
+
+
+def _html_body(job_title: str, job_url: str | None = None) -> str:
+    title_text = html.escape(_formatted_title(job_title))
+    if job_url:
+        title_markup = (
+            f'<a href="{html.escape(job_url, quote=True)}"><strong><em>{title_text}</em></strong></a>'
+        )
+    else:
+        title_markup = f"<strong><em>{title_text}</em></strong>"
+
+    return f"""<html>
+  <body>
+    <p>Hello,</p>
+    <p>My name is Andre Foreman, and I’m reaching out regarding your {title_markup} posting.</p>
+    <p>
+      I bring 5 years of experience across software engineering and data analytics, with a portfolio
+      of shipped projects that reflects the quality and range of my work:
+      <a href="{html.escape(PORTFOLIO_URL, quote=True)}">{html.escape(PORTFOLIO_URL)}</a>.
+    </p>
+    <p>
+      I’d welcome the opportunity to contribute to your team, do thoughtful work, and make a
+      strong contribution from day one.
+    </p>
+    <p>For clarity, I am a Canadian citizen and fully authorized to work in Canada.</p>
+    <p>
+      Best regards,<br>
+      Andre Foreman<br>
+      519-636-3173<br>
+      <a href="mailto:foreandr@gmail.com">foreandr@gmail.com</a><br>
+      <a href="{html.escape(GITHUB_URL, quote=True)}">{html.escape(GITHUB_URL)}</a>
+    </p>
+  </body>
+</html>"""
+
+
+def generate_application(
+    job_title: str,
+    job_board: str,
+    cover_letter_type: str = "swe",
+    job_url: str | None = None,
+) -> dict[str, object]:
     """
     Returns a dict with everything needed to send an application email.
 
     Args:
-        job_title (str):          e.g. "Data Analyst"
-        job_board (str):          e.g. "Indeed"
-        cover_letter_type (str):  "swe" or "general"
+        job_title (str): e.g. "Data Analyst"
+        job_board (str): e.g. "Indeed"
+        cover_letter_type (str): retained for backward compatibility
+        job_url (str | None): original job posting URL
 
     Returns:
-        dict with keys: subject, body, attachments
+        dict with keys: subject, body, body_html, attachments
     """
+    del job_board, cover_letter_type
+    formatted_title = _formatted_title(job_title)
     return {
-        "subject":     f"Application for {job_title.title()} role — Andre Foreman",
-        "body":        BODIES[cover_letter_type](job_title, job_board),
-        "attachments": [RESUME, COVER_LETTERS[cover_letter_type]],
+        "subject": f"Application for {formatted_title} Role - Andre Foreman",
+        "body": _plain_body(job_title, job_url=job_url),
+        "body_html": _html_body(job_title, job_url=job_url),
+        "attachments": [RESUME],
     }
-
-'''
-how to use :
-
-from email_generator import generate_application
-
-app = generate_application(job_title="Data Analyst", job_board="Indeed", cover_letter_type="swe")
-# app["subject"], app["body"], app["attachments"]
-
-'''

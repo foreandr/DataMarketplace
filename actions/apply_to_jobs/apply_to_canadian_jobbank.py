@@ -18,33 +18,12 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(ROOT))
 import email_sender
-from keywords import SOFTWARE_KEYWORDS
 from files.application_data import generate_application
 from skip_emails import SKIP_EMAILS
 from net_guard import ensure_page_loaded
 
 EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
 _TEST_DOMAINS = {"test.com", "example.com", "mailinator.com", "tempmail.com"}
-
-
-def _is_software_title(title: str) -> bool:
-    title_lower = (title or "").lower()
-    if any(kw.lower() in title_lower for kw in SOFTWARE_KEYWORDS):
-        return True
-    strong_signals = (
-        "software",
-        "developer",
-        "engineer",
-        "full stack",
-        "frontend",
-        "backend",
-        "devops",
-        "data",
-        "machine learning",
-        "ml",
-        "ai",
-    )
-    return any(sig in title_lower for sig in strong_signals)
 
 
 def apply(job: dict[str, Any]) -> None:
@@ -98,11 +77,10 @@ def apply(job: dict[str, Any]) -> None:
 
         # ── send application email ─────────────────────────────────────────────────
         title = job.get("title", "the posted position")
-        cover_letter_type = "swe" if _is_software_title(title) else "general"
         app = generate_application(
             job_title=title,
             job_board="Canadian Job Bank",
-            cover_letter_type=cover_letter_type,
+            job_url=url,
         )
         browser.close_browser()
 
@@ -111,6 +89,7 @@ def apply(job: dict[str, Any]) -> None:
                 receiver=recipient,
                 subject=app["subject"],
                 body=app["body"],
+                body_html=app["body_html"],
                 attachment_paths=app["attachments"],
             )
         browser.close_browser()
