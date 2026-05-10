@@ -27,3 +27,26 @@ def test_generate_application_uses_richer_signature() -> None:
     assert "5196363173" in body_html
     assert "foreandr@gmail.com" in body_html
     assert "https://foreandr.github.io/" in body_html
+
+
+def test_generate_application_uses_current_outreach_copy() -> None:
+    application = generate_application(
+        job_title="senior data engineer",
+        job_board="Indeed",
+        job_url="https://example.com/job",
+    )
+
+    body = application["body"]
+    body_html = application["body_html"]
+
+    assert "from the job board and wanted to reach out" in body
+    assert "from the job board and wanted to reach out" in body_html
+    assert "many years of experience across engineering, analytics" in body
+    assert "portfolio of shipped products" in body_html
+    assert "learn more about your business" in body
+    assert "learn more about" in body_html
+    assert "your business" in body_html
+    assert "schedule a call or Zoom" in body
+    assert "schedule a call or Zoom" in body_html
+    assert "Thank you for your time and consideration." in body
+    assert "Thank you for your time and consideration." in body_html

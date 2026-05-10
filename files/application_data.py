@@ -23,29 +23,27 @@ def _formatted_title(job_title: str) -> str:
 def _plain_body(job_title: str, job_url: str | None = None) -> str:
     title_text = _formatted_title(job_title)
     lines = [
-        "Hello,",
+        "Dear Hiring Management,",
         "",
         (
-            f"My name is Andre Foreman, and I’m reaching out regarding your "
-            f"{title_text} posting."
+            f"My name is Andre Foreman, and I saw your {title_text} posting "
+            "from the job board and wanted to reach out."
         ),
         (
-            "I bring 5 years of experience across software engineering and data analytics, "
-            "with a portfolio of shipped projects that reflects the quality and range of "
-            f"my work: {PORTFOLIO_URL}"
+            "I bring many years of experience across engineering, analytics, and a range "
+            "of management and leadership roles, with a portfolio of shipped products "
+            f"that reflects the quality and range of my work: here ({PORTFOLIO_URL})"
         ),
         (
-            "I’d welcome the opportunity to contribute to your team, do thoughtful work, "
-            "and make a strong contribution from day one."
+            "I’d be grateful for the opportunity to contribute to your team and learn "
+            "more about your business."
         ),
+        "I've attached my resume below for your review.",
+        "Please let me know if you feel I'd be a good fit for the role and would like to "
+        "schedule a call or Zoom. Thank you for your time and consideration.",
     ]
-    if job_url:
-        lines.append(f"Original job posting: {job_url}")
     lines.extend(
         [
-            (
-                "For clarity, I am a Canadian citizen and fully authorized to work in Canada."
-            ),
             "",
             "Andre Foreman",
             PHONE_NUMBER,
@@ -58,27 +56,24 @@ def _plain_body(job_title: str, job_url: str | None = None) -> str:
 
 def _html_body(job_title: str, job_url: str | None = None) -> str:
     title_text = html.escape(_formatted_title(job_title))
-    if job_url:
-        title_markup = (
-            f'<a href="{html.escape(job_url, quote=True)}"><strong><em>{title_text}</em></strong></a>'
-        )
-    else:
-        title_markup = f"<strong><em>{title_text}</em></strong>"
+    del job_url
+    title_markup = f"<strong><em>{title_text}</em></strong>"
 
     return f"""<html>
   <body>
-    <p>Hello,</p>
-    <p>My name is Andre Foreman, and I’m reaching out regarding your {title_markup} posting.</p>
+    <p>Dear Hiring Management,</p>
+    <p>My name is Andre Foreman, and I saw your {title_markup} posting from the job board and wanted to reach out.</p>
     <p>
-      I bring 5 years of experience across software engineering and data analytics, with a portfolio
-      of shipped projects that reflects the quality and range of my work:
-      <a href="{html.escape(PORTFOLIO_URL, quote=True)}">{html.escape(PORTFOLIO_URL)}</a>.
+      I bring many years of experience across engineering, analytics, and a range of management
+      and leadership roles, with a portfolio of shipped products that reflects the quality and
+      range of my work: <a href="{html.escape(PORTFOLIO_URL, quote=True)}">here</a>.
     </p>
     <p>
-      I’d welcome the opportunity to contribute to your team, do thoughtful work, and make a
-      strong contribution from day one.
+      I’d be grateful for the opportunity to contribute to your team and learn more about
+      your business.
     </p>
-    <p>For clarity, I am a Canadian citizen and fully authorized to work in Canada.</p>
+    <p>I've attached my resume below for your review.</p>
+    <p>Please let me know if you feel I'd be a good fit for the role and would like to schedule a call or Zoom. Thank you for your time and consideration.</p>
     <div style="margin-top:16px;font-family:Arial, sans-serif;line-height:1.5;">
       <div style="font-size:14px;font-weight:700;color:#111827;">Andre Foreman</div>
       <div style="margin-top:6px;font-size:12px;color:#4b5563;">

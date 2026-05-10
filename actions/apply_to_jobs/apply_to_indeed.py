@@ -225,7 +225,10 @@ _WHY_THIS_COMPANY = (
     "engineering and my genuine interest in building tools that solve real problems. "
     "I bring strong technical fundamentals, a bias toward shipping, and a habit of "
     "investing in code quality and documentation so the next person on the codebase "
-    "has a good time. I believe I can contribute meaningfully from day one."
+    "has a good time. I would be grateful for the opportunity to contribute and "
+    "learn more about your business. I've attached my resume below for your review. "
+    "Please let me know if you feel I'd be a good fit for the role and would like "
+    "to schedule a call or Zoom. Thank you for your time and consideration."
 )
 
 _DESCRIBE_YOURSELF = (
