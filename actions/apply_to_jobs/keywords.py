@@ -1,16 +1,76 @@
 """
-actions/apply_to_jobs/keywords.py
+Canonical keyword lists for broad software and placement-role searches.
 
-Two keyword sets:
-  SOFTWARE_KEYWORDS  — remote software roles (title-search only, >= 7 chars,
-                       no bare generics, no non-technical roles)
-  PLACEMENT_KEYWORDS — internship / co-op / summer student roles filtered
-                       to a specific geographic area (see main.py)
+These lists are matched against job titles with SQL LIKE clauses, so they stay
+focused on role names and role-shaped phrases rather than long descriptions.
 """
 
-SOFTWARE_KEYWORDS = [
-    "programmer","computer","information technology", "data", "software", "web", "mobile", "cloud", "devops",
-    # Software / general
+from __future__ import annotations
+
+
+def _unique_keywords(*keywords: str) -> list[str]:
+    seen: set[str] = set()
+    ordered: list[str] = []
+
+    for keyword in keywords:
+        cleaned = keyword.strip()
+        if not cleaned:
+            continue
+        key = cleaned.casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        ordered.append(cleaned)
+
+    return ordered
+
+
+SOFTWARE_KEYWORDS = _unique_keywords(
+    # General computing and IT roles
+    "computer technician",
+    "computer tech",
+    "pc technician",
+    "pc support technician",
+    "personal computer technician",
+    "computer support technician",
+    "computer service technician",
+    "computer repair technician",
+    "computer operator",
+    "computer engineer",
+    "computer programmer",
+    "computer programmer analyst",
+    "computer programming analyst",
+    "computer systems analyst",
+    "computer systems manager",
+    "manager computer systems",
+    "computer systems development manager",
+    "computer systems administrator",
+    "computer systems specialist",
+    "computer systems engineer",
+    "information systems manager",
+    "information systems analyst",
+    "information technology business analyst",
+    "it business analyst",
+    "it analyst",
+    "it specialist",
+    "it support specialist",
+    "technical support analyst",
+    "technical support specialist",
+    "help desk technician",
+    "desktop support technician",
+    "computer network technician",
+    "computer networks technician",
+    "computer networking technician",
+    "computer networks manager",
+    "network administrator",
+    "application programmer",
+    "application programming analyst",
+    "application programming specialist",
+    "systems programmer",
+    "programmer, systems",
+    "systems analyst",
+    "systems administrator",
+    # Broad software and application roles
     "software developer",
     "software engineer",
     "software programmer",
@@ -18,46 +78,72 @@ SOFTWARE_KEYWORDS = [
     "application developer",
     "application engineer",
     "systems developer",
-    "systems software",
+    "solutions developer",
+    "technical developer",
+    "programmer analyst",
+    "developer analyst",
+    "application analyst",
     "full stack developer",
     "full stack engineer",
-    "fullstack developer",
-
-    # Web / frontend / backend
-    "web developer",
-    "web engineer",
+    "full-stack developer",
+    "full-stack engineer",
     "frontend developer",
     "frontend engineer",
+    "front-end developer",
+    "front-end engineer",
     "backend developer",
     "backend engineer",
-
-    # Mobile
+    "back-end developer",
+    "back-end engineer",
+    "web developer",
+    "website developer",
+    "web application developer",
+    "web software developer",
+    "web engineer",
+    "web programmer",
+    "web integrator",
     "mobile developer",
     "mobile engineer",
-    "iOS developer",
-    "Android developer",
     "app developer",
-
-    # Data
+    "ios developer",
+    "android developer",
+    # Data and analytics
     "data analyst",
     "data engineer",
     "data scientist",
     "data architect",
     "data developer",
-    "database developer",
-    "database administrator",
-    "database engineer",
-    "ETL developer",
-    "BI developer",
-    "business intelligence developer",
+    "business data analyst",
     "analytics engineer",
     "reporting analyst",
-    "quantitative analyst",
-    "SQL developer",
-    "Spark developer",
-
-    # DevOps / infrastructure / cloud
-    "DevOps engineer",
+    "business intelligence developer",
+    "bi developer",
+    "etl developer",
+    "sql developer",
+    "database developer",
+    "database analyst",
+    "database administrator",
+    "database engineer",
+    "data governance analyst",
+    "data governance specialist",
+    "data steward",
+    "data quality analyst",
+    "data quality engineer",
+    "data platform engineer",
+    "data infrastructure engineer",
+    "data warehouse developer",
+    "data lake developer",
+    "data operations specialist",
+    "data operations engineer",
+    "machine learning engineer",
+    "ml engineer",
+    "ai engineer",
+    "artificial intelligence engineer",
+    "deep learning engineer",
+    "computer vision engineer",
+    "nlp engineer",
+    # Cloud, DevOps, infra, security, QA
+    "devops engineer",
     "site reliability engineer",
     "platform engineer",
     "infrastructure engineer",
@@ -65,87 +151,56 @@ SOFTWARE_KEYWORDS = [
     "cloud architect",
     "solutions architect",
     "systems architect",
-    "Kubernetes engineer",
-    "Terraform engineer",
-    "Azure developer",
-
-    # ML / AI
-    "machine learning engineer",
-    "ML engineer",
-    "AI engineer",
-    "deep learning engineer",
-    "computer vision engineer",
-    "NLP engineer",
-    "artificial intelligence engineer",
-
-    # QA / testing / automation
-    "QA engineer",
-    "quality assurance engineer",
-    "test engineer",
-    "automation engineer",
-    "test automation","actuary","actuarial","Actuaries"
-
-    # Security
+    "kubernetes engineer",
+    "terraform engineer",
+    "azure developer",
     "security engineer",
     "cybersecurity engineer",
+    "application security engineer",
     "penetration tester",
-    "application security",
-
-    # Networking
     "network engineer",
     "network developer",
-
-    # Embedded / firmware
+    "network analyst",
+    "network support technician",
+    "network support specialist",
+    "qa engineer",
+    "quality assurance engineer",
+    "test engineer",
+    "test automation engineer",
+    "automation engineer",
+    # Embedded, integration, enterprise, and niche software roles
     "embedded developer",
     "embedded systems engineer",
     "firmware engineer",
-
-    # Integration / API
     "integration engineer",
-    "API developer",
-
-    # Game dev
+    "api developer",
     "game developer",
     "game engineer",
     "graphics programmer",
-
-    # CRM / ERP / enterprise
-    "CRM developer",
-    "ERP developer",
-    "Salesforce developer",
-    "SAP developer",
-
-    # Technologies as roles (specific enough to be unambiguous)
-    "JavaScript developer",
-    "TypeScript developer",
-    "Python developer",
-    "Java developer",
-    "React developer",
-    "Angular developer",
-    "Go developer",
-    "PHP developer",
-    "Swift developer",
-    "Ruby developer",
-    "Rust developer",
+    "crm developer",
+    "erp developer",
+    "salesforce developer",
+    "sap developer",
+    # Tech-stack-specific roles
+    "javascript developer",
+    "typescript developer",
+    "python developer",
+    "java developer",
+    "react developer",
+    "angular developer",
+    "go developer",
+    "php developer",
+    "swift developer",
+    "ruby developer",
+    "rust developer",
     "dotnet developer",
-    "C# developer",
-
-    # Mid-level / intermediate
-    "intermediate developer",
-    "intermediate engineer",
-    "intermediate software developer",
-    "intermediate software engineer",
-    "mid-level developer",
-    "mid-level engineer",
-
-    # Flask / framework-specific roles
-    "Flask developer",
-    "Django developer",
-    "FastAPI developer",
-    "Node.js developer",
-    "Spring developer",
-    
-        # Junior / entry-level software titles (specific enough on their own)
+    "c# developer",
+    "flask developer",
+    "django developer",
+    "fastapi developer",
+    "node.js developer",
+    "spring developer",
+    # Entry and intermediate variants
     "junior developer",
     "junior engineer",
     "junior software developer",
@@ -153,27 +208,44 @@ SOFTWARE_KEYWORDS = [
     "junior web developer",
     "junior data analyst",
     "junior data engineer",
+    "associate developer",
+    "associate engineer",
+    "associate software developer",
     "entry level developer",
     "entry level engineer",
-    "entry level software",
+    "entry level software developer",
+    "entry level software engineer",
     "new grad developer",
     "new grad engineer",
     "graduate developer",
     "graduate engineer",
-    "graduate software",
-    "associate developer",
-    "associate engineer",
-    "associate software",
-    
-]
+    "intermediate developer",
+    "intermediate engineer",
+    "intermediate software developer",
+    "intermediate software engineer",
+    "mid-level developer",
+    "mid-level engineer",
+)
 
-# ── internship / co-op / summer student keywords ──────────────────────────────
-# Used with a city-based location filter (ON cities) rather than remote_only.
-#
-# Real job titles rarely read "software intern" — they read things like
-# "Software Developer Intern" or "Co-op Student – Data".  These bare terms
-# matched against the title column, combined with the city/province filter,
-# keep results tight without over-engineering the compound phrases.
-PLACEMENT_KEYWORDS = [
 
-]
+PLACEMENT_KEYWORDS = _unique_keywords(
+    "intern",
+    "internship",
+    "co-op",
+    "co op",
+    "coop",
+    "student",
+    "summer student",
+    "work term",
+    "placement",
+    "developer intern",
+    "software developer intern",
+    "software engineer intern",
+    "web developer intern",
+    "data analyst intern",
+    "data engineer intern",
+    "data science intern",
+    "machine learning intern",
+    "qa intern",
+    "devops intern",
+)

@@ -14,7 +14,7 @@ from typing import Any
 from selenium.webdriver.common.by import By
 from hyperSel import instance
 
-from some_keywords import SOFTWARE_KEYWORDS
+from keywords import SOFTWARE_KEYWORDS
 from tracker_db import already_applied, is_failed, _init_db, DB, record_failure, record_application
 import time
 

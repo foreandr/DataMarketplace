@@ -22,7 +22,7 @@ from selenium.webdriver.support.ui import Select as SeleniumSelect
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from some_keywords import SOFTWARE_KEYWORDS
+from keywords import SOFTWARE_KEYWORDS
 
 # ── Job titles that are auto-skipped (case-insensitive substring match) ───── #
 SKIP_KEYWORDS: list[str] = [

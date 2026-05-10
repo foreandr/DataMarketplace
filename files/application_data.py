@@ -11,6 +11,8 @@ COVER_LETTERS = {
 }
 PORTFOLIO_URL = "https://foreandr.github.io/"
 GITHUB_URL = "https://github.com/foreandr?tab=repositories"
+PHONE_NUMBER = "5196363173"
+EMAIL = "foreandr@gmail.com"
 
 
 def _formatted_title(job_title: str) -> str:
@@ -45,11 +47,10 @@ def _plain_body(job_title: str, job_url: str | None = None) -> str:
                 "For clarity, I am a Canadian citizen and fully authorized to work in Canada."
             ),
             "",
-            "Best regards,",
             "Andre Foreman",
-            "519-636-3173",
-            "foreandr@gmail.com",
-            GITHUB_URL,
+            PHONE_NUMBER,
+            EMAIL,
+            PORTFOLIO_URL,
         ]
     )
     return "\n".join(lines)
@@ -78,13 +79,14 @@ def _html_body(job_title: str, job_url: str | None = None) -> str:
       strong contribution from day one.
     </p>
     <p>For clarity, I am a Canadian citizen and fully authorized to work in Canada.</p>
-    <p>
-      Best regards,<br>
-      Andre Foreman<br>
-      519-636-3173<br>
-      <a href="mailto:foreandr@gmail.com">foreandr@gmail.com</a><br>
-      <a href="{html.escape(GITHUB_URL, quote=True)}">{html.escape(GITHUB_URL)}</a>
-    </p>
+    <div style="margin-top:16px;font-family:Arial, sans-serif;line-height:1.5;">
+      <div style="font-size:14px;font-weight:700;color:#111827;">Andre Foreman</div>
+      <div style="margin-top:6px;font-size:12px;color:#4b5563;">
+        <span style="font-weight:700;color:#374151;">Phone:</span> {html.escape(PHONE_NUMBER)}<br>
+        <span style="font-weight:700;color:#374151;">Email:</span> <a href="mailto:{html.escape(EMAIL, quote=True)}" style="color:#1f2937;text-decoration:none;">{html.escape(EMAIL)}</a><br>
+        <span style="font-weight:700;color:#374151;">Portfolio:</span> <a href="{html.escape(PORTFOLIO_URL, quote=True)}" style="color:#1f2937;text-decoration:none;">{html.escape(PORTFOLIO_URL)}</a>
+      </div>
+    </div>
   </body>
 </html>"""
 

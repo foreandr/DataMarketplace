@@ -24,7 +24,7 @@ _STATS = {"success": 0, "failed": 0, "total": 0}
 SOURCES = {
     "canadian_jobbank": ROOT / "src/_canadian_jobbank/database.sqlite",
     # "charityvillage":   ROOT / "src/_charityvillage_jobs/database.sqlite",
-    "craigslist":       ROOT / "src/_craigslist_jobs/database.sqlite",
+    # "craigslist":       ROOT / "src/_craigslist_jobs/database.sqlite",
     # "goodwork":         ROOT / "src/_goodwork_jobs/database.sqlite",
     # "indeed":           ROOT / "src/_indeed_jobs/database.sqlite",
     "jobspider":        ROOT / "src/_jobspider_jobs/database.sqlite",
